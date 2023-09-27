@@ -1,0 +1,160 @@
+<div class="layout">
+  <mat-expansion-panel expanded>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Personal data
+      </mat-panel-title>
+      <!--<mat-panel-description>
+        Main information
+      </mat-panel-description>-->
+    </mat-expansion-panel-header>
+
+    <form class="info-form" [formGroup]="checkoutForm" >
+      <div class="info-form__body" formGroupName="addressForm">
+        <div class="info-form__row">
+          <div class="info-form__row-item">
+            <mat-form-field class="example-full-width">
+              <mat-label>First name</mat-label>
+              <input formControlName="firstName" matInput placeholder="First name">
+            </mat-form-field>
+          </div>
+          <div class="info-form__row-item">
+            <mat-form-field class="example-full-width">
+              <mat-label>Last name</mat-label>
+              <input formControlName="lastName" matInput placeholder="Last name">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="info-form__row">
+          <div class="info-form__row-item">
+            <mat-form-field class="example-full-width">
+              <mat-label> City </mat-label>
+              <input formControlName="city" matInput placeholder="City">
+            </mat-form-field>
+          </div>
+          <div class="info-form__row-item">
+            <mat-form-field class="example-full-width">
+              <mat-label>Zip code</mat-label>
+              <input formControlName="zipCode" matInput placeholder="Zip code">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="info-form__row">
+          <div class="info-form__row-item">
+            <mat-form-field class="example-full-width">
+              <mat-label>State</mat-label>
+              <input formControlName="state" matInput placeholder="Email">
+            </mat-form-field>
+          </div>
+          <div class="info-form__row-item">
+            <mat-form-field class="example-full-width">
+              <mat-label> Phone</mat-label>
+              <input matInput placeholder="Phone">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="info-form__row">
+          <div class="info-form__row-item">
+            <button  mat-button color="primary">Save</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!--<div class="form" [formGroup]="checkoutForm" >
+
+      &lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;
+      <div class="form__row" formGroupName="addressForm">
+        <div class="form__row form__row_type_flex">
+          <app-text-input formControlName="firstName" [label]="'First name'" class="form__input_gr1"/>
+          <app-text-input formControlName="lastName" [label]="'Last name'" class="form__input_gr1 form__input_ml_12"/>
+        </div>
+      </div>
+
+      &lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;
+      <div class="form__row" formGroupName="addressForm">
+        <div class="form__row form__row_type_flex">
+          <app-text-input formControlName="street" [label]="'street'" class="form__input_gr1" />
+          <app-text-input formControlName="city" [label]="'city'" class="form__input_gr1 form__input_ml_12"/>
+        </div>
+      </div>
+      &lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;
+      <div class="form__row" formGroupName="addressForm">
+        <div class="form__row form__row_type_flex">
+          <app-text-input formControlName="state" [label]="'state'" class="form__input_gr1" />
+          <app-text-input formControlName="zipCode" [label]="'zip code'" class="form__input_gr1 form__input_ml_12"/>
+        </div>
+      </div>
+
+      &lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;
+      <div class="form__row">
+        <app-button (click)="updateUserInfo()" buttonName="Save information" buttonStyle="btn btn_color_dark btn_size_medium basket-list__checkout-button"/>
+      </div>
+    </div>-->
+
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Additional information
+      </mat-panel-title>
+      <!--<mat-panel-description>
+        Main information
+      </mat-panel-description>-->
+    </mat-expansion-panel-header>
+
+    <div class="info-form">
+      <div class="info-form__body">
+        <div class="info-form__row">
+          <div class="info-form__row-item">
+            <mat-form-field class="example-full-width">
+              <mat-label>First name</mat-label>
+              <input matInput placeholder="First name">
+            </mat-form-field>
+          </div>
+          <div class="info-form__row-item">
+            <mat-form-field class="example-full-width">
+              <mat-label>Last name</mat-label>
+              <input matInput placeholder="Last name">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="info-form__row">
+          <div class="info-form__row-item">
+            <mat-form-field class="example-full-width">
+              <mat-label> City </mat-label>
+              <input matInput placeholder="City">
+            </mat-form-field>
+          </div>
+          <div class="info-form__row-item">
+            <mat-form-field class="example-full-width">
+              <mat-label>Zip code</mat-label>
+              <input matInput placeholder="Zip code">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="info-form__row">
+          <div class="info-form__row-item">
+            <mat-form-field class="example-full-width">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+            </mat-form-field>
+          </div>
+          <div class="info-form__row-item">
+            <mat-form-field class="example-full-width">
+              <mat-label> Phone</mat-label>
+              <input matInput placeholder="Phone">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="info-form__row">
+          <div class="info-form__row-item">
+            <button mat-button color="primary">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </mat-expansion-panel>
+</div>
+

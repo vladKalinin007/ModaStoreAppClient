@@ -1,0 +1,201 @@
+.mat-icon {
+  height: 2.8rem;
+  width: 2.8rem;
+  margin-right: 0rem;
+}
+
+.catalog-item {
+
+  height: 600px;
+  transition: box-shadow 0.3s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 2rem 4rem rgba(97,97,97,.1);
+    margin-bottom: -10rem;
+    transition: box-shadow .2s;
+    z-index: 2;
+  }
+
+  &:hover &__sizes-btn {
+    height: 10rem;
+    opacity: 1;
+  }
+
+  &__layout {
+    position: relative;
+    padding: 1rem;
+
+  }
+  &__image {
+    position: relative;
+    min-height: 376px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: currentColor;
+      &:after {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  &__pic-container {
+    max-height: 414px;
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  &__pic {
+    /*max-width: 276px;*/
+    max-height: 414px;
+    //max-height: 100%;
+    width: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  &__like {
+    cursor: pointer;
+    position: absolute;
+    right: 7px;
+    top: .8rem;
+    display: flex;
+    align-items: center;
+    transition: .2s;
+  }
+
+  &__labels {
+    position: absolute;
+    top: 16px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    pointer-events: none;
+  }
+
+  .pi-heart:hover path {
+    fill: #ec5c5d;
+  }
+
+  &__like-icon {
+    font-size: 2.8rem;
+    color: grey;
+    &:hover {
+      color: #ec5c5d;
+    }
+  }
+
+  &__times-icon {
+    font-size: 1.8rem;
+    color: grey;
+  }
+
+  &__caption {
+
+  }
+
+  &__price {
+    display: flex;
+    align-items: baseline;
+    margin-top: 1rem;
+  }
+
+  &__new-price {
+    color: #ec5c5d;
+    font-weight: bold;
+    font-size: 1.6rem;
+  }
+
+  &__old-price {
+    font-size: 1.3rem;
+    text-decoration: line-through;
+    margin-left: 1rem;
+  }
+
+  &__sizes-btn {
+    height: 0px;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2.0rem;
+  }
+
+  &__button &__button.hidden {
+    display: none;
+  }
+}
+
+.item-label {
+  line-height: 1.8rem;
+  padding: 0 1rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 1rem;
+  background: #212121;
+  color: #fff;
+  white-space: nowrap;
+  display: inline-flex;
+  vertical-align: top;
+  align-items: center;
+  position: relative;
+
+  &_blue {
+    background: #42bfdd;
+  }
+
+  &_orange {
+    background: #f2a965;
+  }
+
+  &_red {
+    background: #ec5c5d;
+  }
+
+  &_white {
+    background: #fff;
+    color: #212121;
+  }
+}
+
+.detail-palette {
+  margin-top: 1rem;
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -.4rem -.3rem;
+    align-items: center;
+  }
+
+  &__link {
+    /*background: #000000;*/
+    border: .5px solid #d7d7d7;
+    width: 2.4rem;
+    height: 2.4rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    margin: .4rem .3rem;
+    transition: .15s;
+    box-shadow: inset 0 0 0 1px transparent;
+    &:link:hover {
+      box-shadow: inset 0 0 0 1px #000;
+    }
+    &.is-active {
+      box-shadow: inset 0 0 0 1px #000,inset 0 0 0 .4rem #fff;
+      pointer-events: none;
+    }
+  }
+}

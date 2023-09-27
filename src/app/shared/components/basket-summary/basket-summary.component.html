@@ -1,0 +1,58 @@
+<ng-container *ngIf="(basket$ | async).items">
+      <div class="basket__content">
+        <div class="basket-list">
+          <!--<h5 class="basket-list__seller-heading"> Seller: kalinin007 </h5>-->
+          <div *ngFor="let item of (basket$ | async).items">
+            <div class="basket-list__item">
+              <div class="basket-product">
+                <div class="basket-product__body">
+                  <div class="basket-product__item">
+                    <a href="" class="basket-product__picture">
+                      <img src="{{item.pictureUrl}}" alt="" class="basket-product__picture-image">
+                    </a>
+                    <div class="basket-product__main">
+                      <div class="additional-class-1"></div>
+                      <a href="" class="product-name-link"> {{item.productName}} </a>
+                      <div class="additional-class-2"></div>
+                    </div>
+                  </div>
+                  <div class="product-amount" *ngIf="!AmountInfoHidden">
+                    <div class="product-amount__price">
+                      <div class="product-amount__heading"> Price</div>
+                      <div class="product-amount__price-val">
+                        {{item.price}} $
+                      </div>
+                    </div>
+                    <div class="product-amount__quantity">
+                      <div class="product-amount__heading">
+                        Quantity
+                      </div>
+                      <div class="product-amount__value">
+                        <a class="product-amount__indecrease">
+                          <i *ngIf="isBasket" (click)="decrementItemQuantity(item)" class="pi pi-minus"></i>
+                        </a>
+                        {{item.quantity}}
+                        <a class="product-amount__indecrease">
+                          <i *ngIf="isBasket" (click)="incrementItemQuantity(item)" class="pi pi-plus"></i>
+                        </a>
+                      </div>
+
+                    </div>
+                    <div class="product-amount__sum">
+                      <div class="product-amount__heading"> Sum</div>
+                      <div class="product-amount__price-val">
+                        {{item.price * item.quantity}} $
+                      </div>
+                    </div>
+                  </div>
+                  <a class="product-action__delete">
+                    <i *ngIf="isBasket" (click)="removeBasketItem(item)" class="pi pi-trash"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+

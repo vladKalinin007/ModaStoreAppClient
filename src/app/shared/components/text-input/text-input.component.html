@@ -1,0 +1,25 @@
+<div class="input">
+  <label for="{{label}}" class="input__label"> {{label}} </label>
+  <div class="input__text-field-loader" *ngIf="controlDir && controlDir.control && controlDir.control.status === 'PENDING'">
+    <i class="fa fa-spinner fa-spin"></i>
+  </div>
+  <div class="input__text-field-wrap">
+    <input
+      class="input__text-field"
+      [ngClass]="(controlDir && controlDir.control && !controlDir.control.valid && controlDir.control.touched) ? !controlDir.control.valid ? 'is-invalid' : 'is-valid' : null"
+      [type]="type"
+      (input)="onChange($event.target.value)"
+      (blur)="onTouched()"
+      id="{{label}}"
+      #input
+      placeholder="{{label}}"
+      value
+    >
+  </div>
+  <div class="input__warning-label-wrap" *ngIf="(controlDir && controlDir.control && !controlDir.control.valid && controlDir.control.touched)">
+    <span class="input__warning-label" *ngIf="controlDir.control.errors?.required"> {{label}} is required </span>
+    <span class="input__warning-label" *ngIf="controlDir.control.errors?.pattern"> Email is not valid </span>
+    <span class="input__warning-label" *ngIf="controlDir.control.errors?.minlength"> Password must be at least 6 characters </span>
+    <span class="input__warning-label" *ngIf="controlDir.control.errors?.emailExists"> Email address is in use </span>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+/*@import "../checkout/checkout.component.scss";*/
+@import "src/app/shared/styles/common.scss";
+@import "src/app/features/checkout/checkout/checkout.component.scss";
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}

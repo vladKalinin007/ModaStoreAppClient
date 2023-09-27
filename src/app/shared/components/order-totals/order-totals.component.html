@@ -1,0 +1,83 @@
+<div class="checkout-sidebar">
+  <div class="checkout-promo">
+    <div class="checkout-promo__header">
+      <h4 class="checkout-promo__heading">
+        Promocode
+      </h4>
+      <!--<button class="button checkout-promo__header-button button_with-icon button_link">
+        Add
+      </button>-->
+    </div>
+    <div class="checkout-promo__form">
+      <div class="form__row">
+        <mat-form-field>
+          <mat-label>Add promocode</mat-label>
+          <input formControlName="zipCode" matInput>
+        </mat-form-field>
+      </div>
+      <div class="form__row mt-3">
+        <!--<button type="button" class="button button_size_medium button_color_navy checkout-promo__submit">
+          Apply
+        </button>-->
+        <app-button buttonName="Apply" buttonStyle="btn btn_size_large btn_color_light btn_rd checkout-promo__submit"/>
+      </div>
+    </div>
+  </div>
+  <div class="checkout-total">
+    <h4 class="checkout-total__hading">Sun</h4>
+    <dl class="checkout-total__row js-goods-info">
+      <dt class="checkout-total__label">
+        1 goods for:
+      </dt>
+      <dd class="checkout-total__value">
+        {{(basketTotal$ | async).subtotal | currency: 'USD':'symbol':'1.2-2'}}
+      </dd>
+    </dl>
+    <dl class="checkout-total__row mt-3">
+      <dt class="checkout-total__label">
+        Delivery cost:
+      </dt>
+      <dd class="checkout-total__value">
+        {{(shippingPrice$ | async) | currency: 'USD':'symbol':'1.2-2'}}
+      </dd>
+    </dl>
+    <dl class="checkout-total__row checkout-total__row_type_bordered mt-3">
+      <dt class="checkout-total__label">
+        Total payment:
+      </dt>
+      <dd class="checkout-total__value checkout-total__value_size_large">
+        {{(basketTotal$ | async).total | currency: 'USD':'symbol':'1.2-2'}}
+      </dd>
+    </dl>
+    <div class="checkout-total__buttons">
+      <!--<input type="submit" tabindex="29" class="button button_color_green button_size_large checkout-total__submit" value="Make an order">-->
+      <div>
+        <app-button (click)="submitOrder()" buttonName="Checkout" buttonStyle="btn btn_color_dark btn_size_large btn_rd checkout-total__submit" />
+      </div>
+    </div>
+    <p class="checkout-total__caption">
+      By confirming the order, I accept the terms and conditions:
+    </p>
+    <ul class="total-list">
+      <li class="total-list__item"> the provisions on the processing and protection of personal data and
+        <button type="button" class="button button_link">
+                    <span class="button-info">
+                      <svg width="2" height="9" aria-hidden="true">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-info"></use>
+                      </svg>
+                    </span>
+        </button>
+      </li>
+      <li class="total-list__item"> the user agreement
+        <button type="button" class="button button_link">
+                    <span class="button-info">
+                      <svg width="2" height="9" aria-hidden="true">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-info"></use>
+                      </svg>
+                    </span>
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+<p-toast></p-toast>

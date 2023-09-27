@@ -1,0 +1,22 @@
+<div class="wishlist">
+  <div class="layout">
+    <div class="wishlist__inner">
+      <div class="wishlist__title"> Wishlist </div>
+      <ng-container *ngIf="(products$ | async) as products; else empty">
+        <div class="wishlist__list">
+          <ng-container *ngFor="let product of products">
+            <app-product-item
+              [product]="product"
+              class="wishlist__item_w25"
+              [isFavoritesIconVisible]="false"
+              >
+            </app-product-item>
+          </ng-container>
+        </div>
+      </ng-container>
+      <ng-template #empty>
+        <app-empty [placeholderMessage]="'Your wishlist is empty'" [placeholderIcon]="'star'"></app-empty>
+      </ng-template>
+    </div>
+  </div>
+</div>

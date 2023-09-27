@@ -1,0 +1,105 @@
+<div class="delivery-form">
+  <div class="delivery-form__title"> Select your delivery method </div>
+  <!--<div class="delivery-form__body">
+    <div class="delivery-form__tabs">
+      <mat-radio-group aria-label="Select an option" class="example-radio-group" >
+        <mat-radio-button value="1" (change)="radioButtonChange($event)">
+        Pick up from the store
+        </mat-radio-button>
+        <mat-radio-button value="2" (change)="radioButtonChange($event)">
+        Postal service
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <ng-container *ngIf="isOnlineSelected">
+      <div class="delivery-form__shipping">
+        <div class="delivery-from__labels">
+          <div class="search-select">
+            <div class="label">
+              <div class="label__body">
+                <p-accordion [activeIndex]="[0]">
+                  <p-accordionTab header="Service">
+                    <p-dropdown formControlName="shortName" [options]="deliveryMethods" optionLabel="shortName" (onChange)="onSelectionChange($event.value)"/>
+                  </p-accordionTab>
+                  <p-accordionTab header="City">
+                    <p-dropdown formControlName="city" [options]="cities" optionLabel="name"/>
+                  </p-accordionTab>
+                  <p-accordionTab header="Address">
+                    <app-text-input formControlName="City" [label]="'City'"/>
+                  </p-accordionTab>
+                </p-accordion>
+                <app-button buttonName="Save information" buttonStyle="btn btn_color_dark btn_size_medium"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>-->
+  <form [formGroup]="checkoutForm">
+    <mat-stepper formArrayName="formArray" linear>
+      <mat-step formGroupName="Service" >
+          <!--<mat-form-field>
+            <mat-label>Delivery methods</mat-label>
+            <mat-select (change)="onSelectionChange($event.value)">
+              <mat-option *ngFor="let deliveryMethod of deliveryMethods" [value]="deliveryMethod.shortName" >
+                {{deliveryMethod.shortName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>-->
+        <!--<mat-form-field>
+          <mat-label>Delivery methods</mat-label>
+          <mat-select [(ngModel)]="selectedDeliveryMethod"  (ngModelChange)="onSelectionChange($event)">
+            <mat-option *ngFor="let deliveryMethod of deliveryMethods" [value]="deliveryMethod">
+              {{deliveryMethod.shortName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>-->
+        <mat-form-field>
+          <mat-label>Delivery methods</mat-label>
+          <mat-select (selectionChange)="onSelectionChange($event.value)">
+            <mat-option *ngFor="let deliveryMethod of deliveryMethods" [value]="deliveryMethod">
+              {{deliveryMethod.shortName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious type="button">Back</button>
+          <button mat-button matStepperNext type="button">Next</button>
+        </div>
+      </mat-step>
+      <mat-step formGroupName="City">
+        <mat-form-field>
+          <mat-label>City</mat-label>
+          <mat-select >
+            <mat-option *ngFor="let city of cities" [value]="city.name" >
+              {{city.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious type="button">Back</button>
+          <button mat-button matStepperNext type="button">Next</button>
+        </div>
+      </mat-step>
+      <mat-step formGroupName="Additional info">
+        <!--<form class="example-form">-->
+          <!--<mat-form-field class="example-full-width">
+            <mat-label>Favorite food</mat-label>
+            <input matInput placeholder="Ex. Pizza" value="Sushi">
+          </mat-form-field>-->
+
+          <!--<mat-form-field class="example-full-width">
+            <mat-label>Leave a comment</mat-label>
+            <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+          </mat-form-field>-->
+       <!-- </form>-->
+        <div>
+          <button mat-button matStepperPrevious type="button">Back</button>
+          <button mat-button matStepperNext type="button">Next</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </form>
+
+</div>

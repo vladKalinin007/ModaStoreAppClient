@@ -1,0 +1,27 @@
+@import "src/app/shared/styles/common.scss";
+.wishlist {
+  &__title {
+    margin: 0 0 6.7rem;
+    text-align: center;
+    font-size: 3.6rem;
+    line-height: 1.33;
+    font-weight: 500;
+    font-family: "Playfair Display",sans-serif;
+  }
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -4rem -.5rem 0;
+    margin-bottom: 10rem;
+  }
+
+  &__item {
+
+    &_w25 {
+      width: 25%;
+    }
+    
+    // margin: 4rem .5rem 0;
+    // padding: 0 1rem;
+  }
+}

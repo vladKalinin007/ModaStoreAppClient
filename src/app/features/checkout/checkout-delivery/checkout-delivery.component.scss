@@ -1,0 +1,28 @@
+@import "src/app/shared/styles/common.scss";
+@import "src/app/features/checkout/checkout/checkout.component.scss";
+
+.p-dropdown-panel {
+  width: 1000px
+}
+.delivery-from {
+  &__title {
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 0 0 2.4rem;
+  }
+  &__body {
+
+  }
+}
+
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+  align-items: flex-start;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+  margin-top: 1.2rem;
+}

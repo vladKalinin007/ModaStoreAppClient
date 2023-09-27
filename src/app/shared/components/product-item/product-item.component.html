@@ -1,0 +1,94 @@
+<div class="catalog-item">
+  <div class="catalog-item__layout">
+    <div class="catalog-item__image">
+      <a href="/shop/{{product.category}}/{{product.id}}">
+        <!--<img routerLink="/shop/{{product.id}}"
+             src="{{productImages[imageIndex]?.url}}"
+             alt="{{product.name}}"
+             class="catalog-item__pic"
+             (mouseenter)="setImageIndex(1)"
+             (mouseleave)="setImageIndex(0)"
+        >-->
+        <div class="catalog-item__pic-container">
+          <img routerLink="/shop/{{product.id}}"
+               src="{{productImages[imageIndex]?.url}}"
+               alt="{{product.name}}"
+               class="catalog-item__pic"
+               (mouseenter)="setImageIndex(1)"
+               (mouseleave)="setImageIndex(0)"
+          >
+        </div>
+      </a>
+      <div class="catalog-item__like">
+        <ng-container *ngIf="!product.isInWishlist; else iwl">
+          <mat-icon 
+            [ngStyle]="{'color': '#555555'}"
+            (click)="addItemToWishlist()"
+            class="catalog-item__like-icon" 
+            color="primary" 
+            *ngIf="isFavoritesIconVisible; else notVisible" 
+            [ngClass]="{'favorite': isInWishlist}"> favorite_border
+          </mat-icon>
+        </ng-container>
+        <ng-template #iwl>
+          <mat-icon 
+            [ngStyle]="{'color': '#ec5c5d'}"
+            (click)="removeItemFromWishlist()"
+            class="catalog-item__like-icon" 
+            color="primary" 
+            *ngIf="isFavoritesIconVisible; else notVisible" 
+            [ngClass]="{'favorite': isInWishlist}"> favorite
+          </mat-icon>
+        </ng-template>
+        <ng-template #notVisible>
+          <i (click)="removeItemFromWishlist()" class="pi pi-times catalog-item__times-icon"></i>
+        </ng-template>
+      </div>
+      <div class="catalog-item__labels">
+        <ng-container *ngIf="product.isNew">
+          <div class="item-label item-label_blue"> New</div>
+        </ng-container>
+        <ng-container *ngIf="product.isBestSeller">
+          <div class="item-label item-label_orange"> Bestseller</div>
+        </ng-container>
+        <ng-container *ngIf="product.oldPrice !== null && product.oldPrice > 0">
+          <div class="item-label item-label_red"> -{{ product.oldPrice | discount: product.price }} </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="catalog-item__caption">
+      <a class="catalog-item__name" href="/shop/{{product.category}}/{{product.id}}">
+        {{product.name | shorten: 35}}
+      </a>
+      <div class="detail-palette">
+        <div class="detail-palette__links">
+          <ng-container *ngIf="productColors && productColors.length > 0">
+            <span class="detail-palette__link" *ngFor="let color of productColors" [ngStyle]="{ 'background': color.colorCode }"></span>
+          </ng-container>
+        </div>
+      </div>
+      <div class="catalog-item__price">
+        <ng-container *ngIf="product.oldPrice !== null && product.oldPrice > 0; else price">
+          <div class="catalog-item__new-price">{{product.price}} $</div>
+          <div class="catalog-item__old-price">{{product.oldPrice}} $</div>
+        </ng-container>
+        <ng-template #price>
+          <div class="catalog-item__new-price">{{product.price}} $</div>
+        </ng-template>
+      </div>
+      <div class="catalog-item__sizes-btn">
+        <div class="catalog-item__sizes">
+        </div>
+        <div class="catalog-item__button">
+          <app-button
+            (click)="addItemToBasket()"
+            showIcon="true"
+            iconClass="pi pi-shopping-bag"
+            buttonName="Add to basket"
+            buttonStyle="btn btn_color_dark btn_size_large basket-list__checkout-button"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+.seen-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  &__text {
+    font-size: 2.4rem;
+    font-family: 'Manrope', sans-serif;
+    margin-right: 1.2rem;
+  }
+}
+
+
+

@@ -1,0 +1,156 @@
+@import "src/app/features/checkout/checkout/checkout.component.scss";
+
+:host ::ng-deep .p-inputtext {
+  font-size: 1.4rem;
+  width: 100%;
+}
+
+:host ::ng-deep .fa-lg {
+  font-size: 3em;
+
+}
+
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+  align-items: flex-start;
+}
+
+
+/* Payments */
+.payment-card {
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  padding: 1.6rem;
+
+  &__inner {
+
+  }
+
+  &__form {
+    margin: 0 1.2rem;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+  }
+
+  &__field {
+    width: 100%;
+    margin-bottom: 1.2rem;
+
+    &.payment-card__field_ml12 {
+      margin-left: 1.2rem;
+    }
+  }
+
+  &__confirmation {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6.0rem;
+  }
+
+  &__row {
+    display: flex;
+    margin-bottom: 1.4rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &-item {
+      margin-right: 1.2rem;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &__number {
+    width: 100%;
+  }
+
+  &__item-name {
+    margin-bottom: 1rem;
+  }
+}
+
+
+
+
+.card {
+  box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid rgba(0,0,0,.125);
+  border-radius: 1rem;
+}
+
+.card-body {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.5rem 1.5rem;
+}
+
+.payment-form {
+  padding-left: 4rem;
+  &__tabs {
+
+  }
+
+  &__payment-info {
+    border: 1px dashed #ECECEC;
+    padding: 12px 12px 12px 12px;
+    border-radius: 8px
+  }
+}
+
+.payment-source {
+
+  &__payment-data {
+    width: 100%;
+  }
+
+  &__options {
+    display: flex;
+    flex-grow: 1;
+  }
+
+
+  &__inner {
+    display: flex;
+  }
+}
+
+.service {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-right: 1.2rem;
+
+  &__item {
+    padding: 1.2rem;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.20);
+    margin-bottom: 1.2rem;
+  }
+}

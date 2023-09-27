@@ -1,0 +1,89 @@
+.icon {
+  font-size: 2rem;
+  margin-right: 1.4rem;
+}
+
+.btn {
+  /*position: relative;
+  overflow: hidden;*/
+  height: 4.1rem;
+  width: 17.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: none;
+  text-align: center;
+  font-weight: 700;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  transition: .2s;
+  color: currentColor;
+  background: transparent;
+  padding: 0 3rem;
+  white-space: nowrap;
+
+  &_rd {
+    border-radius: 6px;
+  }
+
+
+  &_size {
+
+    &_medium {
+      font-size: 1.4rem;
+    }
+
+    &_large {
+      font-size: 1.8rem;
+      height: 48px;
+      width: 246px;
+      line-height: 48px;
+      ::after {
+        width: 246px;
+        height: 246px;
+      }
+    }
+  }
+
+  &_color {
+
+    &_dark {
+      background: #212121;
+      border-color: #212121;
+      border-radius: 0px;
+      color: #fff;
+      &:hover {
+        background: #474747;
+        border-color: #474747;
+        color: #fff;
+      }
+    }
+
+    &_light {
+      border-color: #fff;
+      background: #fff;
+      color: #212121;
+      &:hover {
+        text-decoration: none;
+        background: #212121;
+        border-color: #212121;
+        color: #fff;
+      }
+    }
+  }
+
+}
+
+@keyframes ripple {
+  0% {
+    opacity: 1;
+    width: 0;
+    height: 0;
+  }
+  100% {
+    opacity: 0;
+    width: 200px;
+    height: 200px;
+  }
+}

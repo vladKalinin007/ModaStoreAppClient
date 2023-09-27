@@ -1,0 +1,76 @@
+<main>
+  <section class="hero">
+    <div class="layout">
+      <div class="hero__inner">
+        <div class="hero__slider">
+          <p-carousel
+            [autoplayInterval]="8000"
+            animationTimeout="1000"
+            [value]="productImage"
+            [numVisible]="1"
+            [numScroll]="1"
+            [showIndicators]="false"
+
+            >
+            <ng-template let-image pTemplate="item">
+              <img src="{{ image.url }}" alt="image" class="w-100" />
+            </ng-template>
+          </p-carousel>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="categories">
+    <div class="layout">
+      <div class="categories__inner">
+        <div class="categories__title">
+          Categories
+        </div>
+        <div class="categories__list" [@cascade]="categories?.length">
+          <ng-container *ngFor="let category of categories" >
+            <div class="categories__item hero">
+              <a class="categories__item-link" [routerLink]="['/shop/', category.name]" [style.background-image]="'url(' + category.pictureUrl + ')'">
+                <span class="categories__item-caption">
+                <span class="categories__item-title">
+                  {{category.name}}
+                </span>
+              </span>
+              </a>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </section>
+  <app-related-products
+    title="New products"
+    category="new"
+    [products]="newProducts"
+  />
+  <app-related-products
+    title="Bestsellers"
+    category="bestsellers"
+    [products]="bestSellersProducts"
+  />
+  <app-related-products
+    title="Sale"
+    category="sale"
+    [products]="onSaleProducts"
+  />
+  <ng-container *ngIf="(seenProducts$ | async).reverse() as SeenProducts">
+    <app-related-products
+      title="Seen products"
+      category="sale"
+      [products]="SeenProducts"
+    />
+  </ng-container>
+  <ng-container *ngIf="(history$ | async)?.seenProducts">
+    <app-seen-items
+      title="Viewed products"
+    />
+  </ng-container>
+  <section class="reviews">
+
+  </section>
+</main>
+<app-subscribe-block/>

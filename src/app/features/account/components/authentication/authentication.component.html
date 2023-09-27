@@ -1,0 +1,7 @@
+<ng-container *ngIf="isLoginMode; else isRegisterMode">
+  <app-login (loginMode)="changeLoginMode()"></app-login>
+</ng-container>
+<ng-template #isRegisterMode>
+  <app-register (registerMode)="changeLoginMode()"></app-register>
+</ng-template>
+

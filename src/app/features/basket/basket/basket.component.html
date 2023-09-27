@@ -1,0 +1,81 @@
+<div class="basket">
+  <div class="basket__header">
+    <h4 class="basket__heading"> Basket </h4>
+    <div class="basket__close">
+      <a (click)="closeDialog()" class="basket__close-tab">
+        <i class="pi pi-times basket__close-tab-icon"></i>
+      </a>
+    </div>
+  </div>
+  <div class="basket__layout">
+    <ng-container *ngIf="(basket$ | async)?.items.length > 0; else empty">
+      <div class="basket__content">
+        <div class="basket-list">
+          <div *ngFor="let item of (basket$ | async).items">
+            <div class="basket-list__item">
+              <div class="basket-product">
+                <div class="basket-product__body">
+                  <div class="basket-product__item">
+                    <a href="" class="basket-product__picture">
+                      <img src="{{item.pictureUrl}}" alt="" class="basket-product__picture-image">
+                    </a>
+                    <div class="basket-product__main">
+                      <div class="additional-class-1"></div>
+                      <a href="" class="product-name-link"> {{item.productName}} </a>
+                      <div class="additional-class-2"></div>
+                    </div>
+                  </div>
+                  <div class="product-amount">
+                    <div class="product-amount__price">
+                      <div class="product-amount__heading"> Price</div>
+                      <div class="product-amount__price-val">
+                        {{item.price}} $
+                      </div>
+                    </div>
+                    <div class="product-amount__quantity">
+                      <div class="product-amount__heading">
+                        Quantity
+                      </div>
+                      <div class="product-amount__value">
+                        <a class="product-amount__indecrease">
+                          <i (click)="decrementItemQuantity(item)" class="pi pi-minus"></i>
+                        </a>
+                        {{item.quantity}}
+                        <a class="product-amount__indecrease">
+                          <i (click)="incrementItemQuantity(item)" class="pi pi-plus"></i>
+                        </a>
+                      </div>
+
+                    </div>
+                    <div class="product-amount__sum">
+                      <div class="product-amount__heading"> Sum</div>
+                      <div class="product-amount__price-val">
+                        {{item.price * item.quantity}} $
+                      </div>
+                    </div>
+                  </div>
+                  <a class="product-action__delete">
+                    <i (click)="removeBasketItem(item)" class="pi pi-trash product-action__delete-icon"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="basket-list__checkout-button">
+            <app-button
+              routerLink="/checkout"
+              (click)="closeDialog()"
+              buttonName="Checkout {{(basketTotal$ | async).total | currency : 'USD' : 'symbol' : '1.2-2' }}"
+              buttonStyle="btn btn_color_light btn_size_medium basket-list__checkout-button"
+            />
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #empty>
+      <app-empty [placeholderMessage]="'Your basket is empty'" [placeholderIcon]="'remove_shopping_cart'" [@fadeIn]="(basket$ | async)?.items.length"></app-empty>
+    </ng-template>
+  </div>
+</div>
+
+

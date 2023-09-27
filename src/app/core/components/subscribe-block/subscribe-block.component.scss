@@ -1,0 +1,103 @@
+@import "src/app/shared/styles/common.scss";
+
+.subscribe-block {
+  margin: 8rem 0 0;
+  background: #f2f2f2;
+
+  &__inner {
+    padding: 6.4rem 0;
+    min-height: 17.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__form-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    margin-top: .1em;
+    padding-left: 5.5rem;
+    font-size: 1.8rem;
+    line-height: 3.2rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding-right: 2rem;
+    /*background: left center no-repeat url(data:image/svg+xml,%3Csvg width=\'32\' height=\'24\' viewBox=\'0 0 32 24\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M16.9256 16.0425C16.6234 16.2314 16.2834 16.3069 15.9811 16.3069C15.6789 16.3069 15.3388 16.2314 15.0366 16.0425L0 6.86182V19.0649C0 21.6717 2.1157 23.7874 4.72255 23.7874H27.2775C29.8843 23.7874 32 21.6717 32 19.0649V6.86182L16.9256 16.0425Z\' fill=\'black\'/%3E%3Cpath d=\'M27.2787 0.212402H4.72377C2.49473 0.212402 0.605709 1.79918 0.152344 3.91488L16.0201 13.5866L31.8501 3.91488C31.3967 1.79918 29.5077 0.212402 27.2787 0.212402Z\' fill=\'black\'/%3E%3C/svg%3E%0A);*/
+  }
+
+  &__form {
+    max-width: 47rem;
+    width: 100%;
+    /*display: flex;*/
+    position: relative;
+    font-size: 1.4rem;
+  }
+
+  &__form-input {
+    background: #fff;
+    padding: 0 2rem;
+    width: 100%;
+  }
+
+  &__form-submit {
+    min-width: 17.2rem;
+  }
+
+
+}
+
+/*.btn {
+  height: 4.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 700;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  transition: .2s;
+  color: currentColor;
+  border: 1px solid currentColor;
+  background: transparent;
+  padding: 0 3rem;
+
+  &.-dark {
+    background: #212121;
+    border-color: #212121;
+    border-radius: 0px;
+    color: #fff;
+    &:hover {
+      background: #474747;
+      border-color: #474747;
+      color: #fff;
+    }
+  }
+}*/
+
+.label {
+
+  &__input {
+    height: 4.3rem;
+    width: 100%;
+    padding: 0 2rem;
+    outline: none;
+    appearance: none;
+    background: #fff;
+    border: 1px solid #ececec;
+    transition: .1s;
+
+    &[type="email"] {
+      background: #fff;
+      padding: 0 2rem;
+    }
+    &:focus {
+      color: #212121;
+      border-color: #212121;
+    }
+  }
+}

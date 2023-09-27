@@ -1,0 +1,17 @@
+<div class="seen__item">
+  <div class="seen-product">
+    <a href="/shop/{{seenProduct.productType}}/{{seenProduct.id}}" class="seen-product__link"></a>
+    <div class="seen-product__image-wrapper">
+      <a href="/shop/{{seenProduct.productType}}/{{seenProduct.id}}" class="seen-product__image">
+        <img src="{{seenProduct.pictureUrl}}" alt="" class="seen-product__img">
+      </a>
+    </div>
+    <div class="seen-product__caption">
+      <a class="seen-product__title">{{seenProduct.name}}</a>
+      <div class="seen-product__price">
+        <div class="seen-product__new-price"> {{ seenProduct.price}} </div>
+        <div class="seen-product__old-price"> {{ seenProduct.price}} </div>
+      </div>
+    </div>
+  </div>
+</div>

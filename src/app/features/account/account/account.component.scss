@@ -1,0 +1,50 @@
+@import "src/app/shared/styles/common.scss";
+
+.mat-sidenav-container {
+  height: 65rem;
+  margin-bottom: 6rem;
+}
+
+.mat-toolbar.mat-primary {
+  background: linear-gradient(to right, #74008bd1, #056550);
+  color: white
+}
+
+
+
+.mat-drawer.mat-drawer-side {
+  z-index: 2;
+  border: none;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  padding: 1.2rem 1.2rem 1.2rem 0px;
+}
+
+.mat-mdc-icon-button.mat-mdc-button-base {
+  width: 4.8rem;
+  height: 4.8rem;
+  padding: 1.2rem;
+  border: 1px dashed;
+  margin-right: 1.6rem;
+}
+
+.example-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.mdc-list-item__primary-text {
+  display: flex;
+  align-items: center;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+
+  &__icon {
+    margin-right: 1.6rem;
+  }
+}

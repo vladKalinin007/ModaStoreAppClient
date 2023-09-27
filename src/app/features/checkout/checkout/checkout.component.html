@@ -1,0 +1,51 @@
+<div class="checkout">
+  <div class="checkout__layout">
+    <div class="checkout__inner">
+      <div class="checkout__header">
+        <h3 class="checkout__heading">
+          Place your order
+        </h3>
+      </div>
+      <form class="checkout-form">
+        <main class="checkout-form__content">
+          <div class="checkout-block">
+            <div class="checkout-block__title checkout-user__title">
+              <span class="checkout-block__title_informer"> 1 </span>
+              Customer information
+            </div>
+            <app-checkout-user-info [checkoutForm]="checkoutForm"/>
+          </div>
+          <fieldset class="checkout-block">
+            <legend class="checkout-block__title checkout-user__title">
+              <span class="checkout-block__title_informer"> 2 </span>
+              Review
+            </legend>
+            <app-checkout-review [checkoutForm]="checkoutForm"/>
+          </fieldset>
+          <fieldset class="checkout-block">
+            <legend class="checkout-block__title checkout-user__title">
+              <span class="checkout-block__title_informer"> 3 </span>
+              Delivery
+            </legend>
+            <app-checkout-delivery [checkoutForm]="checkoutForm"/>
+          </fieldset>
+          <fieldset class="checkout-block">
+            <legend class="checkout-block__title checkout-user__title">
+              <span class="checkout-block__title_informer"> 4 </span>
+              Payment
+            </legend>
+            <app-checkout-payment 
+              [checkoutForm]="checkoutForm" 
+              (stripeEmitter)="setStripe($event)"
+              (cardNumberEmitter)="setCardNumber($event)"
+            >
+            </app-checkout-payment>
+          </fieldset>
+        </main>
+        <aside class="checkout-form__sidebar">
+          <app-order-totals [checkoutForm]="checkoutForm" [stripe]="stripe" [cardNumber]="cardNumber"/>
+        </aside>
+      </form>
+    </div>
+  </div>
+</div>

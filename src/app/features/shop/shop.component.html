@@ -1,0 +1,148 @@
+<h1 class="page-title heading">{{headerTitle | titlecase}}</h1>
+<div class="catalog">
+  <div class="layout">
+    <div class="catalog_inner">
+      <div class="catalog__main">
+        <ng-container *ngIf="types && brands">
+          <section class="catalog__aside" [ngClass]="{'catalog__aside_hidden': isSideBarHidden}">
+            <mat-expansion-panel expanded>
+              <mat-expansion-panel-header>
+                <mat-panel-title>  Price </mat-panel-title>
+              </mat-expansion-panel-header>
+                <p-slider [(ngModel)]="rangeValues" (ngModelChange)="onPriceSelected()" [range]="true"></p-slider>
+                <div class="price-slider__inputs">
+                  <input type="number" value="0" pInputText [(ngModel)]="rangeValues[0]" (ngModelChange)="onPriceSelected()" class="price-slider__from">
+                  <input type="number" value="800" pInputText [(ngModel)]="rangeValues[1]" (ngModelChange)="onPriceSelected()" class="price-slider__to">
+                </div>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel expanded>
+              <mat-expansion-panel-header>
+                <mat-panel-title>  Brands </mat-panel-title>
+              </mat-expansion-panel-header>
+
+                <div class="catalog__checkbox-item" *ngFor="let brand of brands" >
+                  <mat-checkbox [checked]="selectedBrand === brand.id" (change)="onBrandSelected(brand.id)">
+                    {{brand.name}}
+                  </mat-checkbox>
+                </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>  Types </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="catalog__checkbox-item" *ngFor="let type of types" >
+                <mat-checkbox [checked]="selectedType === type.id" (change)="onTypeSelected(type.id)">
+                  {{type.name}}
+                </mat-checkbox>
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>  Colors </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="catalog__checkbox-item" *ngFor="let color of colors" >
+                <mat-checkbox [checked]="selectedColor === color.id" (change)="onColorSelected(color.id)">
+                  {{color.name}}
+                </mat-checkbox>
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>  Sizes </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="catalog__checkbox-item" *ngFor="let size of sizes" >
+                <mat-checkbox [checked]="selectedSize === size.id" (change)="onSizeSelected(size.id)">
+                  {{size.name}}
+                </mat-checkbox>
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>  Materials </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="catalog__checkbox-item" *ngFor="let material of attributes.materials">
+                <mat-checkbox [checked]="selectedMaterial === material" (change)="onMaterialSelected(material)">
+                  {{material}}
+                </mat-checkbox>
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>  Styles </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="catalog__checkbox-item" *ngFor="let style of attributes.styles">
+                <mat-checkbox [checked]="selectedStyle === style"  (change)="onStyleSelected(style)">
+                  {{style}}
+                </mat-checkbox>
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>  Seasons </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="catalog__checkbox-item" *ngFor="let season of attributes.seasons">
+                <mat-checkbox [checked]="selectedSeason === season" (change)="onSeasonSelected(season)">
+                  {{season}}
+                </mat-checkbox>
+              </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>  Patterns </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="catalog__checkbox-item" *ngFor="let pattern of attributes.patterns">
+                <mat-checkbox [checked]="selectedPattern === pattern" (change)="onPatternSelected(pattern)">
+                  {{pattern}}
+                </mat-checkbox>
+              </div>
+            </mat-expansion-panel>
+            <mat-chip-listbox aria-label="Fish selection" multiple>
+              <mat-chip-option color="accent">One fish</mat-chip-option>
+              <mat-chip-option color="accent">Two fish</mat-chip-option>
+              <mat-chip-option color="accent">Accent fish</mat-chip-option>
+              <mat-chip-option color="accent">Warn fish</mat-chip-option>
+              <mat-chip-option color="accent">One fish</mat-chip-option>
+              <mat-chip-option color="accent">Two fish</mat-chip-option>
+              <mat-chip-option color="accent">Accent fish</mat-chip-option>
+              <mat-chip-option color="accent">Warn fish</mat-chip-option>
+              <mat-chip-option color="accent">One fish</mat-chip-option>
+              <mat-chip-option color="accent">Two fish</mat-chip-option>
+              <mat-chip-option color="accent">Accent fish</mat-chip-option>
+              <mat-chip-option color="accent">Warn fish</mat-chip-option>
+              <mat-chip-option color="accent">One fish</mat-chip-option>
+              <mat-chip-option color="accent">Two fish</mat-chip-option>
+              <mat-chip-option color="accent">Accent fish</mat-chip-option>
+              <mat-chip-option color="accent">Warn fish</mat-chip-option>
+            </mat-chip-listbox>
+          </section>
+
+          <section class="catalog__content">
+            <!--<div class="d-flex justify-content-between align-items-center">
+            </div>-->
+            <div class="catalog__list" [@fastCascade]="products.length">
+              <ng-container *ngFor="let product of products">
+                <app-product-item class="catalog__item" [ngClass]="{'catalog__item_w_33': !isSideBarHidden}" [product]="product"/>
+              </ng-container>
+            </div>
+            <div class="d-flex justify-content-center mt-5" *ngIf="totalCount > 0">
+              <!--<app-pager
+                [pageSize]="this.shopParams.pageSize"
+                [totalCount]="this.totalCount"
+                (pageChanged)="onPageChanged($event)"
+              ></app-pager>-->
+              <mat-paginator [length]="100"
+                             [pageSize]="this.shopParams.pageSize"
+                             [pageSizeOptions]="[5, 10, 25, 100]"
+                             aria-label="Select page">
+              </mat-paginator>
+            </div>
+          </section>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+
+<button [class]="buttonStyle" (click)="buttonClicked.emit()">
+  <ng-container *ngIf="showIcon">
+    <i class="icon" [ngClass]="iconClass"></i>
+  </ng-container>
+  {{ buttonName }}
+</button>

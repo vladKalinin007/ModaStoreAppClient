@@ -1,0 +1,33 @@
+<div class="form" [formGroup]="checkoutForm" >
+
+  <!------------------------>
+  <div class="form__row" formGroupName="addressForm">
+    <div class="form__row form__row_type_flex">
+      <app-text-input formControlName="firstName" [label]="'First name'" class="form__input_gr1"/>
+      <app-text-input formControlName="lastName" [label]="'Last name'" class="form__input_gr1 form__input_ml_12"/>
+    </div>
+  </div>
+
+  <!------------------------>
+  <div class="form__row" formGroupName="addressForm">
+    <div class="form__row form__row_type_flex">
+      <app-text-input formControlName="street" [label]="'street'" class="form__input_gr1" />
+      <app-text-input formControlName="city" [label]="'city'" class="form__input_gr1 form__input_ml_12"/>
+    </div>
+  </div>
+  <!------------------------>
+  <div class="form__row" formGroupName="addressForm">
+    <div class="form__row form__row_type_flex">
+      <app-text-input formControlName="state" [label]="'state'" class="form__input_gr1" />
+      <app-text-input formControlName="zipCode" [label]="'zip code'" class="form__input_gr1 form__input_ml_12"/>
+    </div>
+  </div>
+
+  <!------------------------>
+  <div class="form__row">
+    <app-button (click)="updateUserInfo()" buttonName="Save information" buttonStyle="btn btn_color_dark btn_size_medium basket-list__checkout-button"/>
+  </div>
+</div>
+
+
+

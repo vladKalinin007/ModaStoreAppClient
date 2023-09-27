@@ -1,0 +1,34 @@
+<div class="container mt-5">
+  <h4>
+    Internal Sever Error - refresh the page or try again later
+  </h4>
+  <ng-container *ngIf="error">
+    <h5 class="text-danger">
+      Error: {{ error.message }}
+    </h5>
+    <p class="font-weight-bold">
+      Note: If you are seeing this then Angular is not responsible for this error.
+    </p>
+    <p>
+      What to do next?
+    </p>
+    <ol>
+      <li>
+        Refresh the page
+      </li>
+      <li>
+        Try again later
+      </li>
+      <li>
+        Contact the administrator
+      </li>
+    </ol>
+    <p>
+      If you are the administrator, check the server logs for more information.
+    </p>
+    <code class="mt-5" style="background-color: whitesmoke">
+      {{ error.details }}
+    </code>
+  </ng-container>
+
+</div>
