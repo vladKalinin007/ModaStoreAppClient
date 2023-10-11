@@ -1,6 +1,6 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, Signal, ViewEncapsulation} from '@angular/core';
 import {BasketService} from "../../../features/basket/basket.service";
-import {debounceTime, delay, distinctUntilChanged, Observable, of, switchMap} from "rxjs";
+import {debounceTime, distinctUntilChanged, Observable, of, switchMap} from "rxjs";
 import {IBasket} from "../../models/basket";
 import {MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
 import {BasketComponent} from "../../../features/basket/basket/basket.component";
@@ -10,9 +10,6 @@ import {IUser} from "../../models/user";
 import {AccountService} from "../../../features/account/account.service";
 import {WishlistService} from "../../../features/wishlist/wishlist.service";
 import {IWishlist} from "../../models/customer/wishlist";
-import {LoginComponent} from "../../../features/account/login/login.component";
-import {WishlistComponent} from "../../../features/wishlist/wishlist/wishlist.component";
-import {NavModalComponent} from "../nav-modal/nav-modal/nav-modal.component";
 import {SearchService} from "../../services/search.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {IProduct} from "../../models/product";
@@ -30,14 +27,14 @@ import {AuthenticationComponent} from "../../../features/account/components/auth
   animations: [
     fastCascade,
   ],
-  providers: [ConfirmationService, MessageService]
+  providers: [ConfirmationService, MessageService],
 })
 export class HeaderComponent implements OnInit {
 
+  currentUser: Signal<IUser>;
   basket$: Observable<IBasket>;
   wishlist$: Observable<IWishlist>;
   products$: Observable<IProduct[]>
-  currentUser$: Observable<IUser>;
   searchResults$: Observable<IPagination>;
 
   isMenuActive: boolean = false;
@@ -46,7 +43,6 @@ export class HeaderComponent implements OnInit {
   isCheckoutPage: boolean = false;
 
   searchForm: FormGroup;
-
 
   constructor(
     private basketService: BasketService,
@@ -67,7 +63,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.basket$ = this.basketService.basket$;
-    this.currentUser$ = this.accountService.currentUser$;
+    this.currentUser = this.accountService._currentUser.asReadonly();
     this.wishlist$ = this.wishlistService.wishlist$;
     this.products$ = this.wishlistService.products$;
     this.setSearchObservable();
@@ -82,7 +78,7 @@ export class HeaderComponent implements OnInit {
     icon: 'pi pi-exclamation-triangle',
 
     accept: () => {
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
+        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have logged out' });
         this.logout();
     },
 
@@ -140,7 +136,6 @@ export class HeaderComponent implements OnInit {
     dialogConfig.scrollStrategy = this.overlay.scrollStrategies.noop();
     dialogConfig.hasBackdrop = true;
     dialogConfig.disableClose = false
-    /*dialogConfig.panelClass = 'custom-dialog-class';*/
     dialogConfig.restoreFocus = true;
     dialogConfig.closeOnNavigation = true;
 
@@ -163,5 +158,4 @@ export class HeaderComponent implements OnInit {
       }
     });
   }
-
 }

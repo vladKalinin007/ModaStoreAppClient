@@ -6,7 +6,7 @@
           <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="sidenav.toggle()">
             <mat-icon>menu</mat-icon>
           </button>
-          <span>{{(currentUser$ | async)?.email}}</span>
+          <span>{{currentUser()?.email}}</span>
         </mat-toolbar>
       </p>
       <mat-nav-list>
@@ -47,18 +47,15 @@
           </span>
         </a>
       </mat-nav-list>
-
     </mat-sidenav>
-
-
     <mat-sidenav-content>
       <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" *ngIf="!sidenav.opened" (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
       <router-outlet/>
     </mat-sidenav-content>
-
-
   </mat-sidenav-container>
 </div>
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 

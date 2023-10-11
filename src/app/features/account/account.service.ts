@@ -1,60 +1,37 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable, signal, WritableSignal} from '@angular/core';
 import {environment} from "../../../environments/environment";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {BehaviorSubject, Observable, of, ReplaySubject} from "rxjs";
+import {HttpClient} from "@angular/common/http";
+import {Observable, of} from "rxjs";
 import {IUser} from "../../core/models/user";
 import {map} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {IAddress} from "../../core/models/address";
 import {IProductReview} from "../../core/models/catalog/product-review";
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
 
+  private httpClient: HttpClient = inject(HttpClient);
+  private router: Router = inject(Router);
+
   private baseUrl: string = environment.apiUrl;
-  // private _currentUserSource: ReplaySubject<IUser> = new ReplaySubject<IUser>(1);
-  private _currentUserSource: BehaviorSubject<IUser> = new BehaviorSubject<IUser>(null);
-  public currentUser$: Observable<IUser> = this._currentUserSource.asObservable();
 
-  constructor(
-    private httpClient: HttpClient,
-    private router: Router,
-  ) {
-    // this.getUser();
-  }
-
-  // getUser(){
-  //   console.log("getUser() called");
-  //   this.httpClient.get<IUser>(this.baseUrl + 'User').subscribe({
-  //     next: (user: IUser) => {
-  //       if (user) {
-  //         console.log("getUser() user", user);
-  //         this._currentUserSource.next(user);
-  //         console.log("getUser() currentUser$ in method", this.currentUser$);
-  //       }
-  //     },
-  //     error: (error: any) => {
-  //       console.log("getUser() ERROR LOADING USER")
-  //       console.log(error);
-  //     }
-  //   })
-  // }
-
+  public _currentUser: WritableSignal<IUser> = signal<IUser>(null);
 
   loadCurrentUser(token: string) {
+
     if (token === null) {
-      this._currentUserSource.next(null);
+      this._currentUser.set(null);
       return of(null);
     }
 
-    // отправляем запрос к API для получения данных пользователя
     return this.httpClient.get(this.baseUrl + 'User').pipe(
       map((user: IUser) => {
         if (user) {
-          this._currentUserSource.next(user);
-          console.log("currentUser$ in method", this.currentUser$);
+          this._currentUser.set(user);
         }
       })
     );
@@ -64,7 +41,7 @@ export class AccountService {
     return this.httpClient.post(this.baseUrl + 'authentication/login', values).pipe(
       map((user: IUser) => {
         if (user) {
-          this._currentUserSource.next(user);
+          this._currentUser.set(user);
           localStorage.setItem('token', user.token);
         }
       }
@@ -72,7 +49,7 @@ export class AccountService {
   }
 
   logout(): void {
-    this._currentUserSource.next(null);
+    this._currentUser.set(null);
     localStorage.removeItem('token');
     this.router.navigateByUrl('/');
   }
@@ -81,7 +58,7 @@ export class AccountService {
     return this.httpClient.post(this.baseUrl + 'authentication/register', values).pipe(
       map((user: IUser) => {
         if (user) {
-          this._currentUserSource.next(user);
+          this._currentUser.set(user);
           localStorage.setItem('token', user.token);
         }
       }

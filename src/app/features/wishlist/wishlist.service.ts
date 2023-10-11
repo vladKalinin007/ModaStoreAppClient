@@ -1,15 +1,13 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {IWishlist, Wishlist} from "../../core/models/customer/wishlist";
 import {BehaviorSubject, Observable} from "rxjs";
-import {map} from "rxjs/operators";
 import {IWishlistItem} from "../../core/models/customer/wishlistItem";
 import {IProduct} from "../../core/models/product";
 import { ProductService } from '../../core/services/product.service/product.service';
 import { forkJoin } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
