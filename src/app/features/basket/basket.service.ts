@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {environment} from "../../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable, Subject} from "rxjs";
@@ -6,6 +6,10 @@ import {Basket, IBasket, IBasketItem, IBasketTotals} from "../../core/models/bas
 import {map} from "rxjs/operators";
 import {IProduct} from "../../core/models/product";
 import {IDeliveryMethod} from "../../core/models/deliveryMethod";
+import {BasketState, BasketActions} from "./reducers/basket.state";
+import {Store} from "@ngrx/store";
+import {selectBasket, selectBasketItemsCount, selectBasketTotals, selectShippingPrice} from "./reducers/selectors";
+
 
 @Injectable({
   providedIn: 'root'
@@ -182,5 +186,4 @@ export class BasketService {
       type: item.productType,
     }
   }
-
 }

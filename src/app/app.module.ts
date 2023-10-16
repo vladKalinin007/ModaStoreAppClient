@@ -9,17 +9,17 @@ import {CoreModule} from "./core/core.module";
 import {HomeModule} from "./features/home/home.module";
 import {ErrorInterceptor} from "./core/interceptors/error.interceptor";
 import {NgxSpinnerModule} from "ngx-spinner";
-/*import {LoadingInterceptor} from "./core/interceptors/loading.interceptor";*/
-import {DialogService, DynamicDialogModule} from 'primeng/dynamicdialog';
-import {MessageService} from "primeng/api";
-/*import {MaterialModule} from "../material.module";*/
+import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {MatNativeDateModule} from "@angular/material/core";
 import {DialogModule} from "@angular/cdk/dialog";
 import {JwtInterceptor} from "./core/interceptors/jwt.interceptor";
 import {CommonModule} from "@angular/common";
 import {SpeedDialModule} from "primeng/speeddial";
 import {SharedModule} from "./shared/shared.module";
-/*import {basketReducer} from "./features/basket/reducers/basket.reducer";*/
+import {reducers} from "./features/basket/reducers/basket.state";
+import {BasketEffects} from "./features/basket/basket.effects";
+import {StoreModule} from "@ngrx/store";
+import {EffectsModule} from "@ngrx/effects";
 
 
 @NgModule({
@@ -40,7 +40,8 @@ import {SharedModule} from "./shared/shared.module";
         DialogModule,
         SpeedDialModule,
         SharedModule,
-        /*StoreModule.forRoot({basket: basketReducer}),*/
+        // StoreModule.forRoot(reducers),
+        // EffectsModule.forRoot([BasketEffects])
     ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

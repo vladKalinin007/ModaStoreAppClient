@@ -30,4 +30,10 @@ export interface IBasketTotals {
   total: number
 }
 
+export class BasketTotals implements IBasketTotals {
+  shipping: number = 0;
+  subtotal: number = 0;
+  total: number = 0;
+}
+
 
