@@ -1,15 +1,11 @@
 import {inject, Injectable} from '@angular/core';
 import {environment} from "../../../environments/environment";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {BehaviorSubject, Observable, Subject} from "rxjs";
+import {HttpClient} from "@angular/common/http";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Basket, IBasket, IBasketItem, IBasketTotals} from "../../core/models/basket";
 import {map} from "rxjs/operators";
 import {IProduct} from "../../core/models/product";
 import {IDeliveryMethod} from "../../core/models/deliveryMethod";
-import {BasketState, BasketActions} from "./reducers/basket.state";
-import {Store} from "@ngrx/store";
-import {selectBasket, selectBasketItemsCount, selectBasketTotals, selectShippingPrice} from "./reducers/selectors";
-
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +25,7 @@ export class BasketService {
   private shippingSource: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   public shipping$ = this.shippingSource.asObservable();
 
-
-  constructor(private http: HttpClient) { }
+  private http: HttpClient = inject(HttpClient);
 
   countBasketItems() {
     return this.basketSource.value.items.length;
@@ -58,11 +53,10 @@ export class BasketService {
   }
 
   getCurrentBasketValue(): IBasket {
-  return this.basketSource.value;
-}
+    return this.basketSource.value;
+  }
 
   getBasket(id: string) {
-    console.log("BASKET TEST. basket.service.getBasket() called");
     const url: string = this.baseUrl + 'basket/' + id;
 
     return this.http.get(url)
@@ -102,12 +96,6 @@ export class BasketService {
     if (basket.items.some(x => x.id === item.id)) {
       basket.items = basket.items.filter(i => i.id !== item.id);
       this.setBasket(basket);
-      // if (basket.items.length > 0) {
-      //   this.setBasket(basket);
-      // } else {
-      //   // this.deleteBasket(basket);
-      //   this.setBasket(basket);
-      // }
     }
   }
 
@@ -186,4 +174,5 @@ export class BasketService {
       type: item.productType,
     }
   }
+
 }

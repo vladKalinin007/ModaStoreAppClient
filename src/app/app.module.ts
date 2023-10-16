@@ -16,10 +16,6 @@ import {JwtInterceptor} from "./core/interceptors/jwt.interceptor";
 import {CommonModule} from "@angular/common";
 import {SpeedDialModule} from "primeng/speeddial";
 import {SharedModule} from "./shared/shared.module";
-import {reducers} from "./features/basket/reducers/basket.state";
-import {BasketEffects} from "./features/basket/basket.effects";
-import {StoreModule} from "@ngrx/store";
-import {EffectsModule} from "@ngrx/effects";
 
 
 @NgModule({
@@ -40,8 +36,8 @@ import {EffectsModule} from "@ngrx/effects";
         DialogModule,
         SpeedDialModule,
         SharedModule,
-        // StoreModule.forRoot(reducers),
-        // EffectsModule.forRoot([BasketEffects])
+      // StoreModule.forRoot(reducers),
+      // EffectsModule.forRoot([BasketEffects])
     ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
