@@ -2,152 +2,209 @@
   <div class="product__layout">
     <div class="product-about">
       <div class="product-about__left">
-        <div class="product-slider">
-          <p-galleria
-            [numVisible]="3"
-            [value]="sliderImage"
-            [showItemNavigators]="true"
-            [showThumbnails]="false"
-            [circular]="true"
-            [showItemNavigatorsOnHover]="true"
-          >
-
-            <ng-template pTemplate="item" let-item>
-              <img
-                [src]="item.previewImageSrc"
-                [alt]="item.alt"
-                [title]="item.title"
-                style="width: 100%;"
-              >
-              <div class="item__labels">
-                <ng-container *ngIf="product.isNew">
-                  <div class="item-label item-label_blue"> New</div>
-                </ng-container>
-                <ng-container *ngIf="product.isBestSeller">
-                  <div class="item-label item-label_orange"> Bestseller</div>
-                </ng-container>
-                <ng-container *ngIf="product.oldPrice !== null && product.oldPrice > 0">
-                  <div class="item-label item-label_red"> -{{ product.oldPrice | discount: product.price }} </div>
-                </ng-container>
-              </div>
-            </ng-template>
-
-
-            <ng-template pTemplate="thumbnail" let-item width="50%">
-              <div class="grid  grid-nogutter justify-content-center">
+        <ng-container *ngIf="true; else slider">
+          <ngx-skeleton-loader 
+          [theme]="{height: '80rem', width: '61rem'}"
+          ></ngx-skeleton-loader>
+        </ng-container>
+        <ng-template #slider>
+          <div class="product-slider">
+            <p-galleria
+              [numVisible]="3"
+              [value]="sliderImage"
+              [showItemNavigators]="true"
+              [showThumbnails]="false"
+              [circular]="true"
+              [showItemNavigatorsOnHover]="true"
+            >
+              <ng-template pTemplate="item" let-item>
                 <img
-                  [src]="item.thumbnailImageSrc"
-                  [alt]="item.alt"
-                  [title]="item.title"
-                  width=80%
-                />
-              </div>
-            </ng-template>
-
-          </p-galleria>
-          <!--<img src="https://cdn.dressa.com.ua/ostrov-cache/sylius_extra_large/fd/plate-na-uzkih-bretelyah-s-cvetochnym-printom-beloe-59103-1683010716-1.jpg" style="width: 40%; display: block;" />-->
-        </div>
+                  [src]="item?.previewImageSrc"
+                  [alt]="item?.alt"
+                  [title]="item?.title"
+                  style="width: 100%;"
+                >
+                <div class="item__labels">
+                  <ng-container *ngIf="product?.isNew">
+                    <div class="item-label item-label_blue"> New</div>
+                  </ng-container>
+                  <ng-container *ngIf="product?.isBestSeller">
+                    <div class="item-label item-label_orange"> Bestseller</div>
+                  </ng-container>
+                  <ng-container *ngIf="product?.oldPrice !== null && product?.oldPrice > 0">
+                    <div class="item-label item-label_red"> -{{ product?.oldPrice | discount: product?.price }} </div>
+                  </ng-container>
+                </div>
+              </ng-template>
+  
+  
+              <ng-template pTemplate="thumbnail" let-item width="50%">
+                <div class="grid  grid-nogutter justify-content-center">
+                  <img
+                    [src]="item?.thumbnailImageSrc"
+                    [alt]="item?.alt"
+                    [title]="item?.title"
+                    width=80%
+                  />
+                </div>
+              </ng-template>
+  
+            </p-galleria>
+          </div>
+        </ng-template>
       </div>
       <div class="product-about__right">
       <div class="product-card">
-          <div class="product-card__description">
-            <div class="product-card__header">
-              <h1 class="product-card__title">
-                {{product?.name}}
-              </h1>
-            </div>
+        <div class="product-card__description">
+          <div class="product-card__header">
+            <h1 class="product-card__title">
+              <ngx-skeleton-loader 
+              [theme]="{height: '2.5rem', width: '50rem'}"
+              ></ngx-skeleton-loader>
+              {{product?.name}}
+            </h1>
+          </div>
+          <ng-container *ngIf="true; else panel">
+            <ngx-skeleton-loader 
+            [theme]="{height: '2.5rem', width: '30rem'}"
+            ></ngx-skeleton-loader>
+          </ng-container>
+          <ng-template #panel>
             <div class="product-card__panel">
               <div class="product-card__panel-article"> Brand: {{product?.productBrand}}</div>
               <div class="product-card__rating">
                 <p-rating [(ngModel)]="ratingValue" [cancel]="false"/>
               </div>
-              <!--<ng-container *ngIf="product.reviews?.length  0; else reviews">
                 <div class="product-card__reviews">
-                  <a href="#" class="product-card__reviews-count"> {{product.reviews?.length}} </a>
+                  <a href="#" class="product-card__reviews-count"> {{product?.reviews?.length}} reviews</a>
                 </div>
-              </ng-container>-->
-              <!--<ng-template #reviews>-->
-                <div class="product-card__reviews">
-                  <a href="#" class="product-card__reviews-count"> {{product.reviews?.length}} reviews</a>
-                </div>
-              <!--</ng-template>-->
             </div>
+          </ng-template>
+          <ng-container *ngIf="true; else price">
+            <ngx-skeleton-loader 
+            [theme]="{height: '2.5rem', width: '20rem'}"
+            ></ngx-skeleton-loader>
+          </ng-container>
+          <ng-template #price>
             <div class="product-card__price">
               <div class="product-card__current-price">
-                Price: {{product.price | currency:'USD':true:'1.2-2'}}
+                Price: {{product?.price | currency:'USD':true:'1.2-2'}}
               </div>
-              <ng-container *ngIf="product.oldPrice !== null && product.oldPrice > 0">
+              <ng-container *ngIf="product?.oldPrice !== null && product?.oldPrice > 0">
                 <div class="product-card__old-price">
-                  {{product.oldPrice | currency:'USD':true:'1.2-2'}}
+                  {{product?.oldPrice | currency:'USD':true:'1.2-2'}}
                 </div>
               </ng-container>
             </div>
+          </ng-template>
+          <ng-container *ngIf="true; else color">
+            <ngx-skeleton-loader 
+            [theme]="{height: '2.5rem', width: '20rem'}"
+            ></ngx-skeleton-loader>
+          </ng-container>
+          <ng-template #color>
             <div class="product-card__color">
               <div class="product-card__color-title">
                 Select color:
               </div>
-              <ng-container *ngIf="product.colors?.length > 0">
+              <ng-container *ngIf="product?.colors?.length > 0">
                 <div class="color-palette">
-                  <a href="" class="color-palette__link" *ngFor="let color of product.colors" [ngStyle]="{ 'background': color.colorCode }"></a>
+                  <a href="" class="color-palette__link" *ngFor="let color of product?.colors" [ngStyle]="{ 'background': color.colorCode }"></a>
                 </div>
               </ng-container>
             </div>
+          </ng-template>
+          <ng-container *ngIf="true; else sizes">
+            <ngx-skeleton-loader 
+            [theme]="{height: '2.5rem', width: '20rem'}"
+            ></ngx-skeleton-loader>
+          </ng-container>
+          <ng-template #sizes>
             <div class="product-card__sizes">
-                <div class="product-card__sizes-title">
-                  Select your size:
-                  <a (click)="sidebarVisible = true" class="product-card__sizes-link">table of sizes</a>
-                  <p-sidebar [(visible)]="sidebarVisible" position="right">
-                  </p-sidebar>
-                </div>
-              <div class="product-card__sizes-options">
-                <!--&lt;!&ndash;<ng-container *ngIf="product.size?.length > 0">-->
-                  <ng-container *ngFor="let size of product.sizes">
-                    <label class="product-card__sizes-option">
-                      <input type="radio" name="size" class="product-card__sizes-option-input" value="S">
-                      <span class="product-card__sizes-option-box"> {{size.name}} </span>
-                   </label>
-                <!--&lt;!&ndash;  </ng-container>-->
-                </ng-container>
+              <div class="product-card__sizes-title">
+                Select your size:
+                <a (click)="sidebarVisible = true" class="product-card__sizes-link">table of sizes</a>
+                <p-sidebar [(visible)]="sidebarVisible" position="right">
+                </p-sidebar>
               </div>
-                <div></div>
-              </div>
+            <div class="product-card__sizes-options">
+              <!--&lt;!&ndash;<ng-container *ngIf="product.size?.length > 0">-->
+                <ng-container *ngFor="let size of product?.sizes">
+                  <label class="product-card__sizes-option">
+                    <input type="radio" name="size" class="product-card__sizes-option-input" value="S">
+                    <span class="product-card__sizes-option-box"> {{size?.name}} </span>
+                  </label>
+              <!--&lt;!&ndash;  </ng-container>-->
+              </ng-container>
             </div>
-            <div class="product-sale">
-              <div class="product-sale__container">
-              <div class="product-sale__buy-button">
+              <div></div>
+            </div>
+          </ng-template>          
+        </div>
+
+        <div class="product-sale">
+          <div class="product-sale__container">
+          <div class="product-sale__buy-button">
+
+            <ng-container *ngIf="true; else buyButton">
+              <ngx-skeleton-loader 
+              [theme]="{height: '4.8rem', width: '24.6rem'}"
+              ></ngx-skeleton-loader>
+            </ng-container>
+            <ng-template #buyButton>
+              <app-button
+              (click)="addItemToWishList()"
+              buttonName="Add to basket"
+              buttonStyle="btn btn_color_dark btn_size_large basket-list__checkout-button"
+              showIcon="true"
+              iconClass="pi pi-shopping-bag"
+              />
+            </ng-template>
+
+          </div>
+            <div class="product-sale__buy-button">
+              <ng-container *ngIf="true; else wishButton">
+                <ngx-skeleton-loader 
+                [theme]="{height: '4.8rem', width: '24.6rem'}"
+                ></ngx-skeleton-loader>
+              </ng-container>
+              <ng-template #wishButton>
                 <app-button
-                  (click)="addItemToWishList()"
-                  buttonName="Add to basket"
-                  buttonStyle="btn btn_color_dark btn_size_large basket-list__checkout-button"
-                  showIcon="true"
-                  iconClass="pi pi-shopping-bag"
-                />
-              </div>
-                <div class="product-sale__buy-button">
-                  <app-button
-                    (click)="addProductToBasket()"
-                    buttonName="Add to wishlist"
-                    buttonStyle="btn btn_color_light btn_size_large"
-                    showIcon="true"
-                    iconClass="pi pi-heart"
-                  />
-                </div>
-              </div>
-              <i class="fa-sharp fa-light fa-bag-shopping"></i>
+                (click)="addProductToBasket()"
+                buttonName="Add to wishlist"
+                buttonStyle="btn btn_color_light btn_size_large"
+                showIcon="true"
+                iconClass="pi pi-heart"
+              />
+              </ng-template>
             </div>
-            <div class="product-card__warehouse">
-              <a class="product-card__warehouse-link">
-                Availability in stores
-              </a>
-            </div>
+          </div>
+        </div>
+        <div class="product-card__warehouse">
+          <ng-container *ngIf="true; else link">
+            <ngx-skeleton-loader 
+            [theme]="{height: '2.5rem', width: '10rem'}"
+            ></ngx-skeleton-loader>
+          </ng-container>
+          <ng-template #link>
+          <a class="product-card__warehouse-link">
+            Availability in stores
+          </a>
+          </ng-template>
+        </div>
       </div>
       </div>
     </div>
     <div class="product-details">
       <p-tabView>
         <p-tabPanel header="Description">
+          <ngx-skeleton-loader 
+          count="5" 
+          appearance="line" 
+          [theme]="{height: '1.5rem'}"
+          ></ngx-skeleton-loader>
           <div class="product-details__description">
-          {{product.description}}
+          {{product?.description}}
           </div>
         </p-tabPanel>
         <p-tabPanel header="Details">
@@ -158,7 +215,7 @@
                   Brand
                 </div>
                 <div class="props__cell">
-                  {{product.productBrand}}
+                  {{product?.productBrand}}
                 </div>
 
               </div>
@@ -167,7 +224,7 @@
                   Color
                 </div>
                 <div class="props__cell">
-                  {{product.colors[0].name}}
+                  {{product?.colors[0]?.name}}
                 </div>
 
               </div>
@@ -176,7 +233,7 @@
                   Material
                 </div>
                 <div class="props__cell">
-                  {{product.material}}
+                  {{product?.material}}
                 </div>
 
               </div>
@@ -185,7 +242,7 @@
                   Neckline
                 </div>
                 <div class="props__cell">
-                  {{product.neckline}}
+                  {{product?.neckline}}
                 </div>
 
               </div>
@@ -194,7 +251,7 @@
                   Season
                 </div>
                 <div class="props__cell">
-                  {{product.season}}
+                  {{product?.season}}
                 </div>
 
               </div>
@@ -205,7 +262,7 @@
                   Style
                 </div>
                 <div class="props__cell">
-                  {{product.style}}
+                  {{product?.style}}
                 </div>
 
               </div>
@@ -214,7 +271,7 @@
                   Pattern
                 </div>
                 <div class="props__cell">
-                  {{product.pattern}}
+                  {{product?.pattern}}
                 </div>
 
               </div>
@@ -223,7 +280,7 @@
                   Sleeve
                 </div>
                 <div class="props__cell">
-                  {{product.sleeve}}
+                  {{product?.sleeve}}
                 </div>
 
               </div>
@@ -232,7 +289,7 @@
                   Product type
                 </div>
                 <div class="props__cell">
-                  {{product.productType}}
+                  {{product?.productType}}
                 </div>
 
               </div>
@@ -241,7 +298,7 @@
                   Waistline
                 </div>
                 <div class="props__cell">
-                  {{product.waistline}}
+                  {{product?.waistline}}
                 </div>
 
               </div>
@@ -254,8 +311,8 @@
               Reviews
             </div>-->
             <div class="product-details__reviews-text">
-              <ng-container *ngIf="product.reviews.length > 0">
-                <ng-container *ngFor="let review of product.reviews">
+              <ng-container *ngIf="product?.reviews?.length > 0">
+                <ng-container *ngFor="let review of product?.reviews">
                   <app-review [review]="review"/>
                   <app-review [review]="review"/>
                 </ng-container>
@@ -267,14 +324,16 @@
     </div>
     <app-related-products
       title="Related products"
-      [products]="product.relatedProducts"
+      [products]="product?.relatedProducts"
     />
-
-    <ng-container *ngIf="(history$ | async)?.seenProducts">
-      <app-seen-items
+<!-- 
+    <ng-container *ngIf="(history$ | async).reverse() as SeenProducts">
+      <app-related-products
         title="Seen products"
+        category="sale"
+        [products]="SeenProducts"
       />
-    </ng-container>
+    </ng-container> -->
 
 
   </div>

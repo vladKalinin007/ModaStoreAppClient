@@ -1,10 +1,14 @@
+
 <h1 class="page-title heading">{{headerTitle | titlecase}}</h1>
 <div class="catalog">
+  
   <div class="layout">
     <div class="catalog_inner">
       <div class="catalog__main">
-        <ng-container *ngIf="types && brands">
+        <ng-container>
+          
           <section class="catalog__aside" [ngClass]="{'catalog__aside_hidden': isSideBarHidden}">
+            
             <mat-expansion-panel expanded>
               <mat-expansion-panel-header>
                 <mat-panel-title>  Price </mat-panel-title>
@@ -17,132 +21,214 @@
             </mat-expansion-panel>
 
             <mat-expansion-panel expanded>
+
               <mat-expansion-panel-header>
                 <mat-panel-title>  Brands </mat-panel-title>
+                <ngx-skeleton-loader [theme]="{height: '5rem'}"></ngx-skeleton-loader>
               </mat-expansion-panel-header>
 
+              <ng-container *ngIf="areBrandsLoading(); else brandsLoaded">
+                <div class="catalog__checkbox-item" *ngFor="let i of [1, 2, 3, 4, 5, 6]">
+                  <ngx-skeleton-loader [theme]="{height: '1.5rem'}"></ngx-skeleton-loader>
+                </div>
+              </ng-container>
+
+              <ng-template #brandsLoaded>
                 <div class="catalog__checkbox-item" *ngFor="let brand of brands" >
                   <mat-checkbox [checked]="selectedBrand === brand.id" (change)="onBrandSelected(brand.id)">
                     {{brand.name}}
                   </mat-checkbox>
                 </div>
+              </ng-template>
+
             </mat-expansion-panel>
             <mat-expansion-panel>
+
               <mat-expansion-panel-header>
                 <mat-panel-title>  Types </mat-panel-title>
               </mat-expansion-panel-header>
 
-              <div class="catalog__checkbox-item" *ngFor="let type of types" >
-                <mat-checkbox [checked]="selectedType === type.id" (change)="onTypeSelected(type.id)">
-                  {{type.name}}
-                </mat-checkbox>
-              </div>
+              <ng-container *ngIf="areTypesLoading(); else typesLoaded">
+                <div class="catalog__checkbox-item" *ngFor="let i of [1, 2, 3, 4, 5, 6]">
+                  <ngx-skeleton-loader [theme]="{height: '1.5rem'}"></ngx-skeleton-loader>
+                </div>
+              </ng-container>
+
+              <ng-template #typesLoaded>
+                <div class="catalog__checkbox-item" *ngFor="let type of types" >
+                  <mat-checkbox [checked]="selectedType === type.id" (change)="onTypeSelected(type.id)">
+                    {{type.name}}
+                  </mat-checkbox>
+                </div>
+              </ng-template>
+
             </mat-expansion-panel>
             <mat-expansion-panel>
+
               <mat-expansion-panel-header>
                 <mat-panel-title>  Colors </mat-panel-title>
               </mat-expansion-panel-header>
 
-              <div class="catalog__checkbox-item" *ngFor="let color of colors" >
-                <mat-checkbox [checked]="selectedColor === color.id" (change)="onColorSelected(color.id)">
-                  {{color.name}}
-                </mat-checkbox>
-              </div>
+              <ng-container *ngIf="areColorsLoading(); else colorsLoaded">
+                <div class="catalog__checkbox-item" *ngFor="let i of [1, 2, 3, 4, 5, 6]">
+                  <ngx-skeleton-loader [theme]="{height: '1.5rem'}"></ngx-skeleton-loader>
+                </div>
+              </ng-container>
+
+              <ng-template #colorsLoaded>
+                <div class="catalog__checkbox-item" *ngFor="let color of colors" >
+                  <mat-checkbox [checked]="selectedColor === color.id" (change)="onColorSelected(color.id)">
+                    {{color.name}}
+                  </mat-checkbox>
+                </div>
+              </ng-template>
+
             </mat-expansion-panel>
             <mat-expansion-panel>
+
               <mat-expansion-panel-header>
                 <mat-panel-title>  Sizes </mat-panel-title>
               </mat-expansion-panel-header>
 
-              <div class="catalog__checkbox-item" *ngFor="let size of sizes" >
-                <mat-checkbox [checked]="selectedSize === size.id" (change)="onSizeSelected(size.id)">
-                  {{size.name}}
-                </mat-checkbox>
-              </div>
+              <ng-container *ngIf="areSizesLoading(); else sizesLoaded">
+                <div class="catalog__checkbox-item" *ngFor="let i of [1, 2, 3, 4, 5, 6]">
+                  <ngx-skeleton-loader [theme]="{height: '1.5rem'}"></ngx-skeleton-loader>
+                </div>
+              </ng-container>
+
+              <ng-template #sizesLoaded>
+                <div class="catalog__checkbox-item" *ngFor="let size of sizes" >
+                  <mat-checkbox [checked]="selectedSize === size.id" (change)="onSizeSelected(size.id)">
+                    {{size.name}}
+                  </mat-checkbox>
+                </div>
+              </ng-template>
+
             </mat-expansion-panel>
             <mat-expansion-panel>
+
               <mat-expansion-panel-header>
                 <mat-panel-title>  Materials </mat-panel-title>
               </mat-expansion-panel-header>
-              <div class="catalog__checkbox-item" *ngFor="let material of attributes.materials">
-                <mat-checkbox [checked]="selectedMaterial === material" (change)="onMaterialSelected(material)">
-                  {{material}}
-                </mat-checkbox>
-              </div>
+
+              <ng-container *ngIf="areAttributesLoading(); else materialsLoaded">
+                <div class="catalog__checkbox-item" *ngFor="let i of [1, 2, 3, 4, 5, 6]">
+                  <ngx-skeleton-loader [theme]="{height: '1.5rem'}"></ngx-skeleton-loader>
+                </div>
+              </ng-container>
+
+              <ng-template #materialsLoaded>
+                <div class="catalog__checkbox-item" *ngFor="let material of attributes.materials">
+                  <mat-checkbox [checked]="selectedMaterial === material" (change)="onMaterialSelected(material)">
+                    {{material}}
+                  </mat-checkbox>
+                </div>
+              </ng-template>
+
             </mat-expansion-panel>
             <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <mat-panel-title>  Styles </mat-panel-title>
               </mat-expansion-panel-header>
-              <div class="catalog__checkbox-item" *ngFor="let style of attributes.styles">
-                <mat-checkbox [checked]="selectedStyle === style"  (change)="onStyleSelected(style)">
-                  {{style}}
-                </mat-checkbox>
-              </div>
+
+              <ng-container *ngIf="areAttributesLoading(); else stylesLoaded">
+                <div class="catalog__checkbox-item" *ngFor="let i of [1, 2, 3, 4, 5, 6]">
+                  <ngx-skeleton-loader [theme]="{height: '1.5rem'}"></ngx-skeleton-loader>
+                </div>
+              </ng-container>
+
+              <ng-template #stylesLoaded>
+                <div class="catalog__checkbox-item" *ngFor="let style of attributes.styles">
+                  <mat-checkbox [checked]="selectedStyle === style"  (change)="onStyleSelected(style)">
+                    {{style}}
+                  </mat-checkbox>
+                </div>
+              </ng-template>
+
             </mat-expansion-panel>
             <mat-expansion-panel>
+
               <mat-expansion-panel-header>
                 <mat-panel-title>  Seasons </mat-panel-title>
               </mat-expansion-panel-header>
-              <div class="catalog__checkbox-item" *ngFor="let season of attributes.seasons">
-                <mat-checkbox [checked]="selectedSeason === season" (change)="onSeasonSelected(season)">
-                  {{season}}
-                </mat-checkbox>
-              </div>
+
+              <ng-container *ngIf="areAttributesLoading(); else seasonsLoaded">
+                <div class="catalog__checkbox-item" *ngFor="let i of [1, 2, 3, 4, 5, 6]">
+                  <ngx-skeleton-loader [theme]="{height: '1.5rem'}"></ngx-skeleton-loader>
+                </div>
+              </ng-container>
+
+              <ng-template #seasonsLoaded>
+                <div class="catalog__checkbox-item" *ngFor="let season of attributes.seasons">
+                  <mat-checkbox [checked]="selectedSeason === season" (change)="onSeasonSelected(season)">
+                    {{season}}
+                  </mat-checkbox>
+                </div>
+              </ng-template>
+
             </mat-expansion-panel>
             <mat-expansion-panel>
+
               <mat-expansion-panel-header>
                 <mat-panel-title>  Patterns </mat-panel-title>
               </mat-expansion-panel-header>
-              <div class="catalog__checkbox-item" *ngFor="let pattern of attributes.patterns">
-                <mat-checkbox [checked]="selectedPattern === pattern" (change)="onPatternSelected(pattern)">
-                  {{pattern}}
-                </mat-checkbox>
-              </div>
+
+              <ng-container *ngIf="areAttributesLoading(); else patternsLoaded">
+                <div class="catalog__checkbox-item" *ngFor="let i of [1, 2, 3, 4, 5, 6]">
+                  <ngx-skeleton-loader [theme]="{height: '1.5rem'}"></ngx-skeleton-loader>
+                </div>
+              </ng-container>
+
+              <ng-template #patternsLoaded>
+                <div class="catalog__checkbox-item" *ngFor="let pattern of attributes.patterns">
+                  <mat-checkbox [checked]="selectedPattern === pattern" (change)="onPatternSelected(pattern)">
+                    {{pattern}}
+                  </mat-checkbox>
+                </div>
+              </ng-template>
             </mat-expansion-panel>
-            <mat-chip-listbox aria-label="Fish selection" multiple>
-              <mat-chip-option color="accent">One fish</mat-chip-option>
-              <mat-chip-option color="accent">Two fish</mat-chip-option>
-              <mat-chip-option color="accent">Accent fish</mat-chip-option>
-              <mat-chip-option color="accent">Warn fish</mat-chip-option>
-              <mat-chip-option color="accent">One fish</mat-chip-option>
-              <mat-chip-option color="accent">Two fish</mat-chip-option>
-              <mat-chip-option color="accent">Accent fish</mat-chip-option>
-              <mat-chip-option color="accent">Warn fish</mat-chip-option>
-              <mat-chip-option color="accent">One fish</mat-chip-option>
-              <mat-chip-option color="accent">Two fish</mat-chip-option>
-              <mat-chip-option color="accent">Accent fish</mat-chip-option>
-              <mat-chip-option color="accent">Warn fish</mat-chip-option>
-              <mat-chip-option color="accent">One fish</mat-chip-option>
-              <mat-chip-option color="accent">Two fish</mat-chip-option>
-              <mat-chip-option color="accent">Accent fish</mat-chip-option>
-              <mat-chip-option color="accent">Warn fish</mat-chip-option>
-            </mat-chip-listbox>
           </section>
 
+          
           <section class="catalog__content">
-            <!--<div class="d-flex justify-content-between align-items-center">
-            </div>-->
-            <div class="catalog__list" [@fastCascade]="products.length">
-              <ng-container *ngFor="let product of products">
-                <app-product-item class="catalog__item" [ngClass]="{'catalog__item_w_33': !isSideBarHidden}" [product]="product"/>
-              </ng-container>
-            </div>
-            <div class="d-flex justify-content-center mt-5" *ngIf="totalCount > 0">
-              <!--<app-pager
+            
+            <ng-container *ngIf="areProductsLoading(); else loaded">
+              <div class="catalog__list" >
+                <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9]">
+                  <ngx-skeleton-loader 
+                  class="catalog__item" 
+                  [theme]="{height: '50rem'}" 
+                  [ngClass]="{'catalog__item_w_33': !isSideBarHidden}"
+                  style="padding: 0 1.5rem 0rem 0;">
+                </ngx-skeleton-loader>
+                </ng-container>
+              </div>
+            </ng-container>
+            
+            <ng-template #loaded>
+              <div class="catalog__list" [@fastCascade]="products?.length">
+                <ng-container *ngFor="let product of products">
+                  <app-product-item class="catalog__item" [ngClass]="{'catalog__item_w_33': !isSideBarHidden}" [product]="product"/>
+                </ng-container>
+              </div>
+            </ng-template>
+
+            <div class="catalog__pagination">
+              <mat-paginator 
+                [length]="100"
                 [pageSize]="this.shopParams.pageSize"
-                [totalCount]="this.totalCount"
-                (pageChanged)="onPageChanged($event)"
-              ></app-pager>-->
-              <mat-paginator [length]="100"
-                             [pageSize]="this.shopParams.pageSize"
-                             [pageSizeOptions]="[5, 10, 25, 100]"
-                             aria-label="Select page">
+                [pageSizeOptions]="[9, 18, 27, 36]"
+                aria-label="Select page"
+              >
               </mat-paginator>
             </div>
           </section>
+ 
         </ng-container>
       </div>
     </div>
   </div>
+</div>
+<div>
+  
 </div>

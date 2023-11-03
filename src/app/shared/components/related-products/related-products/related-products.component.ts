@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, signal} from '@angular/core';
 import {ProductService} from "../../../../core/services/product.service/product.service";
 import {IProduct} from "../../../../core/models/product";
 import {ShopParams} from "../../../../core/models/shopParams";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-related-products',
@@ -19,9 +20,18 @@ export class RelatedProductsComponent implements OnInit {
   @Input()
   category: string;
 
+  // @Input() set isLoading(value: boolean) {
+  //   this._isLoading.set(false);
+  // }
+  _isLoading = signal(true);
+
+  isLoading: Observable<boolean> 
+
   shopParams: ShopParams = new ShopParams();
 
   fourProducts: IProduct[];
+
+  
 
 
   constructor(private productService: ProductService) {
@@ -31,6 +41,10 @@ export class RelatedProductsComponent implements OnInit {
   ngOnInit() {
     /*this.getProducts();*/
   }
+
+  // ngAfterViewInit() {
+  //   this.isLoading = false;
+  // }
 
   getProducts() {
     this.productService.getProducts(this.shopParams)

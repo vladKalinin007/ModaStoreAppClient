@@ -1,19 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, inject, signal} from '@angular/core';
+
 import {IProduct} from "../../../core/models/product";
-import {HomeService} from "../home.service";
 import {ICategory} from "../../../core/models/category";
-import {ProductService} from "../../../core/services/product.service/product.service";
 import {ShopParams} from "../../../core/models/shopParams";
-import {PictureService} from "../../../core/services/picture.service";
 import {IProductImage} from "../../../core/models/catalog/product-image";
-import {HistoryService} from "../../../shared/services/history.service";
-import {cascade, fadeIn} from "../../../shared/animations/fade-in.animation";
-import {animate, state, style, transition, trigger} from "@angular/animations";
-import {Observable} from "rxjs";
 import {ISeenProductList} from "../../../core/models/customer/seenProductList";
+
+import {ProductService} from "../../../core/services/product.service/product.service";
+import {PictureService} from "../../../core/services/picture.service";
+import {HistoryService} from "../../../shared/services/history.service";
 import {WishlistService} from "../../wishlist/wishlist.service";
-import {map} from "rxjs/operators";
-import {combineLatest} from "rxjs";
+import {HomeService} from "../home.service";
+
+import {cascade, fadeIn} from "../../../shared/animations/fade-in.animation";
+import {Observable} from "rxjs";
+
 
 
 
@@ -28,6 +29,12 @@ import {combineLatest} from "rxjs";
 })
 export class HomeComponent implements OnInit {
 
+  private readonly _pictureService = inject(PictureService);
+  private readonly _homeService = inject(HomeService);
+  private readonly _productService = inject(ProductService);
+  private readonly _historyService = inject(HistoryService);
+  private readonly _wishlistService = inject(WishlistService);
+
   products: IProduct[];
   newProducts: IProduct[];
   bestSellersProducts: IProduct[]
@@ -36,19 +43,20 @@ export class HomeComponent implements OnInit {
   product: IProduct;
   categories: ICategory[];
 
+  isLoading: boolean = true;
+
   wishedProducts$: Observable<IProduct[]>;
   history$: Observable<ISeenProductList>
   seenProducts$: Observable<IProduct[]>;
 
-  shopParams: ShopParams = new ShopParams();
+  areBestsellersLoading = signal(true);
+  areNewProductsLoading$: Observable<boolean>;
+  areOnSaleProductsLoading = signal(true);
+  areRecentlyViewedProductsLoading = signal(true);
+  areCategoriesLoading = signal(true);
+  areImagesLoading = signal(true);
 
-  constructor(
-    private pictureService: PictureService,
-    private homeService: HomeService,
-    private productService: ProductService,
-    private historyService: HistoryService,
-    private wishlistService: WishlistService
-  ) {}
+  shopParams: ShopParams = new ShopParams();
 
   ngOnInit() {
     this.getCarouselPictures();
@@ -58,19 +66,18 @@ export class HomeComponent implements OnInit {
     this.getNewProducts();
     this.getBestSellersProducts();
     this.getOnSaleProducts();
-
   }
 
   getCategories() {
-    this.homeService.getCategories()
+    this._homeService.getCategories()
       .subscribe(categories => {
       this.categories = categories;
-      console.log(categories);
+      this.areCategoriesLoading.set(false);
     });
   }
 
   getProducts() {
-    this.productService.getProducts(this.shopParams)
+    this._productService.getProducts(this.shopParams)
       .subscribe({
         next: (response) => {
           this.products = response.data;
@@ -82,10 +89,11 @@ export class HomeComponent implements OnInit {
   }
 
   getBestSellersProducts(): void {
-    this.productService.getBestsellers()
+    this._productService.getBestsellers()
       .subscribe({
         next: (response) => {
           this.bestSellersProducts = response.data;
+          this.areBestsellersLoading.set(false);
         },
         error: (error) => {
           console.log(error);
@@ -94,10 +102,11 @@ export class HomeComponent implements OnInit {
   }
 
   getOnSaleProducts(): void {
-    this.productService.getOnSaleProducts()
+    this._productService.getOnSaleProducts()
       .subscribe({
         next: (response) => {
           this.onSaleProducts = response.data;
+          this.areOnSaleProductsLoading.set(false);
         },
         error: (error) => {
           console.log(error);
@@ -106,10 +115,11 @@ export class HomeComponent implements OnInit {
   }
 
   getNewProducts(): void {
-    this.productService.getNewProducts()
+    this._productService.getNewProducts()
       .subscribe({
         next: (response) => {
           this.newProducts = response.data;
+          // this.areNewProductsLoading.set(false);
         },
         error: (error) => {
           console.log(error);
@@ -118,15 +128,13 @@ export class HomeComponent implements OnInit {
   }
 
   private markWishlistibility(products: IProduct[]): IProduct[] {
-    return this.wishlistService.isInWishlist(products);
+    return this._wishlistService.isInWishlist(products);
   }
 
   loadProduct() {
-    this.productService.getProduct("87c12f75-8176-4ea9-8ee4-a117a2a27d1e").subscribe({
+    this._productService.getProduct("87c12f75-8176-4ea9-8ee4-a117a2a27d1e").subscribe({
       next: (response) => {
-        console.log(`HomeComponent.loadProduct.RESPONSE: ${response}`)
         this.product = response;
-        /*this.bcService.set('@productDetails', this.product.name);*/
       },
       error: (error) => {
         console.log(error);
@@ -135,29 +143,23 @@ export class HomeComponent implements OnInit {
   }
 
   getRecentlyViewedProducts() {
-    this.history$ = this.historyService.history$;
-    this.seenProducts$ = this.historyService.product$;
-    console.log("SEEN PRODUCTS:", this.seenProducts$);
+    this.history$ = this._historyService.history$;
+    this.seenProducts$ = this._historyService.product$;
+    this.areRecentlyViewedProductsLoading.set(false);
   }
 
-  getLastReviews() {
-
-  }
 
   getCarouselPictures() {
-    this.pictureService.getCarouselPictures().subscribe({
+    this._pictureService.getCarouselPictures().subscribe({
       next: (response: IProductImage[]) => {
         this.productImage = response;
-        console.log("RES:", this.productImage);
+        this.areImagesLoading.set(false);
       },
       error: (error) => {
-        console.log("NO PRODUCT FOR CAROUSEL");
         console.log(error);
       }
     });
-
   }
-
 }
 
 

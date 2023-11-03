@@ -4,14 +4,23 @@
       <div class="wishlist__title"> Wishlist </div>
       <ng-container *ngIf="(products$ | async) as products; else empty">
         <div class="wishlist__list">
-          <ng-container *ngFor="let product of products">
-            <app-product-item
-              [product]="product"
-              class="wishlist__item_w25"
-              [isFavoritesIconVisible]="false"
-              >
-            </app-product-item>
+          <ng-container *ngIf="true; else wishlist">
+            <ng-container *ngFor="let i of [1, 2, 3, 4]">
+              <ngx-skeleton-loader 
+              [theme]="{height: '50rem', width: '27.5rem', margin: '0 0 2rem 2rem'}"
+              ></ngx-skeleton-loader>
+            </ng-container>
           </ng-container>
+          <ng-template #wishlist>
+            <ng-container *ngFor="let product of products">
+              <app-product-item
+                [product]="product"
+                class="wishlist__item_w25"
+                [isFavoritesIconVisible]="false"
+                >
+              </app-product-item>
+            </ng-container>
+          </ng-template>
         </div>
       </ng-container>
       <ng-template #empty>

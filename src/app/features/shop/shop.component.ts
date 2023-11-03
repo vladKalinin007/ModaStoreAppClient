@@ -1,16 +1,15 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, signal} from '@angular/core';
 import {IProduct} from "../../core/models/product";
 import {ShopService} from "./shop.service";
 import {IPagination} from "../../core/models/pagination";
 import {IBrand} from "../../core/models/brand";
 import {IType} from "../../core/models/productType";
 import {ShopParams} from "../../core/models/shopParams";
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "../../core/services/product.service/product.service";
 import {fastCascade} from "../../shared/animations/fade-in.animation";
 import {ICategory} from "../../core/models/category";
 import {CategoryService} from "../../core/services/category.service/category.service";
-import {filter} from "rxjs";
 import {IProductColor} from "../../core/models/catalog/product-color";
 import {IProductSize} from "../../core/models/catalog/product-size";
 import {IProductAttribute} from "../../core/models/catalog/i-product-attribute";
@@ -51,6 +50,13 @@ export class ShopComponent implements OnInit {
   selectedSeason: string | null = null;
   selectedPattern: string | null = null;
 
+  areProductsLoading = signal(true);
+  areBrandsLoading = signal(true);
+  areTypesLoading = signal(true);
+  areCategoriesLoading = signal(true);
+  areColorsLoading = signal(true);
+  areSizesLoading = signal(true);
+  areAttributesLoading = signal(true);
 
 
   constructor(

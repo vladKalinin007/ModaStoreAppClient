@@ -55,6 +55,7 @@ import { ReviewComponent } from './components/review/review.component';
 import { EmptyComponent } from './components/empty/empty.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { GradientShadowDirective } from './directives/gradient-shadow/gradient-shadow.directive';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @NgModule({
   declarations: [
@@ -119,7 +120,8 @@ import { GradientShadowDirective } from './directives/gradient-shadow/gradient-s
     MatSidenavModule,
     MatListModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
+    NgxSkeletonLoaderModule
   ],
   exports: [
     PaginationModule,
@@ -173,6 +175,7 @@ import { GradientShadowDirective } from './directives/gradient-shadow/gradient-s
     SeenItemComponent,
     ConfirmDialogModule,
     GradientShadowDirective,
+    NgxSkeletonLoaderModule
   ]
 })
 export class SharedModule { }

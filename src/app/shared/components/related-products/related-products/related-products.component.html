@@ -13,14 +13,23 @@
       </div>
       <div class="products__body">
         <div class="products__list" [ngClass]="{'products__list_full': products?.length >= 4}">
-          <ng-container *ngFor="let product of products?.slice(0, 4)">
-            <div class="products__item">
-              <app-product-item
-                [categoryName]="category"
-                [product]="product">
-              </app-product-item>
-            </div>
+          <ng-container *ngIf="_isLoading(); else loaded">
+            <ng-container *ngFor="let i of [1, 2, 3, 4]">
+              <div class="products__item" style="margin: 0 2rem 4rem 0;">
+                <ngx-skeleton-loader [theme]="{height: '50rem'}" ></ngx-skeleton-loader>
+              </div>
+            </ng-container>
           </ng-container>
+          <ng-template #loaded>
+            <ng-container *ngFor="let product of products?.slice(0, 4)">
+              <div class="products__item">
+                <app-product-item
+                  [categoryName]="category"
+                  [product]="product">
+                </app-product-item>
+              </div>
+            </ng-container>
+          </ng-template>
         </div>
       </div>
     </div>

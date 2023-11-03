@@ -1,8 +1,31 @@
 <main>
+
   <section class="hero">
     <div class="layout">
       <div class="hero__inner">
-        <div class="hero__slider">
+        <ng-container *ngIf="areImagesLoading(); else imageLoaded">
+          <ngx-skeleton-loader [theme]="{height: '55rem'}"></ngx-skeleton-loader>
+        </ng-container>
+        <!-- <ngx-skeleton-loader *ngIf="areImagesLoading()" [theme]="{height: '55rem'}"></ngx-skeleton-loader> -->
+        <ng-template #imageLoaded>
+          <div class="hero__slider">
+            <p-carousel
+              [autoplayInterval]="8000"
+              animationTimeout="1000"
+              [value]="productImage"
+              [numVisible]="1"
+              [numScroll]="1"
+              [showIndicators]="false"
+            >
+            
+              <ng-template let-image pTemplate="item">
+                <img src="{{ image.url }}" alt="image" class="w-100" (load)="areImagesLoading.set(false)"/>
+              </ng-template>
+            </p-carousel>
+          </div>
+        </ng-template>
+
+        <!-- <div class="hero__slider">
           <p-carousel
             [autoplayInterval]="8000"
             animationTimeout="1000"
@@ -10,53 +33,67 @@
             [numVisible]="1"
             [numScroll]="1"
             [showIndicators]="false"
-
-            >
+          >
+          
             <ng-template let-image pTemplate="item">
-              <img src="{{ image.url }}" alt="image" class="w-100" />
+              <img src="{{ image.url }}" alt="image" class="w-100" (load)="areImagesLoading.set(false)"/>
             </ng-template>
           </p-carousel>
-        </div>
+        </div> -->
       </div>
     </div>
   </section>
+
   <section class="categories">
     <div class="layout">
       <div class="categories__inner">
         <div class="categories__title">
           Categories
         </div>
-        <div class="categories__list" [@cascade]="categories?.length">
-          <ng-container *ngFor="let category of categories" >
-            <div class="categories__item hero">
-              <a class="categories__item-link" [routerLink]="['/shop/', category.name]" [style.background-image]="'url(' + category.pictureUrl + ')'">
-                <span class="categories__item-caption">
-                <span class="categories__item-title">
-                  {{category.name}}
+        <ng-container *ngIf="areCategoriesLoading(); else loaded">
+          <div class="categories__list">
+            <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6]">
+              <ngx-skeleton-loader class="categories__item hero" [theme]="{height: '55rem'}"></ngx-skeleton-loader>
+            </ng-container>
+          </div>
+        </ng-container>
+        <ng-template #loaded>
+          <div class="categories__list" [@cascade]="categories?.length">
+            <ng-container *ngFor="let category of categories" >
+              <div class="categories__item hero">
+                <a class="categories__item-link" [routerLink]="['/shop/', category.name]" [style.background-image]="'url(' + category.pictureUrl + ')'">
+                  <span class="categories__item-caption">
+                  <span class="categories__item-title">
+                    {{category.name}}
+                  </span>
                 </span>
-              </span>
-              </a>
-            </div>
-          </ng-container>
-        </div>
+                </a>
+              </div>
+            </ng-container>
+          </div>
+        </ng-template>
       </div>
     </div>
   </section>
+  
   <app-related-products
     title="New products"
     category="new"
     [products]="newProducts"
   />
+
   <app-related-products
     title="Bestsellers"
     category="bestsellers"
     [products]="bestSellersProducts"
   />
+
   <app-related-products
     title="Sale"
     category="sale"
     [products]="onSaleProducts"
   />
+
   <ng-container *ngIf="(seenProducts$ | async).reverse() as SeenProducts">
     <app-related-products
       title="Seen products"
@@ -64,11 +101,7 @@
       [products]="SeenProducts"
     />
   </ng-container>
-  <ng-container *ngIf="(history$ | async)?.seenProducts">
-    <app-seen-items
-      title="Viewed products"
-    />
-  </ng-container>
+
   <section class="reviews">
 
   </section>
