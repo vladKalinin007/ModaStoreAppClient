@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -6,14 +6,17 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { StorageService } from '../services/storage.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
+  readonly #storageService: StorageService = inject(StorageService);
+
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token: string = localStorage.getItem('token');
+    const token: string = this.#storageService.getItem('token');
   
     if (token) {
       const cloned = request.clone({

@@ -256,12 +256,12 @@ export class ShopComponent implements OnInit {
       clearTimeout(this.priceChangeTimeout);
     }
 
-    this.priceChangeTimeout = setTimeout(() => {
-      this.shopParams.minPrice = this.rangeValues[0].toString();
-      this.shopParams.maxPrice = this.rangeValues[1].toString();
-      this.shopParams.pageNumber = 1;
-      this.getProducts();
-    }, 2000);
+    // this.priceChangeTimeout = setTimeout(() => {
+    //   this.shopParams.minPrice = this.rangeValues[0].toString();
+    //   this.shopParams.maxPrice = this.rangeValues[1].toString();
+    //   this.shopParams.pageNumber = 1;
+    //   this.getProducts();
+    // }, 2000);
   }
 
 

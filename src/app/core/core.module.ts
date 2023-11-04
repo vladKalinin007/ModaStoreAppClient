@@ -50,6 +50,7 @@ import { AuthenticationComponent } from '../features/account/components/authenti
     SectionHeaderComponent,
     NavModalComponent,
     ModalComponent,
-    SearchModalComponent]
+    SearchModalComponent
+  ]
 })
 export class CoreModule { }

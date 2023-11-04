@@ -16,6 +16,7 @@ import {JwtInterceptor} from "./core/interceptors/jwt.interceptor";
 import {CommonModule} from "@angular/common";
 import {SpeedDialModule} from "primeng/speeddial";
 import {SharedModule} from "./shared/shared.module";
+import {provideClientHydration} from '@angular/platform-browser';
 
 
 @NgModule({
@@ -36,12 +37,11 @@ import {SharedModule} from "./shared/shared.module";
         DialogModule,
         SpeedDialModule,
         SharedModule,
-      // StoreModule.forRoot(reducers),
-      // EffectsModule.forRoot([BasketEffects])
     ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    provideClientHydration(),
   ],
   bootstrap: [AppComponent]
 })
