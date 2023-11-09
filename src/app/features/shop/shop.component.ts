@@ -1,11 +1,11 @@
-import {Component, ElementRef, OnInit, ViewChild, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, inject, signal} from '@angular/core';
 import {IProduct} from "../../core/models/product";
 import {ShopService} from "./shop.service";
 import {IPagination} from "../../core/models/pagination";
 import {IBrand} from "../../core/models/brand";
 import {IType} from "../../core/models/productType";
 import {ShopParams} from "../../core/models/shopParams";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {ProductService} from "../../core/services/product.service/product.service";
 import {fastCascade} from "../../shared/animations/fade-in.animation";
 import {ICategory} from "../../core/models/category";
@@ -18,9 +18,10 @@ import {IProductAttribute} from "../../core/models/catalog/i-product-attribute";
   selector: 'app-shop',
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     fastCascade,
-  ]
+  ],
 })
 export class ShopComponent implements OnInit {
 
@@ -58,14 +59,12 @@ export class ShopComponent implements OnInit {
   areSizesLoading = signal(true);
   areAttributesLoading = signal(true);
 
+  readonly #shopService: ShopService = inject(ShopService);
+  readonly #categoryService: CategoryService = inject(CategoryService);
+  readonly #productService: ProductService = inject(ProductService);
+  readonly #activatedRoute: ActivatedRoute = inject(ActivatedRoute);
 
-  constructor(
-    private shopService: ShopService,
-    private categoryService: CategoryService,
-    private productService: ProductService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.setCategory()
@@ -80,24 +79,24 @@ export class ShopComponent implements OnInit {
   }
 
   setCategory(): void {
-    this.shopParams.category = this.activatedRoute.snapshot.paramMap.get('categoryName') ?? '';
+    this.shopParams.category = this.#activatedRoute.snapshot.paramMap.get('categoryName') ?? '';
   }
 
   loadProducts() {
-    let query: string = this.activatedRoute.snapshot.paramMap.get('categoryName') ?? '';
+    let query: string = this.#activatedRoute.snapshot.paramMap.get('categoryName') ?? '';
 
     if (query) {
-      this.headerTitle = this.activatedRoute.snapshot.paramMap.get('categoryName');
-      this.productService.getProductsByCategory(query)
+      this.headerTitle = this.#activatedRoute.snapshot.paramMap.get('categoryName');
+      this.#productService.getProductsByCategory(query)
     }
     else {
       this.headerTitle = 'All Products';
-      this.productService.getProducts()
+      this.#productService.getProducts()
     }
   }
 
   getProducts() {
-    this.shopService.getProducts(this.shopParams)
+    this.#shopService.getProducts(this.shopParams)
       .subscribe({
         next: (response: IPagination) => {
           this.products = response.data;
@@ -112,7 +111,7 @@ export class ShopComponent implements OnInit {
   }
 
   getBrands() {
-    this.shopService.getBrands()
+    this.#shopService.getBrands()
       .subscribe({
         next: (response: IBrand[]) => {
           this.brands = [
@@ -126,7 +125,7 @@ export class ShopComponent implements OnInit {
   }
 
   getTypes(): void {
-    this.shopService.getTypes(this.shopParams.category)
+    this.#shopService.getTypes(this.shopParams.category)
       .subscribe({
         next: (response: IType[]) => {
           this.types = response;
@@ -138,7 +137,7 @@ export class ShopComponent implements OnInit {
   }
 
   getCategories() {
-    this.categoryService.getCategories()
+    this.#categoryService.getCategories()
       .subscribe({
         next: (response: ICategory[]) => {
           this.categories = response;
@@ -151,7 +150,7 @@ export class ShopComponent implements OnInit {
   }
 
   private updateSideBarVisibility(categories: ICategory[]): void {
-    const currentRoute: string = this.activatedRoute.snapshot.paramMap.get('categoryName');
+    const currentRoute: string = this.#activatedRoute.snapshot.paramMap.get('categoryName');
 
     const isCategoryFound = categories.some(category => category.name === currentRoute);
 
@@ -161,7 +160,7 @@ export class ShopComponent implements OnInit {
   }
 
   getSizes(): void {
-    this.productService.getSizes().subscribe({
+    this.#productService.getSizes().subscribe({
       next: (response: IProductSize[]) => {
         this.sizes = response;
       },
@@ -172,7 +171,7 @@ export class ShopComponent implements OnInit {
   }
 
   getColors(): void {
-    this.productService.getColors().subscribe({
+    this.#productService.getColors().subscribe({
       next: (response: IProductColor[]) => {
         this.colors = response;
       },
@@ -183,7 +182,7 @@ export class ShopComponent implements OnInit {
   }
 
   getAttributes(): void {
-    this.productService.getAttributes().subscribe({
+    this.#productService.getAttributes().subscribe({
       next: (response: IProductAttribute) => {
         console.log("attributes", response)
         this.attributes = response;
@@ -220,7 +219,6 @@ export class ShopComponent implements OnInit {
   }
 
   onMaterialSelected(material: string) {
-    console.log(this.shopParams)
     this.selectedMaterial = this.selectedMaterial === material ? null : material;
     this.shopParams.material = this.selectedMaterial;
     this.shopParams.pageNumber = 1;
@@ -228,7 +226,6 @@ export class ShopComponent implements OnInit {
   }
 
   onSeasonSelected(season: string) {
-    console.log(this.shopParams)
     this.selectedSeason = this.selectedSeason === season ? null : season;
     this.shopParams.season = this.selectedSeason;
     this.shopParams.pageNumber = 1;
@@ -236,7 +233,6 @@ export class ShopComponent implements OnInit {
   }
 
   onPatternSelected(pattern: string) {
-    console.log(this.shopParams)
     this.selectedPattern = this.selectedPattern === pattern ? null : pattern;
     this.shopParams.pattern = this.selectedPattern;
     this.shopParams.pageNumber = 1;
@@ -244,7 +240,6 @@ export class ShopComponent implements OnInit {
   }
 
   onStyleSelected(style: string) {
-    console.log(this.shopParams)
     this.selectedStyle = this.selectedStyle === style ? null : style;
     this.shopParams.style = this.selectedStyle;
     this.shopParams.pageNumber = 1;
