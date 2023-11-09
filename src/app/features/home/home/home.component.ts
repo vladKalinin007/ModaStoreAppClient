@@ -15,9 +15,6 @@ import {HomeService} from "../home.service";
 import {cascade, fadeIn} from "../../../shared/animations/fade-in.animation";
 import {Observable} from "rxjs";
 
-
-
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -42,8 +39,6 @@ export class HomeComponent implements OnInit {
   productImage: IProductImage[];
   product: IProduct;
   categories: ICategory[];
-
-  isLoading: boolean = true;
 
   wishedProducts$: Observable<IProduct[]>;
   history$: Observable<ISeenProductList>

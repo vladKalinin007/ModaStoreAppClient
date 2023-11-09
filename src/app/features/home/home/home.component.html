@@ -1,13 +1,11 @@
 <main>
-
+  
   <section class="hero">
     <div class="layout">
       <div class="hero__inner">
-        <ng-container *ngIf="areImagesLoading(); else imageLoaded">
+        @if (areImagesLoading()) {
           <ngx-skeleton-loader [theme]="{height: '55rem'}"></ngx-skeleton-loader>
-        </ng-container>
-        <!-- <ngx-skeleton-loader *ngIf="areImagesLoading()" [theme]="{height: '55rem'}"></ngx-skeleton-loader> -->
-        <ng-template #imageLoaded>
+        } @else {
           <div class="hero__slider">
             <p-carousel
               [autoplayInterval]="8000"
@@ -23,23 +21,7 @@
               </ng-template>
             </p-carousel>
           </div>
-        </ng-template>
-
-        <!-- <div class="hero__slider">
-          <p-carousel
-            [autoplayInterval]="8000"
-            animationTimeout="1000"
-            [value]="productImage"
-            [numVisible]="1"
-            [numScroll]="1"
-            [showIndicators]="false"
-          >
-          
-            <ng-template let-image pTemplate="item">
-              <img src="{{ image.url }}" alt="image" class="w-100" (load)="areImagesLoading.set(false)"/>
-            </ng-template>
-          </p-carousel>
-        </div> -->
+        }
       </div>
     </div>
   </section>
@@ -50,16 +32,15 @@
         <div class="categories__title">
           Categories
         </div>
-        <ng-container *ngIf="areCategoriesLoading(); else loaded">
+        @if (areCategoriesLoading()) {
           <div class="categories__list">
-            <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6]">
+            @for (i of [1, 2, 3, 4, 5, 6]; track i) {
               <ngx-skeleton-loader class="categories__item hero" [theme]="{height: '55rem'}"></ngx-skeleton-loader>
-            </ng-container>
+            }
           </div>
-        </ng-container>
-        <ng-template #loaded>
+        } @else {
           <div class="categories__list" [@cascade]="categories?.length">
-            <ng-container *ngFor="let category of categories" >
+            @for (category of categories; track category.id) {
               <div class="categories__item hero">
                 <a class="categories__item-link" [routerLink]="['/shop/', category.name]" [style.background-image]="'url(' + category.pictureUrl + ')'">
                   <span class="categories__item-caption">
@@ -69,9 +50,9 @@
                 </span>
                 </a>
               </div>
-            </ng-container>
+            }
           </div>
-        </ng-template>
+        }
       </div>
     </div>
   </section>
@@ -94,13 +75,13 @@
     [products]="onSaleProducts"
   />
 
-  <ng-container *ngIf="(seenProducts$ | async).reverse() as SeenProducts">
+  @if ((seenProducts$ | async).reverse(); as SeenProducts) {
     <app-related-products
       title="Seen products"
       category="sale"
       [products]="SeenProducts"
     />
-  </ng-container>
+  }
 
   <section class="reviews">
 
