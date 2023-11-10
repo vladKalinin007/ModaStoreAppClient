@@ -1,30 +1,36 @@
-<ng-container *ngIf="!isCheckoutPage; else checkoutNavBar">
+@if (!isCheckoutPage) {
   <header class="header">
     <div class="layout">
       <div class="header__main">
         <div class="header__items m-width">
           <div class="header__item_left">
-            <button class="search__submit" (click)="toggleMenu()">
-              <mat-icon>menu</mat-icon>
-            </button>
+            <div class="header__item-icon">
+              <a class="header__menu" (click)="toggleMenu()">
+                <i class="pi pi-align-justify header__icon-internal" size="large"></i>
+              </a>
+            </div>  
           </div>
           <div class="header__item_left">
             <div class="header__item-icon">
-              <div >
-                <button class="search__submit" (click)="toggleSearch()">
-                  <mat-icon>search</mat-icon>
-                </button>
+              <div>
+                <a class="search__submit" (click)="toggleSearch()">
+                  <i class="pi pi-search header__icon-internal" size="large"></i>
+                </a>
               </div>
             </div>
             <div class="header__item-body">
               <form [formGroup]="searchForm" class="search" [ngClass]="{'is-active': isSearchActive}">
-                <button type="button" class="search__submit">
-                  <mat-icon>search</mat-icon>
-                </button>
-                <input class="search__input" type="text" placeholder="Search by product name" formControlName="search">
-                <button type="button" class="search__reset" (click)="toggleSearch()">
-                  <mat-icon>close</mat-icon>
-                </button>
+                <div>
+                  <a type="button" class="search__submit">
+                    <i class="pi pi-search header__icon-internal" size="large"></i>
+                  </a>
+                </div>
+                <!-- <div class="search__field">  -->
+                  <input class="search__input" type="text" placeholder="Search by product name" formControlName="search" style="margin-left: 1.6rem;">
+                <!-- </div> -->
+                <a type="button" class="search__reset" (click)="toggleSearch()">
+                  <i class="pi pi-times header__icon-internal" size="large"></i>
+                </a>
               </form>
             </div>
           </div>
@@ -33,14 +39,13 @@
         <div class="header__logo">
           <a class="logo" href="/">
             <img src="assets/images/MainLogo2.png" alt="moda_logo"
-                 title="moda_logo" class="logo__image">
+                  title="moda_logo" class="logo__image">
           </a>
         </div>
         <!-------------------------------------->
         <div class="header__items">
           <!-------------------A------------------>
-          <ng-container *ngIf="currentUser() === null">
-
+          @if (!currentUser() || currentUser === null) {
             <div class="header__item_left">
               <div class="header__item-icon align-r">
                 <a [routerLink]="['/wishlist/']">
@@ -55,11 +60,18 @@
                   </ng-container>
                   <ng-template #noValueIconW>
                     <i class="pi pi-heart header__icon-internal"
-                       pBadge value="{{(products$ | async)?.length || null}}"
-                       severity="success"
-                       size="large">
+                        pBadge value="{{(products$ | async)?.length || null}}"
+                        severity="success"
+                        size="large">
                     </i>
                   </ng-template>
+                </a>
+              </div>
+            </div>
+            <div class="header__item_left">
+              <div class="header__item-icon align-r">
+                <a (click)="openLoginModal()" class="s-hamb">
+                  <i class="pi pi-user header__icon-internal" size="large"></i>
                 </a>
               </div>
             </div>
@@ -77,62 +89,31 @@
                   </ng-container>
                   <ng-template #noValueIcon>
                     <i class="pi pi-shopping-bag header__icon-internal"
-                       pBadge value="{{(basket$ | async)?.items?.length || null}}"
-                       severity="success"
-                       size="large">
+                        pBadge value="{{(basket$ | async)?.items?.length || null}}"
+                        severity="success"
+                        size="large">
                     </i>
                   </ng-template>
                 </a>
               </div>
             </div>
-            <div class="header__item_left">
-              <div class="header__item-icon align-r">
-                <a (click)="openLoginModal()" class="s-hamb">
-                  <i class="pi pi-user header__icon-internal" size="large"></i>
-                </a>
-              </div>
-            </div>
-          </ng-container>
+          }
           <!-------------------B------------------>
-          <ng-container *ngIf="currentUser()">
+          @if (currentUser()) {
             <div class="header__item_left">
               <div class="header__item-icon ">
                 <a [routerLink]="['/wishlist/']">
-                  <ng-container
-                    *ngIf="
-                    (products$ | async)?.length === 0 ||
-                    (products$ | async)?.length === undefined ||
-                    (products$ | async)?.length === null;
-                    else noValueIconW"
-                  >
+                  @if ((products$ | async)?.length === 0 ||
+                  (products$ | async)?.length === undefined ||
+                  (products$ | async)?.length === null;) {
                     <i class="pi pi-heart header__icon-internal" size="large"></i>
-                  </ng-container>
-                  <ng-template #noValueIconW>
+                  } @else {
                     <i class="pi pi-heart header__icon-internal"
-                       pBadge value="{{(products$ | async)?.length || null}}"
-                       severity="success"
-                       size="large">
+                        pBadge value="{{(products$ | async)?.length || null}}"
+                        severity="success"
+                        size="large">
                     </i>
-                  </ng-template>
-                </a>
-              </div>
-            </div>
-            <div class="header__item_left">
-              <div class="header__item-icon ">
-                <a (click)="openDialog()">
-                  <ng-container *ngIf="(basket$ | async)?.items.length !== 0; else noValueIcon">
-                    <i class="pi pi-shopping-bag header__icon-internal"
-                       pBadge
-                       value="{{(basket$ | async).items.length}}"
-                       severity="success"
-                       size="large">
-                    </i>
-                  </ng-container>
-                  <ng-template #noValueIcon>
-                    <ng-container *ngIf="!(basket$ | async)?.items.length || (basket$ | async)?.items.length === null || (basket$ | async)?.items.length === undefined || (basket$ | async)?.items.length === 0">
-                      <i class="pi pi-shopping-bag header__icon-internal" size="large"></i>
-                    </ng-container>
-                  </ng-template>
+                  }
                 </a>
               </div>
             </div>
@@ -177,21 +158,37 @@
                 </div>
               </div>
             </div>
-          </ng-container>
+            <div class="header__item_left">
+              <div class="header__item-icon ">
+                <a (click)="openDialog()">
+                  @if ((basket$ | async)?.items.length !== 0) {
+                    <i class="pi pi-shopping-bag header__icon-internal"
+                        pBadge value="{{(basket$ | async)?.items.length}}"
+                        severity="success"
+                        size="large">
+                    </i>
+                  } @else {
+                    @if (!(basket$ | async)?.items.length || (basket$ | async)?.items.length === null || (basket$ | async)?.items.length === undefined || (basket$ | async)?.items.length === 0) {
+                      <i class="pi pi-shopping-bag header__icon-internal" size="large"></i>
+                    }
+                  }
+                </a>
+              </div>
+            </div>
+          }
         </div>
       </div>
       <div [@fastCascade]="(searchResults$ | async)?.data?.length">
-        <app-product-list-item
-          *ngFor="let result of (searchResults$ | async)?.data"
-          [product]="result">
-        </app-product-list-item>
+        @for (result of (searchResults$ | async)?.data; track $index) {
+          <app-product-list-item
+            [product]="result">
+          </app-product-list-item>
+        }
       </div>
       <app-nav-modal [isMenuActive]="isMenuActive"></app-nav-modal>
     </div>
   </header>
-</ng-container>
-
-<ng-template #checkoutNavBar>
+} @else {
   <header class="checkout-header">
     <div class="layout">
       <div class="checkout-header__inner">
@@ -206,7 +203,7 @@
       </div>
     </div>
   </header>
-</ng-template>
+}
 <p-toast></p-toast>
 <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 
