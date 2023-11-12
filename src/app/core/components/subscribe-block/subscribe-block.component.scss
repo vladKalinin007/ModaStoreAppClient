@@ -1,11 +1,21 @@
 @import "src/app/shared/styles/common.scss";
 
+.pi {
+    font-size: 3rem;
+}
+
+.layout {
+  border-radius: 8px;
+  background-color: #f4f4f4cc;
+  margin-bottom: 4rem;
+  box-shadow: 0.8px 0.5px 5px #c0d6ed
+}
+
 .subscribe-block {
   margin: 8rem 0 0;
-  background: #f2f2f2;
 
   &__inner {
-    padding: 6.4rem 0;
+    padding: 6.4rem 2rem;
     min-height: 17.1rem;
     display: flex;
     align-items: center;
@@ -39,7 +49,7 @@
 
   &__form-input {
     background: #fff;
-    padding: 0 2rem;
+    margin-right: 2rem;
     width: 100%;
   }
 

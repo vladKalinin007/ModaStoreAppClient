@@ -13,6 +13,7 @@ import {CategoryService} from "../../core/services/category.service/category.ser
 import {IProductColor} from "../../core/models/catalog/product-color";
 import {IProductSize} from "../../core/models/catalog/product-size";
 import {IProductAttribute} from "../../core/models/catalog/i-product-attribute";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-shop',
@@ -30,6 +31,7 @@ export class ShopComponent implements OnInit {
   brands: IBrand[];
   types: IType[];
   categories: ICategory[];
+  categories$: Observable<ICategory[]>;
   colors: IProductColor[];
   sizes: IProductSize[];
   attributes: IProductAttribute;
@@ -98,7 +100,7 @@ export class ShopComponent implements OnInit {
   getProducts() {
     this.#shopService.getProducts(this.shopParams)
       .subscribe({
-        next: (response: IPagination) => {
+        next: (response: IPagination<IProduct>) => {
           this.products = response.data;
           this.shopParams.pageNumber = response.pageIndex;
           this.shopParams.pageSize = response.pageSize;
@@ -137,16 +139,17 @@ export class ShopComponent implements OnInit {
   }
 
   getCategories() {
-    this.#categoryService.getCategories()
-      .subscribe({
-        next: (response: ICategory[]) => {
-          this.categories = response;
-          this.updateSideBarVisibility(response);
-        },
-        error: (error) => {
-          console.log(error);
-        }
-      });
+    this.categories$ = this.#categoryService.categories$
+    // this.#categoryService.getCategories()
+    //   .subscribe({
+    //     next: (response: ICategory[]) => {
+    //       this.categories = response;
+    //       this.updateSideBarVisibility(response);
+    //     },
+    //     error: (error) => {
+    //       console.log(error);
+    //     }
+    //   });
   }
 
   private updateSideBarVisibility(categories: ICategory[]): void {

@@ -6,30 +6,30 @@
           {{ title }}
         </div>
         <a routerLink="/shop/{{category}}" class="products__all-link">
-          See the full list
-          <!--<i class="pi pi-arrow-circle-right products__all-icon"></i>-->
-          <mat-icon class="products__all-link-icon">apps</mat-icon>
+          <div class="products__all-link-text"> Open full list </div>
+          <div class="products__all-link-icon">
+            <i class="pi pi-chevron-down"></i>
+          </div>     
         </a>
       </div>
       <div class="products__body">
-        <div class="products__list" [ngClass]="{'products__list_full': products?.length >= 4}">
-          <ng-container *ngIf="_isLoading(); else loaded">
-            <ng-container *ngFor="let i of [1, 2, 3, 4]">
-              <div class="products__item" style="margin: 0 2rem 4rem 0;">
+        <div class="products__list" [ngClass]="{'products__list_full': (products$ | async)?.length >= 4}">
+          @if (isLoading$ | async) {
+            @for (i of [1, 2, 3, 4]; track i) {
+              <div class="products__item products__skeleton" >
                 <ngx-skeleton-loader [theme]="{height: '50rem'}" ></ngx-skeleton-loader>
               </div>
-            </ng-container>
-          </ng-container>
-          <ng-template #loaded>
-            <ng-container *ngFor="let product of products?.slice(0, 4)">
+            }
+          } @else {
+            @for (product of (products$ | async); track product.id) {
               <div class="products__item">
                 <app-product-item
                   [categoryName]="category"
-                  [product]="product">
+                  [_product$]="product">
                 </app-product-item>
               </div>
-            </ng-container>
-          </ng-template>
+            }
+          }
         </div>
       </div>
     </div>

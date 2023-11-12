@@ -1,61 +1,43 @@
-import {Component, OnInit, inject, signal} from '@angular/core';
-
+import {ChangeDetectionStrategy, Component, OnInit, inject} from '@angular/core';
 import {IProduct} from "../../../core/models/product";
 import {ICategory} from "../../../core/models/category";
-import {ShopParams} from "../../../core/models/shopParams";
-import {IProductImage} from "../../../core/models/catalog/product-image";
-import {ISeenProductList} from "../../../core/models/customer/seenProductList";
-
-import {ProductService} from "../../../core/services/product.service/product.service";
-import {PictureService} from "../../../core/services/picture.service";
-import {HistoryService} from "../../../shared/services/history.service";
-import {WishlistService} from "../../wishlist/wishlist.service";
 import {HomeService} from "../home.service";
-
 import {cascade, fadeIn} from "../../../shared/animations/fade-in.animation";
-import {Observable} from "rxjs";
+import {Observable, map, startWith} from "rxjs";
+import { HomeModule } from '../home.module';
+import { IProductReview } from 'src/app/core/models/catalog/product-review';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  animations: [
-    fadeIn,
-    cascade
-  ]
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [HomeModule],
+  animations: [fadeIn, cascade]
 })
 export class HomeComponent implements OnInit {
+  readonly #homeService = inject(HomeService);
 
-  private readonly _pictureService = inject(PictureService);
-  private readonly _homeService = inject(HomeService);
-  private readonly _productService = inject(ProductService);
-  private readonly _historyService = inject(HistoryService);
-  private readonly _wishlistService = inject(WishlistService);
+  carouselPictures$: Observable<string[]>;
+  categories$: Observable<ICategory[]>;
+  productBestsellers$: Observable<IProduct[]>;
+  productNew$: Observable<IProduct[]>;
+  productOnSale$: Observable<IProduct[]>;
+  recentlyViewedProducts$: Observable<IProduct[]>;
+  latestReviews$: Observable<IProductReview[]>; 
 
-  products: IProduct[];
-  newProducts: IProduct[];
-  bestSellersProducts: IProduct[]
-  onSaleProducts: IProduct[];
-  productImage: IProductImage[];
-  product: IProduct;
-  categories: ICategory[];
-
-  wishedProducts$: Observable<IProduct[]>;
-  history$: Observable<ISeenProductList>
-  seenProducts$: Observable<IProduct[]>;
-
-  areBestsellersLoading = signal(true);
+  areBestsellersLoading$: Observable<boolean>;
   areNewProductsLoading$: Observable<boolean>;
-  areOnSaleProductsLoading = signal(true);
-  areRecentlyViewedProductsLoading = signal(true);
-  areCategoriesLoading = signal(true);
-  areImagesLoading = signal(true);
+  areOnSaleProductsLoading$: Observable<boolean>;
+  areRecentlyViewedProductsLoading$: Observable<boolean>;
+  areCategoriesLoading$: Observable<boolean>;
+  areImagesLoading$: Observable<boolean>;
+  areReviewsLoading$: Observable<boolean>;
 
-  shopParams: ShopParams = new ShopParams();
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.getCarouselPictures();
-    this.loadProduct();
     this.getCategories();
     this.getRecentlyViewedProducts()
     this.getNewProducts();
@@ -63,98 +45,60 @@ export class HomeComponent implements OnInit {
     this.getOnSaleProducts();
   }
 
-  getCategories() {
-    this._homeService.getCategories()
-      .subscribe(categories => {
-      this.categories = categories;
-      this.areCategoriesLoading.set(false);
-    });
-  }
-
-  getProducts() {
-    this._productService.getProducts(this.shopParams)
-      .subscribe({
-        next: (response) => {
-          this.products = response.data;
-        },
-        error: (error) => {
-          console.log(error);
-        }
-      });
+  getCategories(): void {
+    this.categories$ = this.#homeService.categories$;
+    this.areCategoriesLoading$ = this.categories$.pipe(
+      map(categories => categories && categories.length > 0 ? false : true),
+      startWith(true)
+    );
   }
 
   getBestSellersProducts(): void {
-    this._productService.getBestsellers()
-      .subscribe({
-        next: (response) => {
-          this.bestSellersProducts = response.data;
-          this.areBestsellersLoading.set(false);
-        },
-        error: (error) => {
-          console.log(error);
-        }
-      });
+    this.productBestsellers$ = this.#homeService.bestsellerProducts$;
+    this.areBestsellersLoading$ = this.productBestsellers$.pipe(
+      map(products => products ? false : true),
+      startWith(true)
+    );
   }
 
   getOnSaleProducts(): void {
-    this._productService.getOnSaleProducts()
-      .subscribe({
-        next: (response) => {
-          this.onSaleProducts = response.data;
-          this.areOnSaleProductsLoading.set(false);
-        },
-        error: (error) => {
-          console.log(error);
-        }
-      });
+    this.productOnSale$ = this.#homeService.onSaleProducts$;
+    this.areOnSaleProductsLoading$ = this.productOnSale$.pipe(
+      map(products => products ? false : true),
+      startWith(true)
+    );
   }
 
   getNewProducts(): void {
-    this._productService.getNewProducts()
-      .subscribe({
-        next: (response) => {
-          this.newProducts = response.data;
-          // this.areNewProductsLoading.set(false);
-        },
-        error: (error) => {
-          console.log(error);
-        }
-      });
+    this.productNew$ = this.#homeService.newProducts$;
+    this.areNewProductsLoading$ = this.productNew$.pipe(
+      map(products => products ? false : true),
+      startWith(true)
+    );
   }
 
-  private markWishlistibility(products: IProduct[]): IProduct[] {
-    return this._wishlistService.isInWishlist(products);
+  getRecentlyViewedProducts(): void {
+    this.recentlyViewedProducts$ = this.#homeService.recentlyViewedProducs$;
+    this.areRecentlyViewedProductsLoading$ = this.recentlyViewedProducts$.pipe(
+      map(products => products ? false : true)
+    );
   }
 
-  loadProduct() {
-    this._productService.getProduct("87c12f75-8176-4ea9-8ee4-a117a2a27d1e").subscribe({
-      next: (response) => {
-        this.product = response;
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    });
+  getLatestReviews(): void {
+    this.latestReviews$ = this.#homeService.latestReviews$;
+    this.areReviewsLoading$ = this.latestReviews$.pipe(
+      map(reviews => reviews && reviews.length > 0 ? false : true),
+      startWith(true)
+    );
   }
 
-  getRecentlyViewedProducts() {
-    this.history$ = this._historyService.history$;
-    this.seenProducts$ = this._historyService.product$;
-    this.areRecentlyViewedProductsLoading.set(false);
-  }
-
-
-  getCarouselPictures() {
-    this._pictureService.getCarouselPictures().subscribe({
-      next: (response: IProductImage[]) => {
-        this.productImage = response;
-        this.areImagesLoading.set(false);
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    });
-  }
+  getCarouselPictures(): void {
+    this.carouselPictures$ = this.#homeService.carouselPictures$;
+    this.areImagesLoading$ = this.carouselPictures$.pipe(
+      map(pictures => pictures && pictures.length > 0 ? false : true),
+      startWith(true)
+    );
+  } 
 }
 
 

@@ -18,7 +18,7 @@ export class ShopService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts(shopParams: ShopParams): Observable<IPagination> {
+  getProducts(shopParams: ShopParams): Observable<IPagination<IProduct>> {
 
     let params: HttpParams = new HttpParams();
 
@@ -76,7 +76,7 @@ export class ShopService {
 
     console.log(params)
 
-    return this.http.get<IPagination>(this.baseUrl + 'product', {observe: 'response', params}).pipe(map(response => {
+    return this.http.get<IPagination<IProduct>>(this.baseUrl + 'product', {observe: 'response', params}).pipe(map(response => {
         return response.body;
       })
     );

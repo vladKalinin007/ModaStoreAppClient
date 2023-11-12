@@ -7,6 +7,7 @@ import {map} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {IAddress} from "../../core/models/address";
 import {IProductReview} from "../../core/models/catalog/product-review";
+import { ReviewService } from 'src/app/shared/services/review-service/review.service';
 
 
 @Injectable({
@@ -16,8 +17,11 @@ export class AccountService {
 
   private httpClient: HttpClient = inject(HttpClient);
   private router: Router = inject(Router);
+  readonly #reviewService = inject(ReviewService)
 
-  private baseUrl: string = environment.apiUrl;
+  userReviews$: Observable<IProductReview[]>;
+
+  BASE_URL: string = environment.apiUrl;
 
   public _currentUser: WritableSignal<IUser> = signal<IUser>(null);
 
@@ -28,7 +32,7 @@ export class AccountService {
       return of(null);
     }
 
-    return this.httpClient.get(this.baseUrl + 'User').pipe(
+    return this.httpClient.get(this.BASE_URL + 'User').pipe(
       map((user: IUser) => {
         if (user) {
           this._currentUser.set(user);
@@ -38,7 +42,7 @@ export class AccountService {
   }
 
   login(values: any) {
-    return this.httpClient.post(this.baseUrl + 'authentication/login', values).pipe(
+    return this.httpClient.post(this.BASE_URL + 'authentication/login', values).pipe(
       map((user: IUser) => {
         if (user) {
           this._currentUser.set(user);
@@ -55,7 +59,7 @@ export class AccountService {
   }
 
   register(values: any) {
-    return this.httpClient.post(this.baseUrl + 'authentication/register', values).pipe(
+    return this.httpClient.post(this.BASE_URL + 'authentication/register', values).pipe(
       map((user: IUser) => {
         if (user) {
           this._currentUser.set(user);
@@ -66,22 +70,22 @@ export class AccountService {
   }
 
   checkEmailExists(email: string) {
-    return this.httpClient.get(this.baseUrl + 'User/Emailexists?email=' + email);
+    return this.httpClient.get(this.BASE_URL + 'User/Emailexists?email=' + email);
   }
 
   getUserAddress(): Observable<IAddress> {
-    return this.httpClient.get<IAddress>(this.baseUrl + 'User/Address');
+    return this.httpClient.get<IAddress>(this.BASE_URL + 'User/Address');
   }
 
   updateUserAddress(address: IAddress): Observable<IAddress> {
-    return this.httpClient.put<IAddress>(this.baseUrl + 'User/Address', address);
+    return this.httpClient.put<IAddress>(this.BASE_URL + 'User/Address', address);
   }
 
   createUserAddress(address: IAddress): Observable<IAddress> {
-    return this.httpClient.post<IAddress>(this.baseUrl + 'account/address', address);
+    return this.httpClient.post<IAddress>(this.BASE_URL + 'account/address', address);
   }
 
-  getUserReviews(): Observable<IProductReview[]> {
-    return this.httpClient.get<IProductReview[]>(this.baseUrl + 'User/Reviews');
+  getUserReviews(): void {
+    this.userReviews$ = this.httpClient.get<IProductReview[]>(this.BASE_URL + 'reviews');
   }
 }

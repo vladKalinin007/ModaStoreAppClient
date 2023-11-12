@@ -1,23 +1,22 @@
 <main>
-  
   <section class="hero">
     <div class="layout">
       <div class="hero__inner">
-        @if (areImagesLoading()) {
+        @if (areImagesLoading$ | async) {
           <ngx-skeleton-loader [theme]="{height: '55rem'}"></ngx-skeleton-loader>
         } @else {
           <div class="hero__slider">
             <p-carousel
               [autoplayInterval]="8000"
               animationTimeout="1000"
-              [value]="productImage"
+              [value]="carouselPictures$ | async"
               [numVisible]="1"
               [numScroll]="1"
               [showIndicators]="false"
             >
             
               <ng-template let-image pTemplate="item">
-                <img src="{{ image.url }}" alt="image" class="w-100" (load)="areImagesLoading.set(false)"/>
+                <img src="{{ image.url }}" alt="image" class="w-100" (load)="areImagesLoading$"/>
               </ng-template>
             </p-carousel>
           </div>
@@ -25,22 +24,21 @@
       </div>
     </div>
   </section>
-
   <section class="categories">
     <div class="layout">
       <div class="categories__inner">
         <div class="categories__title">
           Categories
-        </div>
-        @if (areCategoriesLoading()) {
+        </div> 
+        @if (areCategoriesLoading$ | async) {
           <div class="categories__list">
             @for (i of [1, 2, 3, 4, 5, 6]; track i) {
               <ngx-skeleton-loader class="categories__item hero" [theme]="{height: '55rem'}"></ngx-skeleton-loader>
             }
           </div>
         } @else {
-          <div class="categories__list" [@cascade]="categories?.length">
-            @for (category of categories; track category.id) {
+          <div class="categories__list" [@cascade]="(categories$ | async)?.length">
+            @for (category of (categories$ | async); track category.id) {
               <div class="categories__item hero">
                 <a class="categories__item-link" [routerLink]="['/shop/', category.name]" [style.background-image]="'url(' + category.pictureUrl + ')'">
                   <span class="categories__item-caption">
@@ -59,27 +57,31 @@
   
   <app-related-products
     title="New products"
+    [isLoading$]="areNewProductsLoading$"
     category="new"
-    [products]="newProducts"
+    [products$]="productNew$"
   />
 
   <app-related-products
     title="Bestsellers"
+    [isLoading$]="areBestsellersLoading$"
     category="bestsellers"
-    [products]="bestSellersProducts"
+    [products$]="productBestsellers$"
   />
 
   <app-related-products
     title="Sale"
+    [isLoading$]="areOnSaleProductsLoading$"
     category="sale"
-    [products]="onSaleProducts"
+    [products$]="productOnSale$"
   />
 
-  @if ((seenProducts$ | async).reverse(); as SeenProducts) {
+  @if ((recentlyViewedProducts$ | async)?.reverse(); as IProduct[]) {
     <app-related-products
       title="Seen products"
+      [isLoading$]="areRecentlyViewedProductsLoading$"
       category="sale"
-      [products]="SeenProducts"
+      [products$]="recentlyViewedProducts$"
     />
   }
 

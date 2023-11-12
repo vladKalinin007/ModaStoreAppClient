@@ -6,11 +6,17 @@
   color: #808080c4;
 }
 
+.pi {
+    font-size: 1.4rem;
+    padding-left: 0.8rem;
+}
+
 .products {
   /*margin: 8rem 0 6.5rem;*/
 
   &__inner {
-    /*border-bottom: 1px #e6e5e5 solid;*/
+    padding-top: 4rem;
+    border-top: 0.8px dotted #ded5d5;
   }
 
   &__header {
@@ -20,13 +26,23 @@
     margin-bottom: 5rem;
   }
 
+  &__skeleton {
+    margin: 0 2rem 4rem 0;
+    &:nth-last-child(1) {
+      margin-right: 0;
+    }
+  }
+
   &__title {
-    font-size: 48px;
+    font-size: 36px;
     line-height: 1.33;
     font-weight: 500;
     font-family: "Playfair Display", sans-serif;
     margin: 0;
-    color: rgba(128, 128, 128, 0.768627451);
+    // color: linear-gradient(to right, #2F4F4F, #C0C0C0);
+    background: linear-gradient(to right, #c4c8c8, #b0aeae);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   &__all-link {
@@ -34,21 +50,26 @@
     align-items: center;
     stroke: currentColor;
     font-size: 1.8rem;
-    font-style: italic;
+    // font-style: italic;
     font-family: 'Playfair Display', sans-serif;
-    color: rgba(128, 128, 128, 0.768627451);
+    color: #bfbebe;
 
     & .svg-icon {
       margin-left: 2rem;
       transition: .2s;
     }
 
-    /*&__all-link-icon {
+    &__all-link-text {
       margin-left: 1.2rem;
-    }*/
+      color: #bfbebe;
+    }
+
+    &__all-link-icon {
+      margin-left: 1.2rem;
+    }
 
     &:hover {
-      text-decoration: underline;
+      // text-decoration: underline;
       color: currentColor;
     }
 

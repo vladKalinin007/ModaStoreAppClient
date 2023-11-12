@@ -1,22 +1,73 @@
-import {Injectable, OnInit} from '@angular/core';
-import {environment} from "../../../environments/environment";
-import {HttpClient} from "@angular/common/http";
-import {ICategory} from "../../core/models/category";
-import {Observable} from "rxjs";
+import { ICategory } from './../../core/models/category';
+import {Injectable, inject} from '@angular/core';
+import {Observable, map} from "rxjs";
 import {CategoryService} from "../../core/services/category.service/category.service";
+import { PictureService } from 'src/app/core/services/picture.service';
+import { ProductService } from 'src/app/core/services/product.service/product.service';
+import { HistoryService } from 'src/app/shared/services/history.service';
+import { IProduct } from 'src/app/core/models/product';
+import { ReviewService } from 'src/app/shared/services/review-service/review.service';
+import { IProductReview } from 'src/app/core/models/catalog/product-review';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HomeService {
+  readonly #categoryService = inject(CategoryService);
+  readonly #pictureService = inject(PictureService);
+  readonly #productService = inject(ProductService);
+  readonly #historyService = inject(HistoryService);
+  readonly #reviewService = inject(ReviewService);
 
-  constructor(
-    private http: HttpClient,
-    private categoryService: CategoryService
-  ) { }
+  categories$: Observable<ICategory[]>;
+  carouselPictures$: Observable<string[]>;
+  bestsellerProducts$: Observable<IProduct[]>;
+  newProducts$: Observable<IProduct[]>;
+  onSaleProducts$: Observable<IProduct[]>;
+  recentlyViewedProducs$: Observable<IProduct[]>;
+  latestReviews$: Observable<IProductReview[]>; 
 
-  getCategories(): Observable<ICategory[]> {
-    return this.categoryService.getCategories();
+  constructor() {
+    this.getCategories();
+    this.getCarouselPictures();
+    this.getBestsellers();
+    this.getNewProducts();
+    this.getOnSaleProducts();
+    this.getRecentlyViewedProducts();
   }
 
+  getCategories(): void {
+    this.categories$ = this.#categoryService.categories$;
+  }
+  
+  getCarouselPictures(): void {
+    this.carouselPictures$ = this.#pictureService.carouselPictures$;
+    console.log(`carouselPictures$ = ${this.carouselPictures$}`)
+  }
+
+  getBestsellers(): void {
+    this.bestsellerProducts$ = this.#productService.getBestsellers().pipe(
+      map(response => response.data)
+    );
+  }
+
+  getNewProducts(): void {
+    this.newProducts$ = this.#productService.getNewProducts().pipe(
+      map(response => response.data)
+    );
+  }
+
+  getOnSaleProducts(): void {
+    this.onSaleProducts$ = this.#productService.getOnSaleProducts().pipe(
+      map(response => response.data)
+    );
+  }
+
+  getRecentlyViewedProducts(): void {
+    this.recentlyViewedProducs$ = this.#historyService.product$;
+  }
+
+  getLatestReviews(): void {
+    this.latestReviews$ = this.#reviewService.latestReviews$;
+  }
 }

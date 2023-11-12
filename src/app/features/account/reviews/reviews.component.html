@@ -1,32 +1,29 @@
-<ng-container>
-  <ng-container *ngIf="reviews; else empty">
-    <ng-container *ngFor="let review of reviews">
-      <div class="product-review">
-        <div class="product-review__picture">
-          <a href="" class="product-review__picture-link">
-            <img src="{{review.pictureUrl}}" alt="" class="product-review__image">
-          </a>
+@if (userReviews$ | async) {
+  @for (review of (userReviews$ | async); track $index) {
+    <div class="product-review">
+      <div class="product-review__picture">
+        <a href="" class="product-review__picture-link">
+          <img src="{{review.pictureUrl}}" alt="" class="product-review__image">
+        </a>
+      </div>
+      <div class="product-review__content">
+        <div class="product-review__header">
+          {{review.productName}}
         </div>
-        <div class="product-review__content">
-          <div class="product-review__header">
-            {{review.productName}}
-          </div>
-          <div class="product-review__review">
-            <app-review [review]="review"></app-review>
-            <ng-template #empty>
-              <app-empty placeholderMessage="No reviews" placeholderIcon="chat_error"></app-empty>
-            </ng-template>
-          </div>
+        <div class="product-review__review">
+          <app-review [review]="review"></app-review>
+          <ng-template #empty>
+            <app-empty placeholderMessage="No reviews" placeholderIcon="chat_error"></app-empty>
+          </ng-template>
         </div>
       </div>
-    </ng-container>
-  </ng-container>
-  <ng-template #empty>
-    <app-empty placeholderMessage="No reviews" placeholderIcon="chat_error"></app-empty>
-  </ng-template>
-</ng-container>
+    </div>
+  }
+} @else {
+  <app-empty placeholderMessage="No reviews" placeholderIcon="chat_error"></app-empty>
+}
 
-<ng-template #productReview>
+<!-- <ng-template #productReview>
   <ng-container *ngIf="reviews; else empty">
     <ng-container *ngFor="let review of reviews">
       <app-review [review]="review"></app-review>
@@ -35,4 +32,4 @@
   <ng-template #empty>
     <app-empty placeholderMessage="No reviews" placeholderIcon="chat_error"></app-empty>
   </ng-template>
-</ng-template>
+</ng-template> -->

@@ -29,7 +29,7 @@ export class ProductItemsCarouselComponent implements OnInit {
   getProducts() {
     this.productService.getProducts(this.shopParams)
       .subscribe({
-        next: (response: IPagination) => {
+        next: (response: IPagination<IProduct>) => {
           this.products = response.data;
 
         },

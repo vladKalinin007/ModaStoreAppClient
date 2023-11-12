@@ -17,13 +17,12 @@ import {IProductAttribute} from "../../models/catalog/i-product-attribute";
 })
 export class ProductService {
 
-  baseUrl: string = environment.apiUrl;
+  BASE_URL: string = environment.apiUrl + 'products';
 
   constructor(private http: HttpClient) { }
 
   getProducts(shopParams?: ShopParams) {
 
-    const url: string = `${this.baseUrl}product`;
     let params = new HttpParams();
 
     params = shopParams?.brandId ? params.append('brandId', shopParams.brandId) : params;
@@ -36,72 +35,67 @@ export class ProductService {
 
     const options = { observe: 'response' as const, params };
 
-    return this.http.get<IPagination>(url, options).pipe(
+    return this.http.get<IPagination<IProduct>>(this.BASE_URL, options).pipe(
       map(response => response.body)
     );
   }
 
   getBestsellers() {
-    const url: string = `${this.baseUrl}Product`;
     let params: HttpParams = new HttpParams();
-    params = params.append('IsBestSeller', 'true');
+    params = params.append('isBestseller', 'true');
     const options = { observe: 'response' as const, params };
-    return this.http.get<IPagination>(url, options).pipe(
+    return this.http.get<IPagination<IProduct>>(this.BASE_URL, options).pipe(
       map(response => response.body)
     );
   }
 
   getNewProducts() {
-    const url: string = `${this.baseUrl}Product`;
     let params: HttpParams = new HttpParams();
-    params = params.append('IsNew', 'true');
+    params = params.append('isNew', 'true');
     const options = { observe: 'response' as const, params };
-    return this.http.get<IPagination>(url, options).pipe(
+    return this.http.get<IPagination<IProduct>>(this.BASE_URL, options).pipe(
       map(response => response.body)
     );
   }
 
   getOnSaleProducts() {
-    const url: string = `${this.baseUrl}Product`;
     let params: HttpParams = new HttpParams();
-    params = params.append('IsOnSale', 'true');
+    params = params.append('isOnSale', 'true');
     const options = { observe: 'response' as const, params };
-    return this.http.get<IPagination>(url, options).pipe(
+    return this.http.get<IPagination<IProduct>>(this.BASE_URL, options).pipe(
       map(response => response.body)
     );
   }
 
   getProduct(id: string) {
-    const url: string = `${this.baseUrl}product/${id}`;
-
-    return this.http.get<IProduct>(url).pipe(
+    return this.http.get<IProduct>(this.BASE_URL).pipe(
       map(response => response[0])
     );
   }
 
   getBrands() {
-    return this.http.get<IBrand[]>(this.baseUrl + 'productBrand/');
+    return this.http.get<IBrand[]>(this.BASE_URL + 'productBrand/');
   }
 
   getTypes() {
-    return this.http.get<IType[]>(this.baseUrl + 'productType/');
+    return this.http.get<IType[]>(this.BASE_URL + 'productType/');
   }
 
   getProductsByCategory(categoryName: string): Observable<IProduct[]> {
-    const url: string = `${this.baseUrl}Product?categoryName=${categoryName}`;
+    const url: string = `${this.BASE_URL}products?categoryName=${categoryName}`;
     console.log("it works")
     return this.http.get<IProduct[]>(url);
   }
 
   getSizes(): Observable<IProductSize[]> {
-    return this.http.get<IProductSize[]>(this.baseUrl + 'Product/Sizes');
+    return this.http.get<IProductSize[]>(this.BASE_URL + '/sizes');
   }
 
   getColors(): Observable<IProductColor[]> {
-    return this.http.get<IProductColor[]>(this.baseUrl + 'Product/Colors');
+    return this.http.get<IProductColor[]>(this.BASE_URL + '/colors');
   }
 
   getAttributes(): Observable<IProductAttribute> {
-    return this.http.get<IProductAttribute>(this.baseUrl + 'Product/Attributes');
+    return this.http.get<IProductAttribute>(this.BASE_URL + '/attributes');
   }
 }

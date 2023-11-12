@@ -6,7 +6,8 @@ import {IWishlistItem} from "../../../core/models/customer/wishlistItem";
 import {ActivatedRoute, Router} from "@angular/router";
 import {IProductColor} from "../../../core/models/catalog/product-color";
 import {IProductImage} from "../../../core/models/catalog/product-image";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-item',
@@ -15,6 +16,7 @@ import {Observable} from "rxjs";
 })
 export class ProductItemComponent implements OnInit {
 
+  @Input() _product$: Observable<IProduct>;
   @Input() product: IProduct;
   @Input() isFavoritesIconVisible: boolean = true;
   @Input() isCaptionVisible: boolean;
@@ -25,7 +27,9 @@ export class ProductItemComponent implements OnInit {
   wishedProducts$: Observable<IProduct[]>;
 
   productColors: IProductColor[];
+  _productColors$: Observable<IProductColor[]>;
   productImages: IProductImage[];
+  _productImages$: Observable<IProductImage[]>;
   imageIndex: number = 0;
 
   id: string;
@@ -39,7 +43,13 @@ export class ProductItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.productColors = this.product.colors;
+    this._productColors$ = this._product$.pipe(
+      map(product => product.colors)
+    );
     this.productImages = this.product.pictures;
+    this._productImages$ = this._product$.pipe(
+      map(product => product.pictures)
+    );
     this.wishedProducts$ = this.wishlistService.products$;
     console.log("WISHLIST IN PRODUCT ITEM:", this.wishedProducts$);
     this.onWishlistProductChanged();
@@ -56,8 +66,6 @@ export class ProductItemComponent implements OnInit {
       } else {
         this.product.isInWishlist = false;
       }
-
-      console.log("WISHLIST IN ONWISHLISTPRODUCTCHANGED is in wishlist:", this.product.isInWishlist);
     }
     );
   }

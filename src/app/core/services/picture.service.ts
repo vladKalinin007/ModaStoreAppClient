@@ -1,18 +1,24 @@
-import {Inject, Injectable} from '@angular/core';
+import {Inject, Injectable, inject} from '@angular/core';
 import {environment} from "../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PictureService {
+  readonly #http = inject(HttpClient);
 
-  baseUrl: string = environment.apiUrl + 'pictures'
+  BASE_URL: string = environment.apiUrl + 'pictures'
+  carouselPictures$: Observable<string[]>;
 
-  constructor(private http: HttpClient) { }
-
-  getCarouselPictures() {
-    return this.http.get(`${this.baseUrl}/carousel`);
+  constructor() { 
+    this.getCarouselPictures();
   }
 
+  getCarouselPictures() {
+    this.carouselPictures$ = this.#http.get<string[]>(`${this.BASE_URL}/carousel`);
+    console.log(`BASE_URL = ${this.BASE_URL}/carousel`)
+    console.log(`carouselPictures$ = ${this.carouselPictures$}`)
+  }
 }

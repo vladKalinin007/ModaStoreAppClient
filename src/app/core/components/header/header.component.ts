@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
   basket$: Observable<IBasket>;
   wishlist$: Observable<IWishlist>;
   products$: Observable<IProduct[]>
-  searchResults$: Observable<IPagination>;
+  searchResults$: Observable<IPagination<IProduct>>;
 
   isMenuActive: boolean = false;
   isSearchActive: boolean = false;

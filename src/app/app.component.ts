@@ -5,14 +5,12 @@ import {MenuItem} from "primeng/api";
 import {NavigationEnd, Router} from "@angular/router";
 import {WishlistService} from "./features/wishlist/wishlist.service";
 import {HistoryService} from "./shared/services/history.service";
-import { ConfirmationService, MessageService } from 'primeng/api';
 import { StorageService } from './core/services/storage.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [ConfirmationService, MessageService]
 })
 export class AppComponent implements OnInit {
 
@@ -20,7 +18,6 @@ export class AppComponent implements OnInit {
   readonly #accountService: AccountService = inject(AccountService);
   readonly #wishlistService: WishlistService = inject(WishlistService);
   readonly #historyService: HistoryService = inject(HistoryService);
-  readonly #messageService: MessageService = inject(MessageService);
   readonly #router: Router = inject(Router);
   readonly #storageService: StorageService = inject(StorageService);
 

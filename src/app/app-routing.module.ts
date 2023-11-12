@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from "./features/home/home/home.component";
-import {TestErrorComponent} from "./core/components/test-error/test-error.component";
 import {ServerErrorComponent} from "./core/components/server-error/server-error.component";
 import {NotFoundComponent} from "./core/components/not-found/not-found.component";
 import {BlogComponent} from "./features/blog/blog/blog.component";
@@ -68,11 +67,6 @@ const routes: Routes = [
     /*canActivate: [AuthGuard],*/
     loadChildren: () => import('./features/checkout/checkout.module').then(m => m.CheckoutModule),
     data: {breadcrumb: 'Checkout'}
-  },
-  {
-    path: 'test-error',
-    component: TestErrorComponent,
-    data: {breadcrumb: 'Test Error'}
   },
   {
     path: 'server-error',

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {IProductReview} from "../../../core/models/catalog/product-review";
@@ -11,16 +11,24 @@ import {switchMap} from "rxjs/internal/operators/switchMap";
   providedIn: 'root'
 })
 export class ReviewService {
+  readonly #http = inject(HttpClient);
+  readonly #productsService = inject(ProductService);
 
-  url: string = environment.apiUrl + 'User/Reviews';
+  BASE_URL: string = environment.apiUrl + 'reviews';
 
-  constructor(private http: HttpClient, private productsService: ProductService) { }
+  userReviews$: Observable<IProductReview[]>;
+  latestReviews$: Observable<IProductReview[]>; 
 
-  getUserReviews(): Observable<IProductReview[]> {
-    return this.http.get<IProductReview[]>(this.url).pipe(
+  constructor() {
+    this.#getUserReviews();
+    this.#getLatestReviews();
+  }
+
+  #getUserReviews(): void {
+    this.userReviews$ = this.#http.get<IProductReview[]>(this.BASE_URL).pipe(
       switchMap((reviews: IProductReview[]) => {
         const productObservables = reviews.map(review => {
-          return this.productsService.getProduct(review.productId).pipe(
+          return this.#productsService.getProduct(review.productId).pipe(
             map(product => {
               review.productName = product.name;
               review.pictureUrl = product.pictureUrl;
@@ -33,17 +41,15 @@ export class ReviewService {
     );
   }
 
-  getFeaturedReviews() {
-    return this.http.get(this.url + '/featured');
+  #getLatestReviews() {
+    this.latestReviews$ = this.#http.get<IProductReview[]>(this.BASE_URL + '/latest');
   }
 
   addUserReview(review: IProductReview) {
-    return this.http.post(this.url, review);
+    return this.#http.post(this.BASE_URL, review);
   }
 
   deleteUserReview(id: number) {
-    return this.http.delete(this.url + '/' + id);
+    return this.#http.delete(this.BASE_URL + id);
   }
-
-
 }
