@@ -4,5 +4,7 @@ export interface IProductReview {
   comment: string;
   productId: string;
   productName: string;
+  userName: string;
   pictureUrl: string;
+  date: Date;
 }

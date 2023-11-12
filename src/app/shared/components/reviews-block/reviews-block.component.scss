@@ -1,0 +1,95 @@
+.pi {
+    font-size: 1.6rem;
+}
+
+.p-disabled, .p-disabled * {
+    color: #f1af1f;
+}
+
+.reviews-block {
+
+    &__inner {
+
+    }
+
+    &__header {
+        display: flex;
+        justify-content: center;
+        padding: 8rem 0;
+    }
+
+    &__heading {
+    font-size: 36px;
+    line-height: 1.33;
+    font-weight: 500;
+    font-family: "Playfair Display", sans-serif;
+    margin: 0;
+    background: linear-gradient(to right, #c4c8c8, #b0aeae);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    }
+
+    &__content {
+        display: flex;
+        justify-content: space-between
+    }
+}
+
+.review-component {
+    margin-right: 2rem;
+    &:nth-last-child(1) {
+        margin-right: 0;
+    }
+    &__product {
+        padding-bottom: 2rem;
+    }
+}
+
+.review-product {
+
+    &__container {
+        padding: 1.6rem;
+        border: 1px solid #e5e5e5;
+        display: flex;
+        align-items: center;
+    }
+
+    &__name {
+        margin-left: 1.6rem;
+    }
+
+    &__naming {
+        font-size: 1.4rem;
+        line-height: 1.33;
+    }
+}
+
+.review-content {
+    &__header {
+        padding-bottom: 1rem;
+    }
+}
+
+.review-header {
+    &__name {
+        display: flex;
+        align-items: center;
+        margin-bottom: .4rem;
+    }
+
+    &__icon {
+        margin-right: .8rem;
+    }
+
+    &__username  {
+        color: #BDBDBDBD;
+        margin-bottom: .4rem;
+    }
+
+    &__date {
+        color: #BDBDBDBD;
+        margin-bottom: .4rem;
+    }
+
+}
