@@ -1,15 +1,21 @@
-<!-- <div class="catalog-item">
+<div class="catalog-item">
   <div class="catalog-item__layout">
     <div class="catalog-item__image">
       <a href="/shop/{{product.category}}/{{product.id}}">
         <div class="catalog-item__pic-container">
-          <img routerLink="/shop/{{product.id}}"
-               src="{{productImages[imageIndex]?.url}}"
-               alt="{{product.name}}"
-               class="catalog-item__pic"
-               (mouseenter)="setImageIndex(1)"
-               (mouseleave)="setImageIndex(0)"
-          >
+          @if (productImages && productImages[imageIndex]) {
+            <img routerLink="/shop/{{product.id}}"
+              src="{{productImages[imageIndex]}}"
+              alt="{{product.name}}"
+              class="catalog-item__pic"
+              (mouseenter)="setImageIndex(1)"
+              (mouseleave)="setImageIndex(0)"
+            >
+          } @else {
+            <div>
+              <ngx-skeleton-loader [theme]="{height: '50rem'}" ></ngx-skeleton-loader>
+            </div>
+          }
         </div>
       </a>
       <div class="catalog-item__like">
@@ -71,17 +77,23 @@
           }
         </div>
       </div>
+
       <div class="catalog-item__price">
         @if (product?.oldPrice !== null && product?.oldPrice > 0) {
-          <div class="catalog-item__new-price">{{product.price}} $</div>
-          <div class="catalog-item__old-price">{{product.oldPrice}} $</div>
+          <div class="catalog-item__new-price">{{product.price | currency: 'USD':'symbol':'1.2-2'}}</div>
+          <div class="catalog-item__old-price">{{product.oldPrice | currency: 'USD':'symbol':'1.2-2'}}</div>
         } @else {
-          <div class="catalog-item__new-price">{{product.price}} $</div>
+          <div class="catalog-item__new-price">{{product.price | currency: 'USD':'symbol':'1.2-2'}}</div>
         }
       </div>
       <div class="catalog-item__sizes-btn">
-        <div class="catalog-item__sizes">
-        </div>
+      <div class="catalog-item__sizes">
+        @if (productSizes && productSizes?.length > 0) {
+          @for (size of productSizes; track $index) {
+            <span class="catalog-item__size">{{size.name}}</span>
+          }
+        } 
+      </div>
         <div class="catalog-item__button">
           <app-button
             (click)="addItemToBasket()"
@@ -94,8 +106,8 @@
       </div>
     </div>
   </div>
-</div> -->
-<div class="catalog-item">
+</div>
+<!-- <div class="catalog-item">
   <div class="catalog-item__layout">
     <div class="catalog-item__image">
       <a href="/shop/{{(_product$ | async)?.category}}/{{(_product$ | async)?.id}}">
@@ -191,4 +203,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

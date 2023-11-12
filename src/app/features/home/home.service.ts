@@ -46,19 +46,19 @@ export class HomeService {
   }
 
   getBestsellers(): void {
-    this.bestsellerProducts$ = this.#productService.getBestsellers().pipe(
+    this.bestsellerProducts$ = this.#productService.getBestsellers(4).pipe(
       map(response => response.data)
     );
   }
 
   getNewProducts(): void {
-    this.newProducts$ = this.#productService.getNewProducts().pipe(
+    this.newProducts$ = this.#productService.getNewProducts(4).pipe(
       map(response => response.data)
     );
   }
 
   getOnSaleProducts(): void {
-    this.onSaleProducts$ = this.#productService.getOnSaleProducts().pipe(
+    this.onSaleProducts$ = this.#productService.getOnSaleProducts(4).pipe(
       map(response => response.data)
     );
   }

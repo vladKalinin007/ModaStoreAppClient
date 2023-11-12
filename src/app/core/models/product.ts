@@ -41,7 +41,8 @@ export interface IProduct {
   fitType: string;
   colors: IProductColor[];
   /*productImage: IProductImage[];*/
-  pictures: IProductImage[];
+  // pictures: IProductImage[];
+  pictures: string[];
   reviews: IProductReview[];
   sizes: IProductSize[];
   relatedProducts: IProduct[];

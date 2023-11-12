@@ -14,19 +14,17 @@
       </div>
       <div class="products__body">
         <div class="products__list" [ngClass]="{'products__list_full': (products$ | async)?.length >= 4}">
-          @if (isLoading$ | async) {
+          @for (product of (products$ | async)?.slice(0, 4); track $index) {
+            <div class="products__item">
+              <app-product-item
+                [categoryName]="category"
+                [product]="product">
+              </app-product-item>
+            </div>
+          } @empty {
             @for (i of [1, 2, 3, 4]; track i) {
               <div class="products__item products__skeleton" >
                 <ngx-skeleton-loader [theme]="{height: '50rem'}" ></ngx-skeleton-loader>
-              </div>
-            }
-          } @else {
-            @for (product of (products$ | async); track product.id) {
-              <div class="products__item">
-                <app-product-item
-                  [categoryName]="category"
-                  [_product$]="product">
-                </app-product-item>
               </div>
             }
           }

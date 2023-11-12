@@ -40,27 +40,30 @@ export class ProductService {
     );
   }
 
-  getBestsellers() {
+  getBestsellers(quantity?: number) {
     let params: HttpParams = new HttpParams();
     params = params.append('isBestseller', 'true');
+    if (quantity) params = params.append('pageSize', quantity.toString());
     const options = { observe: 'response' as const, params };
     return this.http.get<IPagination<IProduct>>(this.BASE_URL, options).pipe(
       map(response => response.body)
     );
   }
 
-  getNewProducts() {
+  getNewProducts(quantity?: number) {
     let params: HttpParams = new HttpParams();
     params = params.append('isNew', 'true');
+    if (quantity) params = params.append('pageSize', quantity.toString());
     const options = { observe: 'response' as const, params };
     return this.http.get<IPagination<IProduct>>(this.BASE_URL, options).pipe(
       map(response => response.body)
     );
   }
 
-  getOnSaleProducts() {
+  getOnSaleProducts(quantity?: number) {
     let params: HttpParams = new HttpParams();
     params = params.append('isOnSale', 'true');
+    if (quantity) params = params.append('pageSize', quantity.toString());
     const options = { observe: 'response' as const, params };
     return this.http.get<IPagination<IProduct>>(this.BASE_URL, options).pipe(
       map(response => response.body)
@@ -97,5 +100,25 @@ export class ProductService {
 
   getAttributes(): Observable<IProductAttribute> {
     return this.http.get<IProductAttribute>(this.BASE_URL + '/attributes');
+  }
+
+  getFeaturedProducts(type: string, quantity: string): Observable<IProduct[]> {
+    let params = new HttpParams();
+    if (type && type === 'Bestsellers') {
+      params = params.append('isBestseller', 'true');
+      params = params.append('pageSize', quantity);
+    }
+    if (type && type === 'New') {
+      params = params.append('isNew', 'true');
+      params = params.append('pageSize', quantity);
+    }
+    if (type && type === 'OnSale') {
+      params = params.append('isOnSale', 'true');
+      params = params.append('pageSize', quantity);
+    }
+    const options = { observe: 'response' as const, params };
+    return this.http.get<IProduct[]>(this.BASE_URL, options).pipe(
+      map(response => response.body)
+    );
   }
 }

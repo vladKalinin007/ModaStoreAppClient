@@ -8,6 +8,7 @@ import {IProductColor} from "../../../core/models/catalog/product-color";
 import {IProductImage} from "../../../core/models/catalog/product-image";
 import {Observable, of} from "rxjs";
 import { map } from 'rxjs/operators';
+import { IProductSize } from 'src/app/core/models/catalog/product-size';
 
 @Component({
   selector: 'app-product-item',
@@ -15,8 +16,6 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./product-item.component.scss']
 })
 export class ProductItemComponent implements OnInit {
-
-  @Input() _product$: Observable<IProduct>;
   @Input() product: IProduct;
   @Input() isFavoritesIconVisible: boolean = true;
   @Input() isCaptionVisible: boolean;
@@ -27,9 +26,8 @@ export class ProductItemComponent implements OnInit {
   wishedProducts$: Observable<IProduct[]>;
 
   productColors: IProductColor[];
-  _productColors$: Observable<IProductColor[]>;
-  productImages: IProductImage[];
-  _productImages$: Observable<IProductImage[]>;
+  productImages: string[];
+  productSizes: IProductSize[];
   imageIndex: number = 0;
 
   id: string;
@@ -42,24 +40,21 @@ export class ProductItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.productColors = this.product.colors;
-    this._productColors$ = this._product$.pipe(
-      map(product => product.colors)
-    );
-    this.productImages = this.product.pictures;
-    this._productImages$ = this._product$.pipe(
-      map(product => product.pictures)
-    );
+    console.log('_product$ is not an Observable:', this.product);
+    this.decomposeProduct();
     this.wishedProducts$ = this.wishlistService.products$;
-    console.log("WISHLIST IN PRODUCT ITEM:", this.wishedProducts$);
     this.onWishlistProductChanged();
+  }
+
+  decomposeProduct() {
+    this.productImages = this.product.pictures;
+    this.productColors = this.product.colors;
+    this.productSizes = this.product.sizes;
   }
 
   onWishlistProductChanged(): void {
     this.wishedProducts$.subscribe(products => {
       let product: IProduct = products.find(p => p.id === this.product.id);
-
-      console.log("WISHLIST FOR COMPONENT RESULT. product:", product);
 
       if (product) {
         this.product.isInWishlist = true;

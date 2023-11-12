@@ -80,8 +80,8 @@ export class ProductDetailsComponent implements OnInit {
   toSliderImages() {
     this.sliderImage = this.product.pictures.map(picture => {
       return {
-        previewImageSrc: picture.url,
-        thumbnailImageSrc: picture.url,
+        previewImageSrc: picture,
+        thumbnailImageSrc: picture,
         alt: 'alt',
         title: 'title'
       };

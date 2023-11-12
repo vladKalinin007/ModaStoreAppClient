@@ -105,7 +105,7 @@
   &__price {
     display: flex;
     align-items: baseline;
-    margin-top: 1rem;
+    margin: 0.6rem 0;
   }
 
   &__new-price {
@@ -127,11 +127,27 @@
     transition: opacity 0.5s ease-in-out;
   }
 
+  &__sizes {
+    margin-bottom: 1.5rem;
+  }
+
+  &__size {
+    display: inline-flex;
+    justify-content: center;
+    box-shadow: 1px 1px 4px #d4c2f6;
+    padding: 0 0.8rem;
+    margin-right: 1rem;
+    border: 0.5px dashed #ebe5e5;
+    border-radius: 8px;
+    overflow: auto;
+    min-width: 3.3rem;
+  }
+
   &__button {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 2.0rem;
+    margin-top: 1.0rem;
   }
 
   &__button &__button.hidden {
@@ -172,7 +188,7 @@
 }
 
 .detail-palette {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   &__links {
     display: flex;
     flex-wrap: wrap;
@@ -183,8 +199,8 @@
   &__link {
     /*background: #000000;*/
     border: .5px solid #d7d7d7;
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 1.6rem;
+    height: 1.6rem;
     flex-shrink: 0;
     border-radius: 50%;
     margin: .4rem .3rem;

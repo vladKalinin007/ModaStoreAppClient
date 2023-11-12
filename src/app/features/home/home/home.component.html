@@ -60,6 +60,8 @@
     [isLoading$]="areNewProductsLoading$"
     category="new"
     [products$]="productNew$"
+    [type]="'New'"
+    [quantity]="4"
   />
 
   <app-related-products
@@ -67,6 +69,8 @@
     [isLoading$]="areBestsellersLoading$"
     category="bestsellers"
     [products$]="productBestsellers$"
+    [type]="'Bestsellers'"
+    [quantity]="4"
   />
 
   <app-related-products
@@ -74,9 +78,11 @@
     [isLoading$]="areOnSaleProductsLoading$"
     category="sale"
     [products$]="productOnSale$"
+    [type]="'Sale'"
+    [quantity]="4"
   />
 
-  @if ((recentlyViewedProducts$ | async)?.reverse(); as IProduct[]) {
+  @if ((recentlyViewedProducts$ | async)?.reverse() && (recentlyViewedProducts$ | async).length > 0; as IProduct[]) {
     <app-related-products
       title="Seen products"
       [isLoading$]="areRecentlyViewedProductsLoading$"
