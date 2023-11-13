@@ -6,5 +6,5 @@ export interface IProductReview {
   productName: string;
   userName: string;
   pictureUrl: string;
-  date: Date;
+  createdOnUtc: Date;
 }

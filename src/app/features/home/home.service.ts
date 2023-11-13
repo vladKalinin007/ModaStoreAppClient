@@ -34,6 +34,7 @@ export class HomeService {
     this.getNewProducts();
     this.getOnSaleProducts();
     this.getRecentlyViewedProducts();
+    this.getLatestReviews();
   }
 
   getCategories(): void {
@@ -68,6 +69,9 @@ export class HomeService {
   }
 
   getLatestReviews(): void {
+    console.log(`HomeService.getLatestReviews(), reviewService.latestReviews: ${this.#reviewService.latestReviews$}}`)
+    console.log(`HomeService.getLatestReviews(), homeService.latestReviews : ${this.latestReviews$}`)
     this.latestReviews$ = this.#reviewService.latestReviews$;
+    console.log(`STEP TWO`)
   }
 }

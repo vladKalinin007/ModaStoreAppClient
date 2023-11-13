@@ -55,6 +55,15 @@
         align-items: center;
     }
 
+    &__picture {
+        max-height:  115px;
+        max-width: 80px;
+    }
+
+    &__image {
+        box-shadow: 2px 2px 4px rgba(124, 124, 124, 0.2);
+    }
+
     &__name {
         margin-left: 1.6rem;
     }
@@ -66,6 +75,7 @@
 }
 
 .review-content {
+    padding: 0 0.4rem;
     &__header {
         padding-bottom: 1rem;
     }
@@ -74,12 +84,21 @@
 .review-header {
     &__name {
         display: flex;
+        justify-content: space-between;
         align-items: center;
         margin-bottom: .4rem;
     }
 
+    &__user-field {
+        display: flex;
+    }
+
     &__icon {
         margin-right: .8rem;
+    }
+
+    &__rating {
+        margin-left: 1rem;
     }
 
     &__username  {

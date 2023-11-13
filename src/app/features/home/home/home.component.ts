@@ -43,6 +43,8 @@ export class HomeComponent implements OnInit {
     this.getNewProducts();
     this.getBestSellersProducts();
     this.getOnSaleProducts();
+    this.getLatestReviews();
+    console.log(`Home.component.latestReviews$: ${this.latestReviews$.forEach(review => console.log(review))}`)
   }
 
   getCategories(): void {
@@ -86,10 +88,13 @@ export class HomeComponent implements OnInit {
 
   getLatestReviews(): void {
     this.latestReviews$ = this.#homeService.latestReviews$;
+    console.log(`Undefined? #homeService.latestReviews$: ${this.latestReviews$}`)
+    console.log(`Undefined?, Home.component.latestReviews$: ${this.latestReviews$}`)
     this.areReviewsLoading$ = this.latestReviews$.pipe(
       map(reviews => reviews && reviews.length > 0 ? false : true),
       startWith(true)
     );
+    console.log(`STEP 3`);
   }
 
   getCarouselPictures(): void {

@@ -11,10 +11,10 @@
                             <div class="review-product">
                                 <div class="review-product__container">
                                     <div class="review-product__image">
-                                        <img src="https://via.placeholder.com/100x100" alt="Product image">
+                                        <img [src]="review.pictureUrl" class="review-product__picture" alt="Product image">
                                     </div>
                                     <div class="review-product__name">
-                                        <div class="review-product__naming">{{review?.name}}</div>
+                                        <div class="review-product__naming">{{review?.productName}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -24,19 +24,25 @@
                                 <div class="review-content__header">
                                     <div class="review-header">
                                         <div class="review-header__name">
-                                            <div class="review-header__icon">
-                                                <i class="pi pi-instagram"></i>
+                                            <div class="review-header__user-field">
+                                                <div class="review-header__icon">
+                                                    <i class="pi pi-instagram"></i>
+                                                </div>
+                                                <div class="review-header__username">
+                                                    {{review?.userName}}
+                                                </div>
+
+                                                <div class="review-header__rating">
+                                                    <p-rating [(ngModel)]="review.rating" [disabled]="true" [cancel]="false"></p-rating>
+                                                </div>
                                             </div>
-                                            <div class="review-header__username">
-                                                {{review?.username}}
+                                            <div>
+                                                <div class="review-header__date">
+                                                    {{review?.createdOnUtc | date: 'dd.MM.yyyy, HH:mm'}}
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="review-header__date">
-                                            {{review?.date}}
-                                        </div>
-                                        <div class="review-header__rating">
-                                            <p-rating [(ngModel)]="rating" [disabled]="true" [cancel]="false"></p-rating>
-                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="review-content__text">

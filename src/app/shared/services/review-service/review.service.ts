@@ -43,6 +43,8 @@ export class ReviewService {
 
   #getLatestReviews() {
     this.latestReviews$ = this.#http.get<IProductReview[]>(this.BASE_URL + '/latest');
+    console.log(`review service, latestReviews$: ${this.latestReviews$}`)
+    console.log(`STEP ONE`);
   }
 
   addUserReview(review: IProductReview) {

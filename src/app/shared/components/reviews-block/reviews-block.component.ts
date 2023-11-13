@@ -1,8 +1,8 @@
-import { AsyncPipe } from "@angular/common";
+import { AsyncPipe, DatePipe } from "@angular/common";
 import { Component, Input, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RatingModule } from "primeng/rating";
-import { Observable } from "rxjs";
+import { Observable, map } from "rxjs";
 import { IProductReview } from "src/app/core/models/catalog/product-review";
 
 @Component({
@@ -13,23 +13,10 @@ import { IProductReview } from "src/app/core/models/catalog/product-review";
     imports: [
         RatingModule,
         FormsModule,
-        AsyncPipe
+        AsyncPipe,
+        DatePipe
     ]
 })
-export class ReviewsBlockComponent implements OnInit {
+export class ReviewsBlockComponent {
     @Input() reviews$: Observable<IProductReview[]>
-    
-    rating: number;
-
-    constructor() { }
-
-    ngOnInit(): void {
-        this.reviews$.subscribe({
-            next: (reviews) => {
-                this.rating = reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length;
-            }
-        })
-
-    }
-
 }
