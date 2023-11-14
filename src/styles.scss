@@ -36,13 +36,6 @@ label.xng-breadcrumb-trail {
 }
 
 a {
-  background: transparent; // Initial color
-  transition: background 2s ease-in-out; // Transition effect
 
-  &:hover {
-    background: linear-gradient(to right, #ad5389, #3c1053);
-    -webkit-background-clip: text;
-    color: transparent;
-  }
 }
 

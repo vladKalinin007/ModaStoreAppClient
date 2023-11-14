@@ -30,27 +30,25 @@
         <div class="categories__title">
           Categories
         </div> 
-        @if (areCategoriesLoading$ | async) {
-          <div class="categories__list">
-            @for (i of [1, 2, 3, 4, 5, 6]; track i) {
-              <ngx-skeleton-loader class="categories__item hero" [theme]="{height: '55rem'}"></ngx-skeleton-loader>
-            }
-          </div>
-        } @else {
           <div class="categories__list" [@cascade]="(categories$ | async)?.length">
             @for (category of (categories$ | async); track category.id) {
-              <div class="categories__item hero">
+              <div class="categories__item">
                 <a class="categories__item-link" [routerLink]="['/shop/', category.name]" [style.background-image]="'url(' + category.pictureUrl + ')'">
                   <span class="categories__item-caption">
-                  <span class="categories__item-title">
-                    {{category.name}}
+                    <span class="categories__item-title">
+                      {{category.name}}
+                    </span>
                   </span>
-                </span>
                 </a>
+              </div>
+            } @empty {
+              <div class="categories__list">
+                @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+                  <ngx-skeleton-loader class="categories__item hero" [theme]="{height: '55rem'}"></ngx-skeleton-loader>
+                }
               </div>
             }
           </div>
-        }
       </div>
     </div>
   </section>
