@@ -40,7 +40,6 @@ export class ProductItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('_product$ is not an Observable:', this.product);
     this.decomposeProduct();
     this.wishedProducts$ = this.wishlistService.products$;
     this.onWishlistProductChanged();

@@ -5,7 +5,7 @@
         <div class="catalog-item__pic-container">
           @if (productImages && productImages[imageIndex]) {
             <img routerLink="/shop/{{product.id}}"
-              src="{{productImages[imageIndex]}}"
+              [src]="productImages[imageIndex]"
               alt="{{product.name}}"
               class="catalog-item__pic"
               (mouseenter)="setImageIndex(1)"
@@ -31,13 +31,6 @@
           } @else {
             <i (click)="removeItemFromWishlist()" class="pi pi-times catalog-item__times-icon"></i>
           }
-          <mat-icon 
-            [ngStyle]="{'color': '#555555'}"
-            (click)="addItemToWishlist()"
-            class="catalog-item__like-icon" 
-            color="primary" 
-            [ngClass]="{'favorite': product.isInWishlist}"> favorite_border
-          </mat-icon>
         } @else {
           @if (isFavoritesIconVisible) {
             <mat-icon 
