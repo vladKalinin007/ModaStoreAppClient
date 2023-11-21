@@ -4,6 +4,10 @@
     width: 3.6rem;
 }
 
+.pi {
+    font-size: 2.6rem;
+}
+
 .material-icons {
     font-size: 3.6rem;
 }
@@ -19,34 +23,10 @@
 
     &__columns {
         display: flex;
+        justify-content: space-between;
         position: relative;
-    }
-
-    &__column {
-
-        width: 25%;
-        padding-right: 5rem;
-
-        &.-catalog {
-            padding-right: 0;
-        }
-
-        &.-social {
-            padding-left: 0;
-        }
-
-        &.-contacts {
-            display: flex;
-            flex-direction: column;
-        }
-
-        &.-customer {
-
-        }
-
-        &.-payments {
-
-        }
+        border-bottom: 1px solid #e2dfdf;
+        padding-bottom: 2rem;
     }
 
     &__row {
@@ -54,13 +34,10 @@
     }
 
     &__title {
+        color: #7f7e7e;
         font-size: 1.8rem;
         font-weight: 700;
         margin-bottom: 2.4rem;
-    }
-
-    &__navigation {
-        
     }
 
     &__links {
@@ -69,6 +46,7 @@
     }
 
     &__link {
+        color: #7b7b7b;
         padding: .5rem 0;
     }
 
@@ -85,6 +63,17 @@
         margin-top: 1rem;
     }
 
+    &__bottom {
+        padding: 2rem 0;
+        display: flex;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
+    &__copyright {
+
+    }
+
 }
 
 .socials {
@@ -99,4 +88,74 @@
     &__item {
         margin-right: 1.2rem;
     }   
+}
+
+.footer-socials {
+    display: flex;
+    margin-top: 3rem;
+    justify-content: center;
+    align-items: center;
+
+    &__item {
+        margin-right: 1.8rem;
+    }
+
+    &__link {
+        cursor: pointer;
+    }
+}
+
+.newsletter {
+    box-shadow: 1px 2px 4px #c7c0c0;
+    border-radius: 8px;
+    padding: 2rem;
+    max-width: 45rem;
+
+    &__header {
+        font-family: 'Manrope', sans-serif;
+        color: #676767;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        font-weight: bold;
+        background: linear-gradient(to right, #83daec, #e797ea);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    &__description {
+        font-size: 1.4rem;
+        margin-bottom: 2.6rem;
+    }
+
+    &__form {
+        position: relative
+    }
+
+    &__input {
+        padding-right: 9rem;
+        height: 4rem;
+        border: none;
+        box-shadow: 1px 1px 3px #d9d4d4;
+        border-radius: 4px;
+        width: 100%;
+        &::placeholder {
+            font-size: 1.4rem;
+            padding-left: 1rem;
+        }
+    }
+
+    &__button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 90%;
+        margin-right: 0.2rem;
+        border: none;
+        width: 14rem;
+        border-radius: 4px;
+        margin-top: 0.2rem;
+        margin-bottom: 0.2rem;
+        font-weight: bold;
+    }
 }
