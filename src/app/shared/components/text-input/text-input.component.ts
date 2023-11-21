@@ -13,6 +13,11 @@ export class TextInputComponent implements OnInit, ControlValueAccessor {
   @Input() type: string = 'text';
   @Input() label: string;
   @Input() mask: string;
+  @Input() icon: string;
+  @Input() placeholder: string;
+  @Input() pattern: string;
+  @Input() minLength: number;
+  @Input() maxLength: number;
 
   private textMaskInputElement: any;
 
@@ -52,6 +57,18 @@ export class TextInputComponent implements OnInit, ControlValueAccessor {
 
   writeValue(obj: any): void {
     this.input.nativeElement.value = obj || '';
+  }
+
+  onKeypress(event: KeyboardEvent) {
+    if (this.type === 'tel') {
+      const pattern = /[0-9]/;
+      const inputChar = String.fromCharCode(event.charCode);
+
+      if (!pattern.test(inputChar)) {
+        // invalid character, prevent input
+        event.preventDefault();
+      }
+    }
   }
 
 }

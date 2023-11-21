@@ -1,229 +1,112 @@
-.login-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #986354;
-  background-image: url(https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  overflow-y: auto;
-  overflow-x: hidden;
-  min-height: 100vh;
-}
-
-.main-wrapper {
-  min-height: calc(100% - 40px);
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0 10px;
-}
-
-.sub-wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.sign-in__content_inner {
+.reg-field {
   max-width: 400px;
   padding: 32px 40px;
-  border-radius: 16px;
   box-sizing: border-box;
   width: 100%;
   background-color: #fff;
   margin: 0 auto;
-  box-shadow: 0 1px 0 0 rgba(0,0,0,.2);
   overflow-x: hidden;
+
+  &__inner {
+
+  }
+
+  &__navigation {
+    display: flex;
+    overflow-x: auto;
+  }
+
+  &__header {
+
+  }
+
+  &__heading {
+    font-family: 'Manrope';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px dashed #dddbdb;
+    font-size: 1.6rem;
+  }
+
+  &__form {
+    margin-top: 24px;
+  }
 }
 
-.registration-field {
+.navigation {
+  &__login {
+    background-color: #eee;
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    color: #414141;
+    font-weight: 500;
+    padding: 10px 16px;
+    border-radius: 8px;
+    margin-right: 8px;
+  }
 
+  &__registration {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: #eee;
+    box-sizing: border-box;
+    margin-right: 0px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    color: #414141;
+    font-weight: 500;
+  }
 }
 
-.login-registration-wrapper {
-  display: flex;
-  overflow-x: auto;
-}
+.registration-form {
 
-.login {
-  background-color: #eee;
-  display: flex;
-  flex-grow: 1;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  text-decoration: none;
-  text-align: center;
-  cursor: pointer;
-  color: #414141;
-  font-weight: 500;
-  padding: 10px 16px;
-  border-radius: 8px;
-  margin-right: 8px;
+  &__submit-btn {
+    font-weight: 600;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #48d597;
+    color: #414141;
+    margin-top: 24px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    letter-spacing: .1px;
+    height: 40px;
+    cursor: pointer;
+    user-select: none;
+    pointer-events: auto;
+    justify-content: center;
+    &:hover {
+      background-color: #8fdbb0;
+      color: #414141;
+    }
 
-}
-
-.registration {
-  display: flex;
-  flex-grow: 1;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  background-color: #eee;
-  box-sizing: border-box;
-  margin-right: 0px;
-  /*padding: 10px 16px;*/
-  border-radius: 8px;
-  font-size: 14px;
-  text-decoration: none;
-  text-align: center;
-  cursor: pointer;
-  color: #414141;
-  font-weight: 500;
-
-
-}
-
-.text-field {
-  color: #777;
-  margin-top: 24px;
-  text-align: center;
-}
-
-.social-media-ref-wrapper {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 16px;
-}
-
-.text-field-second {
-  margin-top: 24px;
-  color: #777;
-  text-align: center;
-}
-
-.form-wrapper {
-  margin-top: 24px;
-}
-
-.input__label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.input__text-field {
-  font: 14px 'PP Object Sans',Arial,Helvetica,Sans-serif;
-  display: inline-flex;
-  height: 40px;
-  border: 1px solid #d2d2d2;
-  outline: 0;
-  width: 100%;
-  margin: 0;
-  padding: 0 12px;
-  align-items: center;
-  box-sizing: border-box;
-  border-radius: 8px;
-  font-size: 14px;
-  color: #414141;
-  transition: border-color .1s ease-in,color .1s ease-in;
-}
-
-.input-label-2 {
-  display: block;
-  margin-bottom: 5px;
-  margin-top: 16px;
-}
-
-.login-button {
-  font-weight: 600;
-  box-sizing: border-box;
-  /*display: flex;*/
-  width: 100%;
-  background-color: #48d597;
-  color: #414141;
-  margin-top: 24px;
-  padding: 0 16px;
-  border: none;
-  border-radius: 8px;
-  text-decoration: none;
-  letter-spacing: .1px;
-
-  height: 40px;
-  cursor: pointer;
-  user-select: none;
-  pointer-events: auto;
-  justify-content: center;
-  /*font: 14px 'PP Object Sans',Arial,Helvetica,Sans-serif;*/
-}
-
-.login-button:hover {
-  background-color: #8fdbb0;
-  color: #414141;
-}
-
-
-.forgot-password-wrapper {
-  display: block;
-  margin-top: 24px;
-  text-align: center;
-  width: 100%;
-  color: #48d597;
-  cursor: pointer;
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  /*transition: color .15s,text-decoration-color .15s,-webkit-text-decoration-color .15s;*/
-}
-
-.social-auth-facebook {
-  width: 100%;
-  transition: background-color .3s;
-  background-color: #44619d;
-  border: none;
-  border-radius: 8px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  color: #fff;
-  padding: 0;
-}
-
-.social-auth-google {
-  width: 100%;
-  transition: background-color .3s;
-  background-color: #4284f4;
-  border: none;
-  border-radius: 8px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  color: #fff;
-  padding: 0;
-  margin-left: 8px;
-}
-
-.social-media-icon {
-  display: flex;
-  width: 16px;
-  height: 16px;
-  fill: #43619f;
-
-}
-
-.google-wrapper {
-  width: 24px;
-  height: 24px;
-  border-radius: 2px;
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 18px 0 8px;
+    &_invalid {
+      background-color: #eee;
+      color: #414141;
+      cursor: not-allowed;
+      &:hover {
+        background-color: #eee;
+        color: #414141;
+      }
+    }
+  }
 }
 

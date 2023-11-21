@@ -1,32 +1,28 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {AsyncValidatorFn, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AccountService} from "../account.service";
+import {Component, EventEmitter, OnInit, Output, inject} from '@angular/core';
+import {AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {of, switchMap, timer} from "rxjs";
 import {map} from "rxjs/operators";
-import {MessageService} from "primeng/api";
 import {MatDialogRef} from "@angular/material/dialog";
+import { UserService } from 'src/app/core/services/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  providers: [MessageService]
 })
 export class RegisterComponent implements OnInit {
-
-  errors: string[] = [];
-  registerForm: FormGroup;
+  readonly #fb = inject(FormBuilder);
+  readonly #router = inject(Router);
+  readonly #userService = inject(UserService);
+  readonly #dialogRef = inject(MatDialogRef<RegisterComponent>);
+  readonly #toastrService = inject(ToastrService);
+  
   @Output() registerMode = new EventEmitter<boolean>();
 
-  constructor(
-    private fb: FormBuilder,
-    private accountService: AccountService,
-    private router: Router,
-    private messageService: MessageService,
-    private dialogRef: MatDialogRef<RegisterComponent>,
-  ) { }
-
+  registerForm: FormGroup;
+  
   ngOnInit(): void {
     this.createRegisterForm();
   }
@@ -36,33 +32,44 @@ export class RegisterComponent implements OnInit {
   }
 
   createRegisterForm(): void {
-    this.registerForm = this.fb.group({
-      displayName: ['', [Validators.required]],
-      email: ['',
+    this.registerForm = this.#fb.group({ 
+      displayName: [
+        '', 
+        [Validators.required]
+      ],
+      email: [
+        '',
         [Validators.required, Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')],
-        [this.validateEmailNottaken()]],
-      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]]
+        [this.validateEmailNottaken()]
+      ],
+      phone: [
+        '', 
+        // [Validators.required, Validators.pattern('0-9')]
+      ],
+      password: [
+        '', 
+        [Validators.required, Validators.minLength(4), Validators.maxLength(8)]
+      ]
     })
   }
 
   onSubmit(): void {
-    this.accountService.register(this.registerForm.value).subscribe({
+    this.#userService.registerUser(this.registerForm.value).subscribe({
       next: () => {
-        console.log("on submit work before ")
-        this.router.navigateByUrl('/');
-        this.closeDialog();
-        console.log("on submit work after")
+        this.#router.navigateByUrl('/');
+        this.#closeDialog();
       },
       error: (error) => {
         console.log(error);
-        this.errors = error.errors;
-        console.log("On Submit doesn't work")
+        this.#toastrService.error(
+          'Registration Failed',
+          error.error);
       }
     })
   }
 
-  closeDialog(): void {
-    this.dialogRef.close();
+  #closeDialog(): void {
+    this.#dialogRef.close();
   }
 
   validateEmailNottaken(): AsyncValidatorFn {
@@ -72,7 +79,7 @@ export class RegisterComponent implements OnInit {
           if (!control.value) {
             return of(null);
           }
-          return this.accountService.checkEmailExists(control.value).pipe(
+          return this.#userService.checkEmailExists(control.value).pipe(
             map(res => {
               return res ? {emailExists: true} : null;
             })

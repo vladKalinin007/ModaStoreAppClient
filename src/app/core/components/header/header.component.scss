@@ -2,6 +2,10 @@
 @import "src/assets/scss/_variables.scss";
 @import "src/assets/scss/_breakpoints.scss";
 
+.custom-dialog-container .mat-dialog-container {
+  border-radius: 8px;
+}
+
 :root  {
   .p {
     &-component {
@@ -81,7 +85,6 @@
     }
   }
 
-  // &__submit,
   &__reset {
     display: flex;
     align-items: center;
@@ -96,13 +99,6 @@
       stroke: #212121;
     }
   }
-
-  // &__submit {
-  //   fill: currentColor;
-  //   @include sm {
-  //     transform: scale(.85);
-  //   }
-  // }
 
   &__input {
     margin-left: 1.6rem;
@@ -136,11 +132,17 @@
 
 .header {
   background: #fff;
+  opacity: 0.97;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 99;
+  transition: top 0.3s;
+
+  &.header-hidden {
+    top: -100px;
+  }
 
   &__main {
     max-width: 1180px;
@@ -221,6 +223,8 @@
 
 
   &__body {
+    border-radius: 6px;
+    box-shadow: 1px 1px 4px #e6e3e6;
     background: #f2f2f2;
     padding: 1.4rem;
     display: flex;
@@ -256,6 +260,10 @@
     color: currentColor;
     text-decoration: none;
     margin-top: 1.6rem;
+    & > .pi {
+      font-size: 2rem;
+      margin-right: 1.6rem;
+    }
   }
 
 
@@ -350,10 +358,7 @@ a {
   }
 }
 
-
-/* Стиль для иконки корзины */
 a {
-  /* Добавляем переход при изменении цвета */
   transition: color 0.1s ease;
 }
 
@@ -361,11 +366,6 @@ a {
 .full-width {
   width: 250%;
 }
-
-
-
-
-
 
 
 .logo {
@@ -445,7 +445,6 @@ a {
   flex: 1;
   flex-wrap: wrap;
   padding: 2px 8px;
-  /*position: relative;*/
   overflow: hidden;
   box-sizing: border-box;
 
@@ -473,10 +472,8 @@ a {
   background-color: hsl(0,0%,100%);
   border-color: hsl(0,0%,80%);
   border-radius: 0;
-  /*border-style: solid;*/
   border-width: 1px;
   cursor: pointer;
-  /*align-items: center;*/
   outline: 0 !important;
   position: relative;
   transition: all 100ms;
@@ -553,55 +550,6 @@ a {
   width: 24px;
   height: 24px;
   fill: #7d7d7d;
-}
-
-
-
-.custom-dialog ::ng-deep .p-dialog-mask {
-  background-color: rgba(0, 0, 0, 0.6); /* Цвет и прозрачность затемнения фона */
-}
-
-.custom-mask {
-  background-color: rgba(0, 0, 0, 0.6); /* Цвет и прозрачность затемнения фона */
-  position: fixed; /* Фиксированная позиция для покрытия всего экрана */
-  top: 0; /* Расположение сверху */
-  left: 0; /* Расположение слева */
-  width: 100%; /* Ширина на весь экран */
-  height: 100%; /* Высота на весь экран */
-  /*z-index: 10000;*/ /* Z-индекс для размещения над остальными элементами */
-}
-
-.custom-dialog-class {
-  overflow-y: auto;
-  padding: 0; /* Удаляем отступы внутри модального окна */
-  /*margin: 0; !* Удаляем отступы внутри модального окна *!*/
-  /*margin-top: 78px;*/
-  background-color: transparent; /* Устанавливаем прозрачный фон модального окна */
-  border-radius: 10px; /* Задайте желаемый радиус скругления углов */
-  box-sizing: border-box;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-}
-
-.custom-dialog-class::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  backdrop-filter: blur(3px); /* Задайте желаемую степень размытия */
-  background-color: rgba(0, 0, 0, 0.3); /* Задайте желаемый цвет фона и его прозрачность */
-  z-index: -1; /* Помещаем фон под модальным окном */
-}
-
-:host {
-  display: block;
-  width: 100%;
-  height: 100%;
-/*  margin: 0;
-  padding: 0;
-  overflow: auto;*/
-
 }
 
 
@@ -699,7 +647,6 @@ a {
   width: 24px;
   height: 24px;
   margin-right: 16px;
-  /*fill: #7d7d7d;*/
 
 }
 

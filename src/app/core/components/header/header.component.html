@@ -1,8 +1,8 @@
 @if (!isCheckoutPage) {
-  <header class="header">
+  <header class="header" [class.header-hidden]="!isScrolled">
     <div class="layout">
       <div class="header__main">
-        <div class="header__items m-width">
+        <div class="header__items">
           <div class="header__item_left">
             <div class="header__item-icon">
               <a class="header__menu" (click)="toggleMenu()">
@@ -25,83 +25,33 @@
                     <i class="pi pi-search header__icon-internal" size="large"></i>
                   </a>
                 </div>
-                <!-- <div class="search__field">  -->
                   <input class="search__input" type="text" placeholder="Search by product name" formControlName="search" style="margin-left: 1.6rem;">
-                <!-- </div> -->
                 <a type="button" class="search__reset" (click)="toggleSearch()">
                   <i class="pi pi-times header__icon-internal" size="large"></i>
                 </a>
               </form>
             </div>
           </div>
+          <div class="header__item_left">
+            <div class="header__item-icon">
+              <a href="https://github.com/vladKalinin007" class="header__menu" target="_blank">
+                <i class="pi pi-github header__icon-internal" size="large"></i>
+              </a>
+            </div>
+          </div>
         </div>
-        <!-------------------------------------->
+        
         <div class="header__logo">
           <a class="logo" href="/">
             <img src="assets/images/MainLogo2.png" alt="moda_logo"
                   title="moda_logo" class="logo__image">
           </a>
         </div>
-        <!-------------------------------------->
+        
         <div class="header__items">
-          <!-------------------A------------------>
-          @if (!currentUser() || currentUser === null) {
-            <div class="header__item_left">
-              <div class="header__item-icon align-r">
-                <a [routerLink]="['/wishlist/']">
-                  <ng-container
-                    *ngIf="
-                    (products$ | async)?.length === 0 ||
-                    (products$ | async)?.length === undefined ||
-                    (products$ | async)?.length === null;
-                    else noValueIconW"
-                  >
-                    <i class="pi pi-heart header__icon-internal" size="large"></i>
-                  </ng-container>
-                  <ng-template #noValueIconW>
-                    <i class="pi pi-heart header__icon-internal"
-                        pBadge value="{{(products$ | async)?.length || null}}"
-                        severity="success"
-                        size="large">
-                    </i>
-                  </ng-template>
-                </a>
-              </div>
-            </div>
-            <div class="header__item_left">
-              <div class="header__item-icon align-r">
-                <a (click)="openLoginModal()" class="s-hamb">
-                  <i class="pi pi-user header__icon-internal" size="large"></i>
-                </a>
-              </div>
-            </div>
-            <div class="header__item_left">
-              <div class="header__item-icon align-r">
-                <a (click)="openDialog()">
-                  <ng-container
-                    *ngIf="
-                    (basket$ | async)?.items?.length === 0 ||
-                    (basket$ | async)?.items?.length === undefined ||
-                    (basket$ | async)?.items?.length === null;
-                    else noValueIcon"
-                  >
-                    <i class="pi pi-shopping-bag header__icon-internal" size="large"></i>
-                  </ng-container>
-                  <ng-template #noValueIcon>
-                    <i class="pi pi-shopping-bag header__icon-internal"
-                        pBadge value="{{(basket$ | async)?.items?.length || null}}"
-                        severity="success"
-                        size="large">
-                    </i>
-                  </ng-template>
-                </a>
-              </div>
-            </div>
-          }
-          <!-------------------B------------------>
           @if (currentUser()) {
             <div class="header__item_left">
-              <div class="header__item-icon ">
+              <div class="header__item-icon align-r">
                 <a [routerLink]="['/wishlist/']">
                   @if ((products$ | async)?.length === 0 ||
                   (products$ | async)?.length === undefined ||
@@ -110,6 +60,24 @@
                   } @else {
                     <i class="pi pi-heart header__icon-internal"
                         pBadge value="{{(products$ | async)?.length || null}}"
+                        severity="success"
+                        size="large">
+                    </i>
+                  }
+                </a>
+              </div>
+            </div>
+            <div class="header__item_left">
+              <div class="header__item-icon align-r">
+                <a (click)="toggleBasket()">
+                  @if (
+                    (basket$ | async)?.items?.length === 0 ||
+                    (basket$ | async)?.items?.length === undefined ||
+                    (basket$ | async)?.items?.length === null;) {
+                    <i class="pi pi-shopping-bag header__icon-internal" size="large"></i>
+                  } @else {
+                    <i class="pi pi-shopping-bag header__icon-internal"
+                        pBadge value="{{(basket$ | async)?.items?.length || null}}"
                         severity="success"
                         size="large">
                     </i>
@@ -130,27 +98,27 @@
                         {{currentUser()?.displayName}}
                       </span>
                       <a routerLink="/account/user-information" class="user-nav__link">
-                        <mat-icon>account_circle</mat-icon>
+                        <i class="pi pi-user"></i>
                         Personal info
                       </a>
                       <a routerLink="/account/user-information" class="user-nav__link">
-                        <mat-icon>visibility</mat-icon>
+                        <i class="pi pi-eye"></i>
                         Seen
                       </a>
                       <a routerLink="/account/orders" class="user-nav__link">
-                        <mat-icon>shopping_cart</mat-icon>
+                        <i class="pi pi-shopping-cart"></i>
                         Orders
                       </a>
                       <a routerLink="/account/reviews" class="user-nav__link">
-                        <mat-icon>mark_chat_read</mat-icon>
+                        <i class="pi pi-comment"></i>
                         Reviews
                       </a>
                       <a routerLink="/account/settings" class="user-nav__link">
-                        <mat-icon>settings</mat-icon>
+                        <i class="pi pi-cog"></i>
                         Settings
                       </a>
                       <a (click)="exit()" class="user-nav__link">
-                        <mat-icon>logout</mat-icon>
+                        <i class="pi pi-sign-out"></i>
                         Logout
                       </a>
                     </div>
@@ -158,20 +126,47 @@
                 </div>
               </div>
             </div>
+          } @else {
             <div class="header__item_left">
-              <div class="header__item-icon ">
-                <a (click)="openDialog()">
-                  @if ((basket$ | async)?.items.length !== 0) {
-                    <i class="pi pi-shopping-bag header__icon-internal"
-                        pBadge value="{{(basket$ | async)?.items.length}}"
+              <div class="header__item-icon align-r">
+                <a [routerLink]="['/wishlist/']">
+                  @if (
+                    (products$ | async)?.length === 0 ||
+                    (products$ | async)?.length === undefined ||
+                    (products$ | async)?.length === null) {
+                    <i class="pi pi-heart header__icon-internal" size="large"></i>
+                  } @else {
+                    <i class="pi pi-heart header__icon-internal"
+                        pBadge value="{{(products$ | async)?.length || null}}"
                         severity="success"
                         size="large">
                     </i>
-                  } @else {
-                    @if (!(basket$ | async)?.items.length || (basket$ | async)?.items.length === null || (basket$ | async)?.items.length === undefined || (basket$ | async)?.items.length === 0) {
-                      <i class="pi pi-shopping-bag header__icon-internal" size="large"></i>
-                    }
                   }
+                </a>
+              </div>
+            </div>
+            <div class="header__item_left">
+              <div class="header__item-icon align-r">
+                <a (click)="toggleBasket()">
+                  @if (
+                    (basket$ | async)?.items?.length === 0 ||
+                    (basket$ | async)?.items?.length === undefined ||
+                    (basket$ | async)?.items?.length === null;) {
+                    <i class="pi pi-shopping-bag header__icon-internal" size="large"></i>
+                  } @else {
+                    <i class="pi pi-shopping-bag header__icon-internal"
+                        pBadge value="{{(basket$ | async)?.items?.length || null}}"
+                        severity="success"
+                        size="large">
+                    </i>
+                  }
+                </a>
+              </div>
+            </div>
+            <div class="header__item_left">
+              <div class="header__item-icon align-r">
+                <a (click)="toggleLogin()" class="s-hamb">
+                  <i class="pi pi-user header__icon-internal" size="large"></i>
                 </a>
               </div>
             </div>

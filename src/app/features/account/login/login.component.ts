@@ -1,32 +1,29 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, inject} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AccountService} from "../account.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {MatDialogRef} from "@angular/material/dialog";
+import { ToastrService } from 'ngx-toastr';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  readonly #toastrService = inject(ToastrService);
+  readonly #dialogRef = inject(MatDialogRef<LoginComponent>);
+  readonly #userService = inject(UserService);
+  readonly #router = inject(Router);
 
-  loginForm: FormGroup;
   @Output() loginMode: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(
-    private accountService: AccountService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private dialogRef: MatDialogRef<LoginComponent>,
-  ) {}
+  loginForm: FormGroup;
+  
+  constructor() {}
 
   ngOnInit(): void {
     this.createLoginForm();
-  }
-
-  closeDialog(): void {
-    this.dialogRef.close();
   }
 
   createLoginForm(): void {
@@ -37,15 +34,23 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.accountService.login(this.loginForm.value).subscribe({
+    this.#userService.loginUser(this.loginForm.value).subscribe({
       next: () => {
-        this.router.navigateByUrl("/shop/dresses");
+        this.#router.navigateByUrl('/');
+        this.#dialogRef.close();
       },
       error: (error) => {
         console.log(error);
+        this.#toastrService.error(
+          'Login Failed',
+          error.info.error,
+          {
+            timeOut: 6000,
+          }
+        );
       }
     });
-    }
+  }
 
   toggleLoginMode(): void {
     this.loginMode.emit(false);

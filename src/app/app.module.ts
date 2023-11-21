@@ -17,6 +17,7 @@ import {CommonModule} from "@angular/common";
 import {SpeedDialModule} from "primeng/speeddial";
 import {SharedModule} from "./shared/shared.module";
 import {provideClientHydration} from '@angular/platform-browser';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import {provideClientHydration} from '@angular/platform-browser';
         DialogModule,
         SpeedDialModule,
         SharedModule,
+        ToastrModule.forRoot(),
     ],
   providers: [
     // {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

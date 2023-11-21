@@ -6,6 +6,7 @@ import {NavigationEnd, Router} from "@angular/router";
 import {WishlistService} from "./features/wishlist/wishlist.service";
 import {HistoryService} from "./shared/services/history.service";
 import { StorageService } from './core/services/storage.service';
+import { UserService } from './core/services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,7 @@ import { StorageService } from './core/services/storage.service';
 export class AppComponent implements OnInit {
 
   readonly #basketService: BasketService = inject(BasketService);
-  readonly #accountService: AccountService = inject(AccountService);
+  readonly #userService: UserService = inject(UserService);
   readonly #wishlistService: WishlistService = inject(WishlistService);
   readonly #historyService: HistoryService = inject(HistoryService);
   readonly #router: Router = inject(Router);
@@ -48,14 +49,10 @@ export class AppComponent implements OnInit {
   }
 
   loadCurrentUser(): void {
-    const token: string = this.#storageService.getItem('token');
-
-    if (token) {
-      this.#accountService.loadCurrentUser(token).subscribe({
-        next: () => console.log('initialized user'),
-        error: error => console.log("user is not initialized: ", error)
-      })
-    }
+    this.#userService.getUser().subscribe({
+      next: () => console.log('initialized user'),
+      error: error => console.log(error)
+    })
   }
 
   loadBasket(): void {
