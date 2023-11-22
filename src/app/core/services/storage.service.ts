@@ -9,19 +9,15 @@ export class StorageService {
 
   setItem(key: string, data: any): void {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem(key, JSON.stringify(data));
+      console.log(`SET ITEM. key: ${key}, data: ${data}`)
+      localStorage.setItem(key, data);
     }
   }
 
   getItem(key: string): any {
     if (isPlatformBrowser(this.platformId)) {
       const item = localStorage.getItem(key);
-      try {
-        return JSON.parse(item);
-      } catch (error) {
-        console.error(`Error parsing data for key "${key}":`, error);
-        return null;
-      }
+      return localStorage.getItem(key);
     }
     return null;
   }

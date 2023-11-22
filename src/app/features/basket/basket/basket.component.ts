@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, inject} from '@angular/core';
 import {Observable} from "rxjs";
 import {IBasket, IBasketItem, IBasketTotals} from "../../../core/models/basket";
 import {BasketService} from "../basket.service";
@@ -13,46 +13,43 @@ import {cascade, fadeIn} from "../../../shared/animations/fade-in.animation";
   styleUrls: ['./basket.component.scss'],
 })
 export class BasketComponent implements OnInit {
+  readonly #basketService: BasketService = inject(BasketService);
+  readonly #wishlistService: WishlistService = inject(WishlistService);
+  readonly #dialogRef: MatDialogRef<BasketComponent> = inject(MatDialogRef);
 
   basket$: Observable<IBasket>;
   wishlist$: Observable<IWishlist>;
-  basketTotal$: Observable<IBasketTotals> = this.basketService.basketTotal$;
+  basketTotal$: Observable<IBasketTotals> = this.#basketService.basketTotal$;
   basketItemsCount: number;
   count$: Observable<number>;
 
-  constructor(
-    private basketService: BasketService,
-    private wishlistService: WishlistService,
-    private dialogRef: MatDialogRef<BasketComponent>,
-  ) {}
-
-  calculateBasketItems() {
-    this.basketItemsCount = this.basketService.countBasketItems()
-    console.log("BASKET =", this.basket$)
-  }
-
-  closeDialog(): void {
-    this.dialogRef.close();
-    console.log('closeDialog()');
-  }
+  constructor() {}
 
   ngOnInit(): void {
-    this.basket$ = this.basketService.basket$;
-    this.wishlist$ = this.wishlistService.wishlist$;
+    this.basket$ = this.#basketService.basket$;
+    this.wishlist$ = this.#wishlistService.wishlist$;
     this.calculateBasketItems();
     console.log(this.basket$);
   }
 
+  calculateBasketItems() {
+    this.basketItemsCount = this.#basketService.countBasketItems()
+  }
+
+  closeDialog(): void {
+    this.#dialogRef.close();
+  }
+
   removeBasketItem(item: IBasketItem): void {
-    this.basketService.removeItemFromBasket(item);
+    this.#basketService.removeItemFromBasket(item);
   }
 
   incrementItemQuantity(item: IBasketItem): void {
-    this.basketService.incrementItemQuantity(item);
+    this.#basketService.incrementItemQuantity(item);
   }
 
   decrementItemQuantity(item: IBasketItem): void {
-    this.basketService.decrementItemQuantity(item);
+    this.#basketService.decrementItemQuantity(item);
   }
 
 }

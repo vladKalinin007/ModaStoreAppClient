@@ -29,21 +29,19 @@ export class WishlistService {
 
 
   constructor() {
-
-      // const wishlistId: string = localStorage.getItem('wishlist_id');
       const wishlistId: string = this.#storageService.getItem('wishlist_id');
 
       if (wishlistId) {
 
-        this.getWishlist(wishlistId).subscribe({
+        this.getWishlist(wishlistId)
+        .subscribe({
           next: (response: IProduct[]) => {
             this.#products$.next(response);
           },
           error: (error: any) => {
             console.log(error);
           }
-        }
-          );
+        });
       }
   }
 
@@ -108,7 +106,7 @@ export class WishlistService {
     const wishlist = new Wishlist();
     localStorage.setItem('wishlist_id', wishlist.id);
     return wishlist;
-  }
+  } 
 
   deleteLocalWishlist(id: string) {
     this.#products$.next(null);
@@ -154,7 +152,6 @@ export class WishlistService {
     const wishlist: IWishlist = this.getCurrentWishlistValue();
     const wishlistItem: IWishlistItem = wishlist.wishlistItems.find(item => item.id === product.id);
     wishlist.wishlistItems = wishlist.wishlistItems.filter(item => item.id !== product.id);
-    // wishlist.wishlistItems = this.addOrUpdateWishlistItems(wishlist.wishlistItems, wishlistItem);
 
     this.setWishlist(wishlist);
   }
@@ -186,8 +183,9 @@ export class WishlistService {
   }
 
   setWishlist(wishlist: IWishlist) {
-    const url = this.#baseUrl + 'Wishlist';
-    return this.#http.post(url, wishlist).subscribe({
+    const url = this.#baseUrl + 'wishlist';
+    return this.#http.post(url, wishlist)
+    .subscribe({
       next: (response: IWishlist) => {
         this.#wishlist$.next(response);
         console.log(response);
@@ -199,22 +197,22 @@ export class WishlistService {
   }
 
 
-  deleteWishlist(id: string) {
-    return this.#http.delete(this.#baseUrl + 'wishlist?id=' + id);
-  }
+  // deleteWishlist(id: string) {
+  //   return this.#http.delete(this.#baseUrl + 'wishlist?id=' + id);
+  // }
 
-  getWishlistItems(id: string) {
-    return this.#http.get(this.#baseUrl + 'wishlist/items?id=' + id);
-  }
+  // getWishlistItems(id: string) {
+  //   return this.#http.get(this.#baseUrl + 'wishlist/items?id=' + id);
+  // }
 
-  getWishlistItemCount(id: string) {
-    return this.#http.get(this.#baseUrl + 'wishlist/count?id=' + id);
-  }
+  // getWishlistItemCount(id: string) {
+  //   return this.#http.get(this.#baseUrl + 'wishlist/count?id=' + id);
+  // }
 
 
-  checkWishlistItemExists(id: string, productId: number) {
-    return this.#http.get(this.#baseUrl + 'wishlist/exists?id=' + id + '&productId=' + productId);
-  }
+  // checkWishlistItemExists(id: string, productId: number) {
+  //   return this.#http.get(this.#baseUrl + 'wishlist/exists?id=' + id + '&productId=' + productId);
+  // }
 
 
 }
