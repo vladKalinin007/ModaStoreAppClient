@@ -1,52 +1,57 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MatSidenavModule} from "@angular/material/sidenav";
-import {NgIf} from "@angular/common";
+import {Component, OnInit, inject} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AccountService} from "../account.service";
 import {MessageService} from "primeng/api";
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-user-info',
   templateUrl: './user-info.component.html',
   styleUrls: ['./user-info.component.scss']
- /* imports: [NgIf, MatSidenavModule],
-  standalone: true*/
 })
 export class UserInfoComponent implements OnInit {
+  readonly #userService = inject(UserService);
+  readonly #messageService = inject(MessageService);
+  readonly #fb = inject(FormBuilder);
 
-  checkoutForm: FormGroup;
+  customerForm: FormGroup;
+  addressForm: FormGroup;
+  userForm: FormGroup;
 
-  constructor(
-    private accountService: AccountService,
-    private messageService: MessageService,
-    private fb: FormBuilder
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.createCheckoutForm();
+    this.createAddressForm();
+    this.createUserForm();
     this.getAddressFormValues();
+    this.getUserFormValues();
   }
 
-  createCheckoutForm() {
-    this.checkoutForm = this.fb.group({
-      addressForm: this.fb.group({
-        firstName: [null, Validators.required],
-        lastName: [null, Validators.required],
-        street: [null, Validators.required],
-        city: [null, Validators.required],
-        state: [null, Validators.required],
-        zipCode: [null, Validators.required],
-      })
+  createUserForm() {
+    this.userForm = this.#fb.group({
+      displayName: [null, Validators.required],
+      email: [null, Validators.required],
+      phone: [null, Validators.required]
+    });
+  }
+
+  createAddressForm() {
+    this.addressForm = this.#fb.group({
+      firstName: [null, Validators.required],
+      lastName: [null, Validators.required],
+      street: [null, Validators.required],
+      city: [null, Validators.required],
+      state: [null, Validators.required],
+      zipcode: [null, Validators.required],
     });
   }
 
   getAddressFormValues() {
-    this.accountService
-      .getUserAddress()
+    this.#userService
+      .getAddress()
       .subscribe({
         next: address => {
           if (address) {
-            this.checkoutForm.get('addressForm').patchValue(address);
+            this.addressForm.patchValue(address);
           }
         },
         error: err => {
@@ -55,19 +60,42 @@ export class UserInfoComponent implements OnInit {
       });
   }
 
-  updateUserInfo() {
-    this.accountService.updateUserAddress(this.checkoutForm.get('addressForm').value)
+  getUserFormValues() {
+    this.#userService
+      .getUser()
+      .subscribe({
+        next: user => {
+          if (user) {
+            this.userForm.patchValue(user);
+          }
+        },
+        error: err => {
+          console.log(err);
+        }
+      });
+  }
+
+  updateAddressInfo() {
+    this.#userService.updateAddress(this.addressForm.value)
       .subscribe({
           next: () => {
-            /*this.toastr.success('Address saved');*/
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Address saved' });
-            console.log("saveUserAddress() SAVED")
+            this.#messageService.add({ severity: 'success', summary: 'Success', detail: 'Address saved' });
           },
           error: err => {
-            /*this.toastr.error(err.message);*/
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: err.message });
-            /*console.log(err);*/
-            console.log("saveUserAddress() NOT SAVED")
+            this.#messageService.add({ severity: 'error', summary: 'Error', detail: err.message });
+          }
+        }
+      );
+  }
+
+  updateUser() {
+    this.#userService.updateUser(this.userForm.value)
+      .subscribe({
+          next: () => {
+            this.#messageService.add({ severity: 'success', summary: 'Success', detail: 'User saved' });
+          },
+          error: err => {
+            this.#messageService.add({ severity: 'error', summary: 'Error', detail: err.message });
           }
         }
       );

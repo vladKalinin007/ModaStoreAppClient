@@ -7,6 +7,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable, concatMap, switchMap, tap } from "rxjs";
 import { IRegister } from "../models/identity/register.interface";
 import { ILogin } from "../models/identity/login.interface";
+import { IAddress } from "../models/address";
 
 @Injectable({
     providedIn: 'root'
@@ -76,8 +77,9 @@ export class UserService {
         );
     }
 
-    updateUser() {
-
+    updateUser(user: any) {
+        console.dir(user);
+        return this.#httpClient.put<IUser>(this.API_URL, user, { withCredentials: true });
     }
 
     deleteUser() {
@@ -85,15 +87,15 @@ export class UserService {
     }
 
     getAddress() {
-
+        return this.#httpClient.get<IAddress>(this.API_URL + '/address', { withCredentials: true });
     }
 
     setAddress() {
             
     }
 
-    updateAddress() {
-
+    updateAddress(address: IAddress) {
+        return this.#httpClient.put<IAddress>(this.API_URL + '/address', address, { withCredentials: true });
     }
 
     deleteAddress() {

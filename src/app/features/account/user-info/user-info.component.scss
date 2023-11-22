@@ -14,8 +14,26 @@
 }
 
 .info-form {
+  margin: 2rem 4rem;
   &__body {
 
+  }
+
+  &__set {
+    padding: 2rem;
+    border: 1px dashed #e5e2e2d9;
+    border-radius: 6px;
+    background-color: #f7f7f7;
+    margin-bottom: 1rem;
+  }
+
+  &__set-header {
+    margin-bottom: 3rem;
+  }
+
+  &__set-title {
+    font-size: 1.6rem;
+    font-weight: bold;
   }
 
   &__row {

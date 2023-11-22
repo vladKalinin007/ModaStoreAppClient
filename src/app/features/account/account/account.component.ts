@@ -3,6 +3,7 @@ import {AccountService} from "../account.service";
 import {IUser} from "../../../core/models/user";
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
 import {inject} from "@angular/core";
+import { UserService } from 'src/app/core/services/user.service';
 
 
 @Component({
@@ -13,18 +14,19 @@ import {inject} from "@angular/core";
 })
 export class AccountComponent implements OnInit {
 
-  private accountService: AccountService = inject(AccountService);
+  readonly #userService: UserService = inject(UserService);
   private confirmationService: ConfirmationService = inject(ConfirmationService);
   private messageService: MessageService = inject(MessageService);
 
   public currentUser: Signal<IUser>;
 
   ngOnInit(): void {
-    this.currentUser = this.accountService._currentUser.asReadonly();
+    this.currentUser = this.#userService.user
+    console.dir(this.currentUser)
   }
 
   logout(): void {
-    this.accountService.logout();
+    this.#userService.logoutUser();
   }
 
   confirmLogout(): void {

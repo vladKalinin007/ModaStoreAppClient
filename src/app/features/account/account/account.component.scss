@@ -5,9 +5,21 @@
   margin-bottom: 6rem;
 }
 
+.pi {
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
 .mat-toolbar.mat-primary {
-  background: linear-gradient(to right, #74008bd1, #056550);
-  color: white
+  background: #e9ecef00;
+  box-shadow: 1px 1px 4px #dfdbdb;
+  color: rgb(82, 81, 81);
+  font-size: 1.8rem;
+  font-weight: 400;
+}
+
+.p {
+  padding: 0 1rem;
 }
 
 
@@ -15,8 +27,8 @@
 .mat-drawer.mat-drawer-side {
   z-index: 2;
   border: none;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-  padding: 1.2rem 1.2rem 1.2rem 0px;
+  box-shadow: 2px 0 8px rgb(194 189 189 / 10%);
+  min-width: 23rem;
 }
 
 .mat-mdc-icon-button.mat-mdc-button-base {
