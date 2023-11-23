@@ -172,6 +172,9 @@ export class BasketService {
       pictureUrl: item.pictures[0],
       brand: item.productBrand,
       type: item.productType,
+      isNew: item.isNew,
+      isBestSeller: item.isBestSeller,
+      oldPrice: item.oldPrice,
     }
   }
 

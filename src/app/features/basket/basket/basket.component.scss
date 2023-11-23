@@ -205,8 +205,39 @@
   }
 }
 
+.item-labels {
+  margin-top: 0.6rem;
+}
+.item-label {
+  padding: 0 1rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 1rem;
+  background: #212121;
+  color: #fff;
+  white-space: nowrap;
+  display: inline-flex;
+  vertical-align: top;
+  align-items: center;
+  position: relative;
 
+  &_blue {
+    background: #42bfdd;
+  }
 
+  &_orange {
+    background: #f2a965;
+  }
+
+  &_red {
+    background: #ec5c5d;
+  }
+
+  &_white {
+    background: #fff;
+    color: #212121;
+  }
+}
 
 
 

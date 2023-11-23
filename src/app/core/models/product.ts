@@ -22,7 +22,6 @@ export interface IProduct {
   isNew: boolean;
   category: string;
   color: string;
-  /*size: string;*/
   season: string;
   material: string;
   style: string;
@@ -40,8 +39,6 @@ export interface IProduct {
   pantStyle: string;
   fitType: string;
   colors: IProductColor[];
-  /*productImage: IProductImage[];*/
-  // pictures: IProductImage[];
   pictures: string[];
   reviews: IProductReview[];
   sizes: IProductSize[];

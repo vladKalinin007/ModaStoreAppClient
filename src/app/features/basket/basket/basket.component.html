@@ -8,10 +8,10 @@
     </div>
   </div>
   <div class="basket__layout">
-    <ng-container *ngIf="(basket$ | async)?.items.length > 0; else empty">
+    @if ((basket$ | async)?.items.length > 0) {
       <div class="basket__content">
         <div class="basket-list">
-          <div *ngFor="let item of (basket$ | async).items">
+          @for (item of (basket$ | async).items; track $index) {
             <div class="basket-list__item">
               <div class="basket-product">
                 <div class="basket-product__body">
@@ -22,7 +22,25 @@
                     <div class="basket-product__main">
                       <div class="additional-class-1"></div>
                       <a href="" class="product-name-link"> {{item.productName}} </a>
-                      <div class="additional-class-2"></div>
+
+                      <div class="item-labels">
+                        @if (item?.isNew) {
+                          <div>
+                            <div class="item-label item-label_blue"> New </div>
+                          </div>
+                        }
+                        @if (item?.isBestSeller) {
+                          <div>
+                            <div class="item-label item-label_orange"> Bestseller </div>
+                          </div>
+                        }
+                        @if (item?.oldPrice !== null && item?.oldPrice > 0) {
+                          <div>
+                            <div class="item-label item-label_red"> -{{ calculateDiscount(item.oldPrice, item.price) }} </div>
+                          </div>
+                        }
+                      </div>
+
                     </div>
                   </div>
                   <div class="product-amount">
@@ -60,7 +78,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          }
           <div class="basket-list__checkout-button">
             <app-button
               routerLink="/checkout"
@@ -71,10 +89,9 @@
           </div>
         </div>
       </div>
-    </ng-container>
-    <ng-template #empty>
+    } @else {
       <app-empty [placeholderMessage]="'Your basket is empty'" [placeholderIcon]="'remove_shopping_cart'" [@fadeIn]="(basket$ | async)?.items.length"></app-empty>
-    </ng-template>
+    }
   </div>
 </div>
 

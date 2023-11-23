@@ -29,7 +29,6 @@ export class BasketComponent implements OnInit {
     this.basket$ = this.#basketService.basket$;
     this.wishlist$ = this.#wishlistService.wishlist$;
     this.calculateBasketItems();
-    console.log(this.basket$);
   }
 
   calculateBasketItems() {
@@ -50,6 +49,11 @@ export class BasketComponent implements OnInit {
 
   decrementItemQuantity(item: IBasketItem): void {
     this.#basketService.decrementItemQuantity(item);
+  }
+
+  calculateDiscount(oldPrice: number, newPrice: number): string {
+    const discount = ((oldPrice - newPrice) / oldPrice) * 100;
+    return discount.toFixed(0) + '%';
   }
 
 }

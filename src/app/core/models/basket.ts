@@ -17,6 +17,9 @@ export interface IBasketItem {
   pictureUrl: string
   brand: string
   type: string
+  isBestSeller?: boolean
+  isNew?: boolean
+  oldPrice?: number
 }
 
 export class Basket implements IBasket {
