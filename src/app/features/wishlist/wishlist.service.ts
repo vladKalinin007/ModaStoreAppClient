@@ -176,7 +176,7 @@ export class WishlistService {
       name: item.name,
       description: item.description,
       price: item.price,
-      pictureUrl: item.pictureUrl,
+      pictureUrl: item.pictures[0],
       productType: item.productType,
       productBrand: item.productBrand
     }

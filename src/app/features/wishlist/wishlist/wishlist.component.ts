@@ -17,9 +17,9 @@ export class WishlistComponent implements OnInit {
 
   }
 
-
   ngOnInit(): void {
     this.products$ = this.wishlistService.products$;
+    console.dir(this.products$);
   }
 
 }

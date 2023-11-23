@@ -71,8 +71,10 @@ export class ProductService {
   }
 
   getProduct(id: string) {
-    return this.http.get<IProduct>(this.BASE_URL).pipe(
-      map(response => response[0])
+    const url: string = `${this.BASE_URL}` + `?id=${id}`;
+    console.log(`CHECK URL: ${url}`)
+    return this.http.get<IPagination<IProduct>>(url).pipe(
+      map(response => response.data[0])
     );
   }
 
