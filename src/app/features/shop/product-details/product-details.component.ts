@@ -62,6 +62,7 @@ export class ProductDetailsComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    this.scrollToTop();
     this.getProductById();
     this.getViewsHistory();
     this.getCurrentUser();
@@ -175,6 +176,10 @@ export class ProductDetailsComponent implements OnInit {
   calculateDiscount(oldPrice: number, newPrice: number): string {
     const discount = ((oldPrice - newPrice) / oldPrice) * 100;
     return discount.toFixed(0) + '%';
+  }
+
+  scrollToTop() {
+    window.scrollTo(0, 0);
   }
 
 }

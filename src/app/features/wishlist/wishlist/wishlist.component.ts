@@ -18,8 +18,10 @@ export class WishlistComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.products$ = this.wishlistService.products$;
     console.dir(this.products$);
+
   }
 
 }

@@ -1,7 +1,9 @@
 @if (!isCheckoutPage) {
+
   <header class="header" [class.header-hidden]="!isScrolled">
+    <div class="modal-overlay"  [style.display]="isModalOpen ? 'block' : 'none'"></div>
     <div class="layout">
-      <div class="header__main">
+      <div class="header__main" [style.padding]="isModalOpen ? '0 2rem' : ''">
         <div class="header__items">
           <div class="header__item_left">
             <div class="header__item-icon">
@@ -19,7 +21,7 @@
               </div>
             </div>
             <div class="header__item-body">
-              <form [formGroup]="searchForm" class="search" [ngClass]="{'is-active': isSearchActive}">
+              <form [formGroup]="searchForm" class="search" [ngClass]="{'is-active': isSearchActive}" [style.padding]="isModalOpen ? '0 2rem' : ''">
                 <div>
                   <a type="button" class="search__submit">
                     <i class="pi pi-search header__icon-internal" size="large"></i>

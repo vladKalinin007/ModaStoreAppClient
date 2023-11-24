@@ -69,6 +69,7 @@ export class ShopComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.scrollToTop()
     this.setCategory()
     this.loadProducts()
     this.getProducts();
@@ -292,5 +293,9 @@ export class ShopComponent implements OnInit {
     this.searchTerm.nativeElement.value = '';
     this.shopParams = new ShopParams();
     this.getProducts();
+  }
+
+  scrollToTop() {
+    window.scrollTo(0, 0);
   }
 }

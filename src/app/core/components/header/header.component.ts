@@ -51,6 +51,7 @@ export class HeaderComponent implements OnInit {
   isSearchActive: boolean = false;
   isCheckoutPage: boolean = false;
   isScrolled: boolean = true;
+  isModalOpen: boolean = false;
 
   prevScrollPos = window.pageYOffset;
 
@@ -124,6 +125,7 @@ export class HeaderComponent implements OnInit {
 
   toggleMenu() {
     this.isMenuActive = !this.isMenuActive;
+    this.isModalOpen = !this.isModalOpen;
     console.log("toggled");
   }
 
