@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {
   ISeenProductList,
@@ -15,86 +15,63 @@ import {ProductService} from "../../core/services/product.service/product.servic
   providedIn: 'root'
 })
 export class HistoryService {
+  readonly #http: HttpClient = inject(HttpClient);
+  readonly #productService: ProductService = inject(ProductService);
 
-  public baseUrl: string = environment.apiUrl;
-  public historySource: BehaviorSubject<ISeenProductList> = new BehaviorSubject<ISeenProductList>(null);
-  public history$ : Observable<ISeenProductList> = this.historySource.asObservable();
-  public _productSource: BehaviorSubject<IProduct[]> = new BehaviorSubject<IProduct[]>([]);
-  public product$ : Observable<IProduct[]> = this._productSource.asObservable();
+  BASE_URL: string = environment.apiUrl;
+  #historySource: BehaviorSubject<ISeenProductList> = new BehaviorSubject<ISeenProductList>(null);
+  history$ : Observable<ISeenProductList> = this.#historySource.asObservable();
+  #productSource: BehaviorSubject<IProduct[]> = new BehaviorSubject<IProduct[]>([]);
+  product$ : Observable<IProduct[]> = this.#productSource.asObservable();
 
-  constructor(private http: HttpClient, private productService: ProductService) { }
+  constructor() { }
 
-  createLocalProductsViewsHistoryId() {
+  createHistory(): ISeenProductList {
     const seenProductList: SeenProductList = new SeenProductList();
     localStorage.setItem('views_history_id', seenProductList.id);
     return seenProductList;
   }
 
-  deleteLocalProductsViewsHistoryId(id: string) {
-    localStorage.removeItem('views_history_id');
+  getHistory(): Observable<IProduct[]> {
+  const id: string = localStorage.getItem('views_history_id');
+  const URL: string = this.BASE_URL + 'seen-product/' + id;
+
+  return this.#http.get<ISeenProductList>(URL)
+    .pipe(
+      switchMap((viewedProductsList) => {
+          this.#historySource.next(viewedProductsList);
+          const productsIds = viewedProductsList.seenProductsIds.map((id) => id);
+          const productObservables = productsIds.map((productId) => this.#productService.getProduct(productId));
+          const result: Observable<IProduct[]> = forkJoin(productObservables);
+          return result.pipe(map(products => {
+            this.#productSource.next(products);
+            return products.reverse();
+          }));
+        }
+      ));
+  }
+  
+
+  setHistory() {
+    const URL: string = this.BASE_URL + 'seen-product';
+    const viewedProductList: ISeenProductList = this.#historySource.getValue();
+    return this.#http.post(URL, viewedProductList).subscribe({
+      next: (response) => {
+        this.#historySource.next(response as ISeenProductList);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
   }
 
-  getItemsFromProductsViewsHistory(): Observable<IProduct[]> {
-
-    const id = localStorage.getItem('views_history_id');
-
-    const url = this.baseUrl + 'SeenProduct/' + id;
-
-
-    return this.http.get<ISeenProductList>(url)
-      .pipe(
-        switchMap((viewedProductsList) => {
-            this.historySource.next(viewedProductsList);
-            const productsIds = viewedProductsList.seenProducts.map((product) => product.id);
-            console.log("HistoryService. products ids: ", productsIds)
-            const productObservables = productsIds.map((productId) => this.productService.getProduct(productId));
-            console.log("HistoryService. product observables: ", productObservables)
-
-            const result: Observable<IProduct[]> = forkJoin(productObservables);
-            console.log("HistoryService. result: ", result)
-            result.subscribe(products => {
-              console.log("HistoryService. products: ", products)
-              this._productSource.next(products);
-
-            });
-
-            return result;
-          }
-        ));
-  }
-
-  setProductsViewsHistory(seenProductList: ISeenProductList) {
-    const url: string = this.baseUrl + 'SeenProduct';
-    return this.http.post(url, seenProductList).subscribe((response: ISeenProductList) => {
-      this.historySource.next(response);
-    }, error => {
-      console.log(error);
-    });
-  }
-
-  addItemToProductsViewsHistory(product: IProduct) {
-    const seenProduct: ISeenProduct = this.toViewedProduct(product);
-    const seenProductList: ISeenProductList = this.getCurrentProductsViewsHistoryValue() ?? this.createLocalProductsViewsHistoryId();
-    seenProductList.seenProducts = this.addOrUpdateViewedProducts(seenProductList.seenProducts, seenProduct);
-    this.setProductsViewsHistory(seenProductList);
-  }
-
-  addOrUpdateViewedProducts(viewedProducts: ISeenProduct[], viewedProduct: ISeenProduct): ISeenProduct[] {
-    const index = viewedProducts.findIndex((item: ISeenProduct) => item.id === viewedProduct.id);
-    if (index === -1) {
-      viewedProducts.push(viewedProduct);
-    } else {
-      viewedProducts[index] = viewedProduct;
+  updateHistory(id: string) {
+    const currentHistory: ISeenProductList = this.#historySource.getValue();
+    const seenProductList: ISeenProductList = currentHistory ?? this.createHistory();
+    if (!seenProductList.seenProductsIds.includes(id)) {
+      seenProductList.seenProductsIds.push(id);
+      this.#historySource.next(seenProductList);
+      this.setHistory();
     }
-    return viewedProducts;
-  }
-
-
-  toViewedProduct(product: IProduct): ISeenProduct {
-    return { ...product };
-  }
-
-  getCurrentProductsViewsHistoryValue(): ISeenProductList {
-    return this.historySource.value;
   }
 }

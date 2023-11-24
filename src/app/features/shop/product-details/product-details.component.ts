@@ -51,15 +51,13 @@ export class ProductDetailsComponent implements OnInit {
   currentUser: Signal<IUser>;
   relatedProducts$: Observable<IProduct[]>;
   productReviews$: Observable<IProductReview[]>;
-  history$: Observable<ISeenProductList>
+  recentlyViewedProducts$: Observable<IProduct[]>;
 
   areRelatedProductsLoading$: Observable<boolean>;
+  areRecentlyViewedProductsLoading$: Observable<boolean>;
 
   ratingValue: number = 5;
   sidebarVisible: boolean;
-
-  prating: number;
-  pcomment: string;
 
   constructor() {}
 
@@ -132,7 +130,10 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   getViewsHistory() {
-    this.history$ = this.#historyService.history$;
+    this.recentlyViewedProducts$ = this.#historyService.product$;
+    this.areRecentlyViewedProductsLoading$ = this.recentlyViewedProducts$.pipe(
+      map(products => products ? false : true)
+    );
   }
 
 
@@ -147,8 +148,8 @@ export class ProductDetailsComponent implements OnInit {
     });
   }
 
-  addProductToViewsHistory(response: IProduct) {
-    this.#historyService.addItemToProductsViewsHistory(response);
+  addProductToViewsHistory(product: IProduct) {
+    this.#historyService.updateHistory(product.id);
   }
 
   addProductToBasket() {
@@ -160,7 +161,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   getProductsFromViewsHistory(id: string) {
-    this.#historyService.getItemsFromProductsViewsHistory().subscribe({
+    this.#historyService.getHistory().subscribe({
       next: (response) => {
         console.log("getProductsFromViewsHistory.response =", response);
       },

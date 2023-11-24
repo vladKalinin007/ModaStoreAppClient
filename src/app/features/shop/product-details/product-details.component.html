@@ -340,15 +340,15 @@
       [isLoading$]="areRelatedProductsLoading$"
       [products$]="relatedProducts$" 
     />
-<!-- 
-    <ng-container *ngIf="(history$ | async).reverse() as SeenProducts">
-      <app-related-products
-        title="Seen products"
-        category="sale"
-        [products]="SeenProducts"
-      />
-    </ng-container> -->
 
+    @if (((recentlyViewedProducts$ | async) && (recentlyViewedProducts$ | async).length > 0); as IProduct[]) {
+      <app-related-products
+        title="Viewed products"
+        [isLoading$]="areRecentlyViewedProductsLoading$"
+        category="sale"
+        [products$]="recentlyViewedProducts$"
+      />
+    }
 
   </div>
 </div>

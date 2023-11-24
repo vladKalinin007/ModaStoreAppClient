@@ -43,7 +43,6 @@ export class HomeService {
   
   getCarouselPictures(): void {
     this.carouselPictures$ = this.#pictureService.carouselPictures$;
-    console.log(`carouselPictures$ = ${this.carouselPictures$}`)
   }
 
   getBestsellers(): void {
@@ -69,9 +68,6 @@ export class HomeService {
   }
 
   getLatestReviews(): void {
-    console.log(`HomeService.getLatestReviews(), reviewService.latestReviews: ${this.#reviewService.latestReviews$}}`)
-    console.log(`HomeService.getLatestReviews(), homeService.latestReviews : ${this.latestReviews$}`)
     this.latestReviews$ = this.#reviewService.latestReviews$;
-    console.log(`STEP TWO`)
   }
 }

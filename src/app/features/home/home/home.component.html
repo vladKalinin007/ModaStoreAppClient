@@ -80,9 +80,9 @@
     [quantity]="4"
   />
 
-  @if ((recentlyViewedProducts$ | async)?.reverse() && (recentlyViewedProducts$ | async).length > 0; as IProduct[]) {
+  @if (((recentlyViewedProducts$ | async) && (recentlyViewedProducts$ | async).length > 0); as IProduct[]) {
     <app-related-products
-      title="Seen products"
+      title="Viwed products"
       [isLoading$]="areRecentlyViewedProductsLoading$"
       category="sale"
       [products$]="recentlyViewedProducts$"

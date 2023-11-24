@@ -83,7 +83,7 @@ export class AppComponent implements OnInit {
 
     if (views_history_id) {
 
-      this.#historyService.getItemsFromProductsViewsHistory().subscribe({
+      this.#historyService.getHistory().subscribe({
         next: () => console.log('initialized history'),
         error: error => console.log(error)
       })
