@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {IPagination} from "../../core/models/pagination";
 import {IBrand} from "../../core/models/brand";
@@ -8,15 +8,24 @@ import {ShopParams} from "../../core/models/shopParams";
 import {IProduct} from "../../core/models/product";
 import {environment} from "../../../environments/environment";
 import {Observable} from "rxjs";
+import { ProductService } from 'src/app/core/services/product.service/product.service';
+import { ReviewService } from 'src/app/shared/services/review-service/review.service';
+import { IProductReview } from 'src/app/core/models/catalog/product-review';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopService {
+  readonly #productService: ProductService = inject(ProductService);
+  readonly #reviewService: ReviewService = inject(ReviewService);
 
   baseUrl: string = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  productReviews$: Observable<IProductReview[]>;
+
+  constructor(private http: HttpClient) { 
+    this.productReviews$ = this.#reviewService.productReviews$;
+  }
 
   getProducts(shopParams: ShopParams): Observable<IPagination<IProduct>> {
 
@@ -82,9 +91,22 @@ export class ShopService {
     );
   }
 
+  getRelatedProducts(ids: string[]): Observable<IProduct[]> {
+    return this.#productService.getRelatedProducts(ids);
+  }
+
+  getProductById(id: string): Observable<IProduct> {
+    return this.#productService.getProduct(id);
+  }
+
   getProduct(id: string): Observable<IProduct>
   {
     return this.http.get<IProduct>(this.baseUrl + 'product/' + id);
+  }
+
+  getReviewsForProduct(productId: string) {
+    
+    return this.#reviewService.getReviewsForProduct(productId);
   }
 
   getBrands(): Observable<IBrand[]> {

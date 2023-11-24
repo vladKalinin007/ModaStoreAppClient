@@ -60,6 +60,7 @@ export class HeaderComponent implements OnInit {
     this.searchForm = this.#formBuilder.group({
       search: ['']
     });
+    this.#userService.toggleLoginFunction = this.toggleLogin.bind(this);
   }
 
   ngOnInit() {

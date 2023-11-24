@@ -24,3 +24,35 @@
 .rev {
   margin-bottom: 1.2rem;
 }
+.review-header {
+  border-bottom: 1px dashed #efefef;
+  &__name {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: .4rem;
+  }
+
+  &__user-field {
+      display: flex;
+  }
+
+  &__icon {
+      margin-right: .8rem;
+  }
+
+  &__rating {
+      margin-left: 1rem;
+  }
+
+  &__username  {
+      color: #BDBDBDBD;
+      margin-bottom: .4rem;
+  }
+
+  &__date {
+      color: #BDBDBDBD;
+      margin-bottom: .4rem;
+  }
+
+}

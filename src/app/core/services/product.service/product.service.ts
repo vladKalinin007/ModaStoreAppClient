@@ -7,10 +7,11 @@ import {map} from "rxjs/operators";
 import {IProduct} from "../../models/product";
 import {IBrand} from "../../models/brand";
 import {IType} from "../../models/productType";
-import {Observable} from "rxjs";
+import {Observable, forkJoin} from "rxjs";
 import {IProductColor} from "../../models/catalog/product-color";
 import {IProductSize} from "../../models/catalog/product-size";
 import {IProductAttribute} from "../../models/catalog/i-product-attribute";
+import { fork } from 'child_process';
 
 @Injectable({
   providedIn: 'root'
@@ -76,6 +77,11 @@ export class ProductService {
     return this.http.get<IPagination<IProduct>>(url).pipe(
       map(response => response.data[0])
     );
+  }
+
+  getRelatedProducts(ids: string[]): Observable<IProduct[]> {
+    const requests = ids.map(id => this.getProduct(id));
+    return forkJoin(requests);
   }
 
   getBrands() {

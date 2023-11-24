@@ -8,6 +8,9 @@ import { Observable, concatMap, switchMap, tap } from "rxjs";
 import { IRegister } from "../models/identity/register.interface";
 import { ILogin } from "../models/identity/login.interface";
 import { IAddress } from "../models/address";
+import { IProductReview, IPublishReview } from "../models/catalog/product-review";
+import { v4 as uuid } from 'uuid';
+import { IProduct } from "../models/product";
 
 @Injectable({
     providedIn: 'root'
@@ -21,6 +24,8 @@ export class UserService {
 
     #user: WritableSignal<IUser> = signal<IUser>(null);
     user = this.#user.asReadonly();
+
+    toggleLoginFunction: () => void;
 
     registerUser(user: any): Observable<IUser> {
 
@@ -102,7 +107,20 @@ export class UserService {
 
     }
 
-    setReview() {
+    addUserReview(review: IProductReview, product: IProduct) {
+        const productReview = {
+            id: uuid(),
+            rating: review.rating || 5,
+            comment: review.comment,
+            userId: this.user().id,
+            productId: product.id,
+            createdOnUtc: new Date(),
+            productName: product.name,
+            userName: this.user().displayName,
+            pictureUrl: product.pictures[0],
+        } as IProductReview;
+        
+        return this.#reviewService.addUserReview(productReview);
     }
 
     getReviews() {
@@ -111,5 +129,7 @@ export class UserService {
     checkEmailExists(email: string): Observable<Object> {
         return this.#httpClient.get(this.API_URL + '/check-email-exists/' + email);
     }
+
+    
 }
     

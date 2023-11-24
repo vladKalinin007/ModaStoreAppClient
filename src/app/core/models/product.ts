@@ -40,8 +40,8 @@ export interface IProduct {
   fitType: string;
   colors: IProductColor[];
   pictures: string[];
-  reviews: IProductReview[];
+  productReviews: IProductReview[];
   sizes: IProductSize[];
-  relatedProducts: IProduct[];
+  relatedProducts: string[];
   isInWishlist: boolean;
 }

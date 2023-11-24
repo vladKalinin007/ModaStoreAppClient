@@ -56,6 +56,7 @@ import { EmptyComponent } from './components/empty/empty.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { GradientShadowDirective } from './directives/gradient-shadow/gradient-shadow.directive';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @NgModule({
   declarations: [
@@ -121,7 +122,8 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     MatListModule,
     MaterialModule,
     FormsModule,
-    NgxSkeletonLoaderModule
+    NgxSkeletonLoaderModule,
+    InputTextareaModule
   ],
   exports: [
     PaginationModule,
@@ -175,7 +177,8 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     SeenItemComponent,
     ConfirmDialogModule,
     GradientShadowDirective,
-    NgxSkeletonLoaderModule
+    NgxSkeletonLoaderModule,
+    InputTextareaModule
   ]
 })
 export class SharedModule { }

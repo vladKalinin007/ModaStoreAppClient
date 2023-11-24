@@ -2,12 +2,7 @@
   <div class="product__layout">
     <div class="product-about">
       <div class="product-about__left">
-        <ng-container *ngIf="true; else slider">
-          <ngx-skeleton-loader 
-          [theme]="{height: '80rem', width: '61rem'}"
-          ></ngx-skeleton-loader>
-        </ng-container>
-        <ng-template #slider>
+        @if (product) {
           <div class="product-slider">
             <p-galleria
               [numVisible]="3"
@@ -25,15 +20,15 @@
                   style="width: 100%;"
                 >
                 <div class="item__labels">
-                  <ng-container *ngIf="product?.isNew">
+                  @if (product?.isNew) {
                     <div class="item-label item-label_blue"> New</div>
-                  </ng-container>
-                  <ng-container *ngIf="product?.isBestSeller">
+                  }
+                  @if (product?.isBestSeller) {
                     <div class="item-label item-label_orange"> Bestseller</div>
-                  </ng-container>
-                  <ng-container *ngIf="product?.oldPrice !== null && product?.oldPrice > 0">
-                    <div class="item-label item-label_red"> -{{ product?.oldPrice | discount: product?.price }} </div>
-                  </ng-container>
+                  }
+                  @if (product?.oldPrice !== null && product?.oldPrice > 0) {
+                    <div class="item-label item-label_red"> -{{ calculateDiscount(item.oldPrice, item.price) }} </div>
+                  }
                 </div>
               </ng-template>
   
@@ -51,75 +46,75 @@
   
             </p-galleria>
           </div>
-        </ng-template>
+        } @else {
+          <ngx-skeleton-loader 
+          [theme]="{height: '80rem', width: '61rem'}"
+          ></ngx-skeleton-loader>
+        }
       </div>
       <div class="product-about__right">
       <div class="product-card">
         <div class="product-card__description">
           <div class="product-card__header">
+            @if (product) {
             <h1 class="product-card__title">
-              <ngx-skeleton-loader 
-              [theme]="{height: '2.5rem', width: '50rem'}"
-              ></ngx-skeleton-loader>
               {{product?.name}}
             </h1>
+            } @else {
+              <ngx-skeleton-loader 
+                [theme]="{height: '2.5rem', width: '30rem'}"
+              ></ngx-skeleton-loader>
+            }
+
           </div>
-          <ng-container *ngIf="true; else panel">
-            <ngx-skeleton-loader 
-            [theme]="{height: '2.5rem', width: '30rem'}"
-            ></ngx-skeleton-loader>
-          </ng-container>
-          <ng-template #panel>
+          @if (product) {
             <div class="product-card__panel">
               <div class="product-card__panel-article"> Brand: {{product?.productBrand}}</div>
               <div class="product-card__rating">
                 <p-rating [(ngModel)]="ratingValue" [cancel]="false"/>
               </div>
                 <div class="product-card__reviews">
-                  <a href="#" class="product-card__reviews-count"> {{product?.reviews?.length}} reviews</a>
+                  <a href="#" class="product-card__reviews-count"> {{productReviews?.length}} reviews</a>
                 </div>
             </div>
-          </ng-template>
-          <ng-container *ngIf="true; else price">
+          } @else {
             <ngx-skeleton-loader 
-            [theme]="{height: '2.5rem', width: '20rem'}"
+              [theme]="{height: '2.5rem', width: '30rem'}"
             ></ngx-skeleton-loader>
-          </ng-container>
-          <ng-template #price>
+          }
+          @if (product) {
             <div class="product-card__price">
               <div class="product-card__current-price">
                 Price: {{product?.price | currency:'USD':true:'1.2-2'}}
               </div>
-              <ng-container *ngIf="product?.oldPrice !== null && product?.oldPrice > 0">
+              @if (product?.oldPrice !== null && product?.oldPrice > 0) {
                 <div class="product-card__old-price">
                   {{product?.oldPrice | currency:'USD':true:'1.2-2'}}
                 </div>
-              </ng-container>
+              }
             </div>
-          </ng-template>
-          <ng-container *ngIf="true; else color">
+          } @else {
             <ngx-skeleton-loader 
-            [theme]="{height: '2.5rem', width: '20rem'}"
+              [theme]="{height: '2.5rem', width: '20rem'}"
             ></ngx-skeleton-loader>
-          </ng-container>
-          <ng-template #color>
+          }
+          @if (product) {
             <div class="product-card__color">
               <div class="product-card__color-title">
                 Select color:
               </div>
-              <ng-container *ngIf="product?.colors?.length > 0">
+              @if (product?.colors?.length > 0) {
                 <div class="color-palette">
                   <a href="" class="color-palette__link" *ngFor="let color of product?.colors" [ngStyle]="{ 'background': color.colorCode }"></a>
                 </div>
-              </ng-container>
+              }
             </div>
-          </ng-template>
-          <ng-container *ngIf="true; else sizes">
+          } @else {
             <ngx-skeleton-loader 
-            [theme]="{height: '2.5rem', width: '20rem'}"
+              [theme]="{height: '2.5rem', width: '20rem'}"
             ></ngx-skeleton-loader>
-          </ng-container>
-          <ng-template #sizes>
+          }
+          @if (product) {
             <div class="product-card__sizes">
               <div class="product-card__sizes-title">
                 Select your size:
@@ -128,30 +123,26 @@
                 </p-sidebar>
               </div>
             <div class="product-card__sizes-options">
-              <!--&lt;!&ndash;<ng-container *ngIf="product.size?.length > 0">-->
-                <ng-container *ngFor="let size of product?.sizes">
-                  <label class="product-card__sizes-option">
-                    <input type="radio" name="size" class="product-card__sizes-option-input" value="S">
-                    <span class="product-card__sizes-option-box"> {{size?.name}} </span>
-                  </label>
-              <!--&lt;!&ndash;  </ng-container>-->
-              </ng-container>
+              @for (size of product.sizes; track $index) {
+                <label class="product-card__sizes-option">
+                  <input type="radio" name="size" class="product-card__sizes-option-input" value="S">
+                  <span class="product-card__sizes-option-box"> {{size?.name}} </span>
+                </label>
+              }
             </div>
               <div></div>
             </div>
-          </ng-template>          
+          } @else {
+            <ngx-skeleton-loader 
+              [theme]="{height: '2.5rem', width: '20rem'}"
+            ></ngx-skeleton-loader>
+          }         
         </div>
-
+ 
         <div class="product-sale">
           <div class="product-sale__container">
           <div class="product-sale__buy-button">
-
-            <ng-container *ngIf="true; else buyButton">
-              <ngx-skeleton-loader 
-              [theme]="{height: '4.8rem', width: '24.6rem'}"
-              ></ngx-skeleton-loader>
-            </ng-container>
-            <ng-template #buyButton>
+            @if (product) {
               <app-button
               (click)="addItemToWishList()"
               buttonName="Add to basket"
@@ -159,38 +150,39 @@
               showIcon="true"
               iconClass="pi pi-shopping-bag"
               />
-            </ng-template>
-
+            } @else {
+              <ngx-skeleton-loader 
+                [theme]="{height: '4.8rem', width: '24.6rem'}"
+              ></ngx-skeleton-loader>
+            }
           </div>
             <div class="product-sale__buy-button">
-              <ng-container *ngIf="true; else wishButton">
-                <ngx-skeleton-loader 
-                [theme]="{height: '4.8rem', width: '24.6rem'}"
-                ></ngx-skeleton-loader>
-              </ng-container>
-              <ng-template #wishButton>
+              @if (product) {
                 <app-button
-                (click)="addProductToBasket()"
-                buttonName="Add to wishlist"
-                buttonStyle="btn btn_color_light btn_size_large"
-                showIcon="true"
-                iconClass="pi pi-heart"
-              />
-              </ng-template>
+                  (click)="addProductToBasket()"
+                  buttonName="Add to wishlist"
+                  buttonStyle="btn btn_color_light btn_size_large"
+                  showIcon="true"
+                  iconClass="pi pi-heart"
+                />
+              } @else {
+                <ngx-skeleton-loader 
+                  [theme]="{height: '4.8rem', width: '24.6rem'}"
+                ></ngx-skeleton-loader>
+              }
             </div>
           </div>
         </div>
         <div class="product-card__warehouse">
-          <ng-container *ngIf="true; else link">
+          @if (product) {
+            <a class="product-card__warehouse-link">
+              Availability in stores
+            </a>
+          } @else {
             <ngx-skeleton-loader 
-            [theme]="{height: '2.5rem', width: '10rem'}"
+              [theme]="{height: '2.5rem', width: '10rem'}"
             ></ngx-skeleton-loader>
-          </ng-container>
-          <ng-template #link>
-          <a class="product-card__warehouse-link">
-            Availability in stores
-          </a>
-          </ng-template>
+          }
         </div>
       </div>
       </div>
@@ -198,14 +190,17 @@
     <div class="product-details">
       <p-tabView>
         <p-tabPanel header="Description">
-          <ngx-skeleton-loader 
-          count="5" 
-          appearance="line" 
-          [theme]="{height: '1.5rem'}"
-          ></ngx-skeleton-loader>
-          <div class="product-details__description">
-          {{product?.description}}
-          </div>
+          @if (product) {
+            <div class="product-details__description">
+              {{product?.description}}
+            </div>
+          } @else {
+            <ngx-skeleton-loader 
+              count="5" 
+              appearance="line" 
+              [theme]="{height: '1.5rem'}"
+            ></ngx-skeleton-loader>
+          }
         </p-tabPanel>
         <p-tabPanel header="Details">
           <div class="props">
@@ -307,16 +302,34 @@
         </p-tabPanel>
         <p-tabPanel header="Reviews">
           <div class="product-details__reviews">
-            <!--<div class="product-details__reviews-title">
-              Reviews
-            </div>-->
-            <div class="product-details__reviews-text">
-              <ng-container *ngIf="product?.reviews?.length > 0">
-                <ng-container *ngFor="let review of product?.reviews">
-                  <app-review [review]="review"/>
-                  <app-review [review]="review"/>
-                </ng-container>
-              </ng-container>
+            <div class="product-reviews">
+              <div class="product-reviews__list">
+                @if (productReviews?.length > 0) {
+                  @for (review of (productReviews$ | async); track $index) {
+                    <app-review [review]="review"/>
+                  }
+                }
+              </div>
+            </div>
+            <div class="product-reviews__insert">
+              <form [formGroup]="reviews">
+                <div class="product-reviews__rating">
+                  <div class="product-reviews__rating-title">
+                    Your product rating is:
+                  </div>
+                  <p-rating formControlName="rating" [cancel]="false"/>
+                </div>
+                <div>
+                  <textarea rows="5" cols="30" pInputTextarea [autoResize]="true" formControlName="comment"  style="width: 100%;"></textarea>
+                </div> 
+                <app-button
+                  (click)="createReview()"
+                  buttonName="Add review"
+                  buttonStyle="btn btn_color_light btn_size_medium basket-list__checkout-button"
+                  showIcon="true"
+                  iconClass="pi pi-comment"
+                />       
+              </form>
             </div>
           </div>
         </p-tabPanel>
@@ -324,8 +337,8 @@
     </div>
     <app-related-products
       title="Related products"
-      [isLoading$]=""
-      [products$]="product?.relatedProducts"
+      [isLoading$]="areRelatedProductsLoading$"
+      [products$]="relatedProducts$" 
     />
 <!-- 
     <ng-container *ngIf="(history$ | async).reverse() as SeenProducts">

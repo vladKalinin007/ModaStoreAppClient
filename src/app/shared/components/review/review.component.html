@@ -1,24 +1,28 @@
 <div class="rev">
   <div class="review">
-    <div class="review__name_instagram">
-      <div class="review__name">
-        <mat-icon class="review__icon">
-          account_circle
-        </mat-icon>
-        <div>
-          user911
-        </div>
-    </div>
-    <div class="review__rating_date">
-      <div class="review__date">
-        06.10.2022 16:30:23
+    <div class="review-header">
+      <div class="review-header__name">
+          <div class="review-header__user-field">
+              <div class="review-header__icon">
+                  <i class="pi pi-instagram"></i>
+              </div>
+              <div class="review-header__username">
+                  {{review?.userName}}
+              </div>
+
+              <div class="review-header__rating">
+                  <p-rating [(ngModel)]="review.rating" [disabled]="true" [cancel]="false"></p-rating>
+              </div>
+          </div>
+          <div>
+              <div class="review-header__date">
+                  {{review?.createdOnUtc | date: 'dd.MM.yyyy, HH:mm'}}
+              </div>
+          </div>
       </div>
-      <div class="review__rating">
-        <p-rating [(ngModel)]="rating" [cancel]="false"/>
-      </div>
-    </div>
+  </div>
     <div class="review__body">
       {{review.comment}}
     </div>
   </div>
-</div>
+</div> 
