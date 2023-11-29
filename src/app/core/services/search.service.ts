@@ -14,7 +14,7 @@ export class SearchService {
   constructor(private http: HttpClient) {}
 
   search(productName: string): Observable<any> {
-    let query: string = this.baseUrl + 'Product?Search=' + productName;
+    let query: string = this.baseUrl + 'products?search=' + productName;
 
     return this.http.get(query);
   }

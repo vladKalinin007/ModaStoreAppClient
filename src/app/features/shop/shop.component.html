@@ -12,11 +12,10 @@
               <mat-expansion-panel-header>
                 <mat-panel-title>  Price </mat-panel-title>
               </mat-expansion-panel-header>
-                <p-slider [(ngModel)]="rangeValues" (ngModelChange)="onPriceSelected()" [range]="true"></p-slider>
-                <div class="price-slider__inputs">
-                  <input type="number" value="0" pInputText [(ngModel)]="rangeValues[0]" (ngModelChange)="onPriceSelected()" class="price-slider__from">
-                  <input type="number" value="800" pInputText [(ngModel)]="rangeValues[1]" (ngModelChange)="onPriceSelected()" class="price-slider__to">
-                </div>
+                <mat-slider min="0" max="400" step="1" discrete [displayWith]="formatLabel">
+                  <input matSliderStartThumb [(ngModel)]="startThumbValue" (ngModelChange)="onPriceSelected()">
+                  <input matSliderEndThumb [(ngModel)]="endThumbValue" (ngModelChange)="onPriceSelected()">
+                </mat-slider>
             </mat-expansion-panel>
 
             <mat-expansion-panel expanded>
@@ -26,14 +25,14 @@
                 <ngx-skeleton-loader [theme]="{height: '5rem'}"></ngx-skeleton-loader>
               </mat-expansion-panel-header>
 
-              @if (areBrandsLoading()) {
+              @if ((areBrandsLoading$ | async)) {
                 @for (i of [1, 2, 3, 4, 5, 6]; track $index) {
                   <div class="catalog__checkbox-item">
                     <ngx-skeleton-loader [theme]="{height: '1.5rem'}"></ngx-skeleton-loader>
                   </div>
                 }
               } @else {
-                @for (brand of brands; track $index) {
+                @for (brand of (brands$ | async); track $index) {
                   <div class="catalog__checkbox-item">
                     <mat-checkbox [checked]="selectedBrand === brand.id" (change)="onBrandSelected(brand.id)">
                       {{brand.name}}
@@ -49,19 +48,17 @@
                 <mat-panel-title>  Types </mat-panel-title>
               </mat-expansion-panel-header>
 
-              @if (areTypesLoading()) {
+              @if (areTypesLoading$ | async) {
                 @for (i of [1, 2, 3, 4, 5, 6]; track $index) {
                   <div class="catalog__checkbox-item">
                     <ngx-skeleton-loader [theme]="{height: '1.5rem'}"></ngx-skeleton-loader>
                   </div>
                 }
               } @else {
-                @for (type of types; track $index) {
-                  <div class="catalog__checkbox-item" *ngFor="let type of types" >                 
-                    <mat-checkbox [checked]="selectedType === type.id" (change)="onTypeSelected(type.id)">
-                      {{type.name}}
-                    </mat-checkbox>
-                  </div>
+                @for (type of (types$ | async); track $index) {                    
+                  <mat-checkbox [checked]="selectedType === type.id" (change)="onTypeSelected(type.id)">
+                    {{type.name}}
+                  </mat-checkbox>
                 }
               }
 
@@ -72,17 +69,18 @@
                 <mat-panel-title>  Colors </mat-panel-title>
               </mat-expansion-panel-header>
 
-              @if (areColorsLoading()) {
+              @if (areColorsLoading$ | async) {
                 @for (i of [1, 2, 3, 4, 5, 6]; track $index) {
                   <div class="catalog__checkbox-item">
                     <ngx-skeleton-loader [theme]="{height: '1.5rem'}"></ngx-skeleton-loader>
                   </div>
                 }
               } @else {
-                @for (color of colors; track $index) {
+                @for (color of (colors$ | async); track $index) {
                   <div class="catalog__checkbox-item">
                     <mat-checkbox [checked]="selectedColor === color.id" (change)="onColorSelected(color.id)">
                       {{color.name}}
+                      <span class="catalog__color-indicator" [ngStyle]="{'background-color': color.colorCode}"></span>
                     </mat-checkbox>
                   </div>
                 }
@@ -95,14 +93,14 @@
                 <mat-panel-title>  Sizes </mat-panel-title>
               </mat-expansion-panel-header>
 
-              @if (areSizesLoading()) {
+              @if (areSizesLoading$ | async) {
                 @for (i of [1, 2, 3, 4, 5, 6]; track $index) {
                   <div class="catalog__checkbox-item">
                     <ngx-skeleton-loader [theme]="{height: '1.5rem'}"></ngx-skeleton-loader>
                   </div>
                 }
               } @else {
-                @for (size of sizes; track $index) {
+                @for (size of (sizes$ | async); track $index) {
                   <div class="catalog__checkbox-item">
                     <mat-checkbox [checked]="selectedSize === size.id" (change)="onSizeSelected(size.id)">
                       {{size.name}}
@@ -118,14 +116,14 @@
                 <mat-panel-title>  Materials </mat-panel-title>
               </mat-expansion-panel-header>
 
-              @if (areAttributesLoading()) {
+              @if (areAttributesLoading$ | async) {
                 @for (i of [1, 2, 3, 4, 5, 6]; track $index) {
                   <div class="catalog__checkbox-item">
                     <ngx-skeleton-loader [theme]="{height: '1.5rem'}"></ngx-skeleton-loader>
                   </div>
                 }
               } @else {
-                @for (material of attributes.materials; track $index) {
+                @for (material of (materials$ | async); track $index) {
                   <div class="catalog__checkbox-item">
                     <mat-checkbox [checked]="selectedMaterial === material" (change)="onMaterialSelected(material)">
                       {{material}}
@@ -140,14 +138,14 @@
                 <mat-panel-title>  Styles </mat-panel-title>
               </mat-expansion-panel-header>
 
-              @if (areAttributesLoading()) {
+              @if (areAttributesLoading$ | async) {
                 @for (i of [1, 2, 3, 4, 5, 6]; track $index) {
                   <div class="catalog__checkbox-item">
                     <ngx-skeleton-loader [theme]="{height: '1.5rem'}"></ngx-skeleton-loader>
                   </div>
                 }
               } @else {
-                @for (style of attributes.styles; track $index) {
+                @for (style of (styles$ | async); track $index) {
                   <div class="catalog__checkbox-item">
                     <mat-checkbox [checked]="selectedStyle === style" (change)="onStyleSelected(style)">
                       {{style}}
@@ -163,14 +161,14 @@
                 <mat-panel-title>  Seasons </mat-panel-title>
               </mat-expansion-panel-header>
 
-              @if (areAttributesLoading()) {
+              @if (areAttributesLoading$ | async) {
                 @for (i of [1, 2, 3, 4, 5, 6]; track $index) {
                   <div class="catalog__checkbox-item">
                     <ngx-skeleton-loader [theme]="{height: '1.5rem'}"></ngx-skeleton-loader>
                   </div>
                 }
               } @else {
-                @for (season of attributes.seasons; track $index) {
+                @for (season of (seasons$ | async); track $index) {
                   <div class="catalog__checkbox-item">
                     <mat-checkbox [checked]="selectedSeason === season" (change)="onSeasonSelected(season)">
                       {{season}}
@@ -186,14 +184,14 @@
                 <mat-panel-title>  Patterns </mat-panel-title>
               </mat-expansion-panel-header>
 
-              @if (areAttributesLoading()) {
+              @if (areAttributesLoading$ | async) {
                 @for (i of [1, 2, 3, 4, 5, 6]; track $index) {
                   <div class="catalog__checkbox-item">
                     <ngx-skeleton-loader [theme]="{height: '1.5rem'}"></ngx-skeleton-loader>
                   </div>
                 }
               } @else {
-                @for (pattern of attributes.patterns; track $index) {
+                @for (pattern of (patterns$ | async); track $index) {
                   <div class="catalog__checkbox-item">
                     <mat-checkbox [checked]="selectedPattern === pattern" (change)="onPatternSelected(pattern)">
                       {{pattern}}
@@ -207,7 +205,7 @@
       
           <section class="catalog__content">
 
-            @if (areProductsLoading()) {
+            @if (areProductsLoading$ | async) {
               <div class="catalog__list" >
                 <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9]">
                   <ngx-skeleton-loader 
@@ -220,7 +218,7 @@
               </div>
             } @else {
               <div class="catalog__list" [@fastCascade]="products?.length">
-                @for (product of products; track $index) {
+                @for (product of (products$ | async); track $index) {
                   <app-product-item class="catalog__item" [ngClass]="{'catalog__item_w_33': !isSideBarHidden}" [product]="product"/>
                 }
               </div>

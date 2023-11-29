@@ -8,9 +8,9 @@ import {IProduct} from "../../models/product";
 import {IBrand} from "../../models/brand";
 import {IType} from "../../models/productType";
 import {Observable, forkJoin} from "rxjs";
-import {IProductColor} from "../../models/catalog/product-color";
-import {IProductSize} from "../../models/catalog/product-size";
-import {IProductAttribute} from "../../models/catalog/i-product-attribute";
+import {IProductColor} from "../../models/catalog/product-color.interface";
+import {IProductSize} from "../../models/catalog/product-size.interface";
+import {IProductAttribute} from "../../models/catalog/product-attribute.interface";
 import { fork } from 'child_process';
 
 @Injectable({
@@ -98,16 +98,16 @@ export class ProductService {
     return this.http.get<IProduct[]>(url);
   }
 
-  getSizes(): Observable<IProductSize[]> {
-    return this.http.get<IProductSize[]>(this.BASE_URL + '/sizes');
+  getSizes(category: string): Observable<IProductSize[]> {
+    return this.http.get<IProductSize[]>(this.BASE_URL + '/sizes/' + category);
   }
 
-  getColors(): Observable<IProductColor[]> {
-    return this.http.get<IProductColor[]>(this.BASE_URL + '/colors');
+  getColors(category: string): Observable<IProductColor[]> {
+    return this.http.get<IProductColor[]>(this.BASE_URL + '/colors/' + category);
   }
 
-  getAttributes(): Observable<IProductAttribute> {
-    return this.http.get<IProductAttribute>(this.BASE_URL + '/attributes');
+  getAttributes(category: string): Observable<IProductAttribute> {
+    return this.http.get<IProductAttribute>(this.BASE_URL + '/attributes/' + category);
   }
 
   getFeaturedProducts(type: string, quantity: string): Observable<IProduct[]> {

@@ -10,10 +10,10 @@ import {ProductService} from "../../core/services/product.service/product.servic
 import {fastCascade} from "../../shared/animations/fade-in.animation";
 import {ICategory} from "../../core/models/category";
 import {CategoryService} from "../../core/services/category.service/category.service";
-import {IProductColor} from "../../core/models/catalog/product-color";
-import {IProductSize} from "../../core/models/catalog/product-size";
-import {IProductAttribute} from "../../core/models/catalog/i-product-attribute";
-import { Observable } from 'rxjs';
+import {IProductColor} from "../../core/models/catalog/product-color.interface";
+import {IProductSize} from "../../core/models/catalog/product-size.interface";
+import {IProductAttribute} from "../../core/models/catalog/product-attribute.interface";
+import { Observable, map, of, startWith, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-shop',
@@ -28,19 +28,26 @@ export class ShopComponent implements OnInit {
 
   @ViewChild('search', {static: false}) searchTerm: ElementRef;
   products: IProduct[];
-  brands: IBrand[];
-  types: IType[];
+  products$: Observable<IProduct[]>;
+  brands$: Observable<IBrand[]>;
+  types$: Observable<IType[]>;
   categories: ICategory[];
   categories$: Observable<ICategory[]>;
   colors: IProductColor[];
+  colors$: Observable<IProductColor[]>;
   sizes: IProductSize[];
+  sizes$: Observable<IProductSize[]>;
   attributes: IProductAttribute;
   materials: string[];
+  materials$: Observable<string[]>;
+  styles$: Observable<string[]>;
+  patterns$: Observable<string[]>;
+  seasons$: Observable<string[]>;
   headerTitle: string;
   shopParams: ShopParams = new ShopParams();
    totalCount: number;
-  rangeValues: number[] = [0, 800];
-  priceChangeTimeout: number;
+  rangeValues: number[] = [0, 300];
+  priceChangeTimeout: NodeJS.Timeout;
   isSideBarHidden: boolean;
 
   selectedBrand: string | null = null;
@@ -53,16 +60,18 @@ export class ShopComponent implements OnInit {
   selectedSeason: string | null = null;
   selectedPattern: string | null = null;
 
-  areProductsLoading = signal(true);
-  areBrandsLoading = signal(true);
-  areTypesLoading = signal(true);
-  areCategoriesLoading = signal(true);
-  areColorsLoading = signal(true);
-  areSizesLoading = signal(true);
-  areAttributesLoading = signal(true);
+  startThumbValue: number = 0;
+  endThumbValue: number;
+
+  areProductsLoading$: Observable<boolean>;
+  areBrandsLoading$: Observable<boolean>;
+  areTypesLoading$: Observable<boolean>;
+  areCategoriesLoading$: Observable<boolean>;
+  areColorsLoading$: Observable<boolean>;
+  areSizesLoading$: Observable<boolean>;
+  areAttributesLoading$: Observable<boolean>;
 
   readonly #shopService: ShopService = inject(ShopService);
-  readonly #categoryService: CategoryService = inject(CategoryService);
   readonly #productService: ProductService = inject(ProductService);
   readonly #activatedRoute: ActivatedRoute = inject(ActivatedRoute);
 
@@ -74,7 +83,6 @@ export class ShopComponent implements OnInit {
     this.loadProducts()
     this.getProducts();
     this.getBrands();
-    this.getCategories();
     this.getTypes();
     this.getSizes();
     this.getColors();
@@ -99,58 +107,33 @@ export class ShopComponent implements OnInit {
   }
 
   getProducts() {
-    this.#shopService.getProducts(this.shopParams)
-      .subscribe({
-        next: (response: IPagination<IProduct>) => {
-          this.products = response.data;
-          this.shopParams.pageNumber = response.pageIndex;
-          this.shopParams.pageSize = response.pageSize;
-          this.totalCount = response.count;
-        },
-        error: (error) => {
-          console.log(error);
-        }
-      });
+    this.products$ = this.#shopService.getProducts(this.shopParams).pipe(
+      map((response: IPagination<IProduct>) => {
+        this.totalCount = response.count;
+        return response.data;
+      })
+    );
+    this.areProductsLoading$ = this.products$.pipe(
+      map(products => products && products.length > 0 ? false : true),
+      startWith(true)
+    );
   }
 
-  getBrands() {
-    this.#shopService.getBrands()
-      .subscribe({
-        next: (response: IBrand[]) => {
-          this.brands = [
-            ...response
-          ];
-        },
-        error: (error) => {
-          console.log(error);
-        }
-      });
+  getBrands(): void {
+    this.brands$ = this.#shopService.brands$;
+    this.areBrandsLoading$ = this.brands$.pipe(
+      map(brands => brands && brands.length > 0 ? false : true),
+      startWith(true)
+    );
   }
 
   getTypes(): void {
-    this.#shopService.getTypes(this.shopParams.category)
-      .subscribe({
-        next: (response: IType[]) => {
-          this.types = response;
-        },
-        error: (error) => {
-          console.log(error);
-        }
-      });
-  }
-
-  getCategories() {
-    this.categories$ = this.#categoryService.categories$
-    // this.#categoryService.getCategories()
-    //   .subscribe({
-    //     next: (response: ICategory[]) => {
-    //       this.categories = response;
-    //       this.updateSideBarVisibility(response);
-    //     },
-    //     error: (error) => {
-    //       console.log(error);
-    //     }
-    //   });
+    const categoryName: string = this.#activatedRoute.snapshot.paramMap.get('categoryName');
+    this.types$ = this.#shopService.getTypes(categoryName);
+    this.areTypesLoading$ = this.types$.pipe(
+      switchMap(types => of(types && types.length > 0 ? false : true)),
+      startWith(true)
+    );
   }
 
   private updateSideBarVisibility(categories: ICategory[]): void {
@@ -164,43 +147,38 @@ export class ShopComponent implements OnInit {
   }
 
   getSizes(): void {
-    this.#productService.getSizes().subscribe({
-      next: (response: IProductSize[]) => {
-        this.sizes = response;
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    })
+    const category: string = this.#activatedRoute.snapshot.paramMap.get('categoryName');
+    this.sizes$ = this.#shopService.getSizes(category);
+    this.areSizesLoading$ = this.sizes$.pipe(
+      map(sizes => sizes && sizes.length > 0 ? false : true),
+      startWith(true)
+    );
   }
 
   getColors(): void {
-    this.#productService.getColors().subscribe({
-      next: (response: IProductColor[]) => {
-        this.colors = response;
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    })
+    const category: string = this.#activatedRoute.snapshot.paramMap.get('categoryName');
+    this.colors$ = this.#shopService.getColors(category);
+    this.areColorsLoading$ = this.colors$.pipe(
+      map(colors => colors && colors.length > 0 ? false : true),
+      startWith(true)
+    );
   }
 
   getAttributes(): void {
-    this.#productService.getAttributes().subscribe({
-      next: (response: IProductAttribute) => {
-        console.log("attributes", response)
-        this.attributes = response;
-        console.log("this.attributes", this.attributes)
-
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    })
+    const category: string = this.#activatedRoute.snapshot.paramMap.get('categoryName');
+    this.#shopService.getAttributes(category).subscribe(attributes => {
+      this.materials$ = of(attributes.materials);
+      this.styles$ = of(attributes.styles);
+      this.patterns$ = of(attributes.patterns);
+      this.seasons$ = of(attributes.seasons);
+    });
+    this.areAttributesLoading$ = this.materials$.pipe(
+      switchMap(materials => of(materials && materials.length > 0 ? false : true)),
+      startWith(true)
+    );
   }
 
   onBrandSelected(brandId: string): void {
-    console.log(this.shopParams)
     this.selectedBrand = this.selectedBrand === brandId ? null : brandId;
     this.shopParams.brandId = this.selectedBrand;
     this.shopParams.pageNumber = 1;
@@ -255,12 +233,12 @@ export class ShopComponent implements OnInit {
       clearTimeout(this.priceChangeTimeout);
     }
 
-    // this.priceChangeTimeout = setTimeout(() => {
-    //   this.shopParams.minPrice = this.rangeValues[0].toString();
-    //   this.shopParams.maxPrice = this.rangeValues[1].toString();
-    //   this.shopParams.pageNumber = 1;
-    //   this.getProducts();
-    // }, 2000);
+    this.priceChangeTimeout = setTimeout(() => {
+      this.shopParams.minPrice = this.startThumbValue.toString();
+      this.shopParams.maxPrice = this.endThumbValue.toString();
+      this.shopParams.pageNumber = 1;
+      this.getProducts();
+    }, 1200);
   }
 
 
@@ -297,5 +275,9 @@ export class ShopComponent implements OnInit {
 
   scrollToTop() {
     window.scrollTo(0, 0);
+  }
+
+  formatLabel(value: number): string {
+    return '$' + value;
   }
 }

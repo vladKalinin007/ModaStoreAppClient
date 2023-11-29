@@ -71,6 +71,7 @@ export class HeaderComponent implements OnInit {
     this.products$ = this.#wishlistService.products$;
     this.setSearchObservable();
     this.checkIfCheckoutPage();
+    this.checkSearchResults();
   }
 
   exit(): void {
@@ -111,6 +112,16 @@ export class HeaderComponent implements OnInit {
     );
   }
 
+  checkSearchResults() {
+  this.searchResults$.subscribe(results => {
+    if (results && results.data && results.data.length > 0) {
+      this.isModalOpen = true;
+    } else {
+      this.isModalOpen = false;
+    }
+  });
+  }
+
   toggleLogin() {
     this.#dialog.open(AuthenticationComponent, {
       width: '415px',
@@ -121,12 +132,23 @@ export class HeaderComponent implements OnInit {
   toggleSearch() {
     this.isSearchActive = !this.isSearchActive;
     if (!this.isSearchActive) this.searchForm.patchValue({ search: '' });
+    if (!this.isModalOpen) {
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+    }
   }
 
   toggleMenu() {
-    this.isMenuActive = !this.isMenuActive;
-    this.isModalOpen = !this.isModalOpen;
-    console.log("toggled");
+    if (this.isSearchActive) {
+      this.isSearchActive = !this.isSearchActive;
+      this.isMenuActive = true;
+      this.isModalOpen = true;
+    } else {
+      this.isMenuActive = !this.isMenuActive;
+      this.isModalOpen = !this.isModalOpen;
+      this.searchForm.patchValue({ search: '' });
+    }
   }
 
   toggleBasket() {
@@ -147,15 +169,24 @@ export class HeaderComponent implements OnInit {
 
   @HostListener('window:scroll', ['$event'])
   onScrollEvent($event){
-    let currentScrollPos = window.pageYOffset;
-    this.isScrolled = this.prevScrollPos > currentScrollPos;
-    this.prevScrollPos = currentScrollPos;
+    if (!this.isModalOpen) {
+      let currentScrollPos = window.pageYOffset;
+      this.isScrolled = this.prevScrollPos > currentScrollPos;
+      this.prevScrollPos = currentScrollPos;
+    }
   }
 
   private checkIfCheckoutPage() {
     this.#router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.isCheckoutPage = (event.urlAfterRedirects === '/checkout');
+        this.isModalOpen = false;
+        const urlSegments = event.urlAfterRedirects.split('/');
+        if (urlSegments.length === 4 && urlSegments[1] === 'shop') {
+          this.searchResults$ = of({ pageIndex: 0, pageSize: 0, count: 0, data: [] });
+          this.isSearchActive = false;
+          document.body.classList.remove('modal-open');
+        }
       }
     });
   }

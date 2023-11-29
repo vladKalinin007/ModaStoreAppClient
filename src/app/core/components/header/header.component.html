@@ -2,13 +2,17 @@
 
   <header class="header" [class.header-hidden]="!isScrolled">
     <div class="modal-overlay"  [style.display]="isModalOpen ? 'block' : 'none'"></div>
-    <div class="layout">
+    <div class="layout" [class.isModalActivated]="isModalOpen">
       <div class="header__main" [style.padding]="isModalOpen ? '0 2rem' : ''">
         <div class="header__items">
           <div class="header__item_left">
             <div class="header__item-icon">
               <a class="header__menu" (click)="toggleMenu()">
-                <i class="pi pi-align-justify header__icon-internal" size="large"></i>
+                @if (isMenuActive) {
+                  <i class="pi pi-undo header__icon-internal" size="large"></i>
+                } @else {
+                  <i class="pi pi-align-justify header__icon-internal" size="large"></i>
+                }
               </a>
             </div>  
           </div>
@@ -175,9 +179,10 @@
           }
         </div>
       </div>
-      <div [@fastCascade]="(searchResults$ | async)?.data?.length">
+      <div class="header__search-field" [@fastCascade]="(searchResults$ | async)?.data?.length">
         @for (result of (searchResults$ | async)?.data; track $index) {
           <app-product-list-item
+            [type]="'common'"
             [product]="result">
           </app-product-list-item>
         }

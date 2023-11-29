@@ -11,6 +11,9 @@ import {Observable} from "rxjs";
 import { ProductService } from 'src/app/core/services/product.service/product.service';
 import { ReviewService } from 'src/app/shared/services/review-service/review.service';
 import { IProductReview } from 'src/app/core/models/catalog/product-review';
+import { IProductSize } from 'src/app/core/models/catalog/product-size.interface';
+import { IProductColor } from 'src/app/core/models/catalog/product-color.interface';
+import { IProductAttribute } from 'src/app/core/models/catalog/product-attribute.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,15 +22,22 @@ export class ShopService {
   readonly #productService: ProductService = inject(ProductService);
   readonly #reviewService: ReviewService = inject(ReviewService);
 
+  products$: Observable<IProduct[]>;
+  brands$: Observable<IBrand[]>;
+  types$: Observable<IType[]>;
+  // sizes$: Observable<ISize[]>;
+  // colors$: Observable<IColor[]>;
+
   baseUrl: string = environment.apiUrl;
 
   productReviews$: Observable<IProductReview[]>;
 
   constructor(private http: HttpClient) { 
     this.productReviews$ = this.#reviewService.productReviews$;
+    this.getBrands();
   }
 
-  getProducts(shopParams: ShopParams): Observable<IPagination<IProduct>> {
+  getProducts(shopParams: ShopParams){
 
     let params: HttpParams = new HttpParams();
 
@@ -85,7 +95,7 @@ export class ShopService {
 
     console.log(params)
 
-    return this.http.get<IPagination<IProduct>>(this.baseUrl + 'product', {observe: 'response', params}).pipe(map(response => {
+    return this.http.get<IPagination<IProduct>>(this.baseUrl + 'products', {observe: 'response', params}).pipe(map(response => {
         return response.body;
       })
     );
@@ -104,21 +114,28 @@ export class ShopService {
     return this.http.get<IProduct>(this.baseUrl + 'product/' + id);
   }
 
-  getReviewsForProduct(productId: string) {
-    
+  getReviewsForProduct(productId: string): Observable<IProductReview[]> {
     return this.#reviewService.getReviewsForProduct(productId);
   }
 
-  getBrands(): Observable<IBrand[]> {
-    return this.http.get<IBrand[]>(this.baseUrl + 'productBrand');
+  getBrands() {
+    this.brands$ = this.http.get<IBrand[]>(this.baseUrl + 'productBrands');
   }
 
-  getTypes(category: string): Observable<IType[]> {
-    return this.http.get<IType[]>(this.baseUrl + 'ProductType/Category?key=' + category);
+  getTypes(name: string): Observable<IType[]> {
+    return this.http.get<IType[]>(this.baseUrl + 'productTypes/category/' + name);
   }
 
-  getCategories() {
-    return this.http.get<IType[]>(this.baseUrl + 'category');
+  getSizes(name: string): Observable<IProductSize[]> {
+    return this.#productService.getSizes(name);
+  }
+
+  getColors(name: string): Observable<IProductColor[]> {
+    return this.#productService.getColors(name);
+  }
+
+  getAttributes(name: string): Observable<IProductAttribute> {
+    return this.#productService.getAttributes(name);
   }
 
 }

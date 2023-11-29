@@ -1,7 +1,7 @@
-import {IProductColor} from "./catalog/product-color";
+import {IProductColor} from "./catalog/product-color.interface";
 import {IProductImage} from "./catalog/product-image";
 import {IProductReview} from "./catalog/product-review";
-import {IProductSize} from "./catalog/product-size";
+import {IProductSize} from "./catalog/product-size.interface";
 import {IProductRelated} from "./catalog/product-related";
 
 export interface IProduct {

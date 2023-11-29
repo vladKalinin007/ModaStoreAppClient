@@ -2,44 +2,75 @@
   <div class="basket-product">
     <div class="basket-product__body">
       <div class="basket-product__item">
-        <a href="" class="basket-product__picture">
-          <img src="{{product.pictureUrl}}" alt="" class="basket-product__picture-image">
+        <a routerLink="/shop/{{product.category}}/{{product.id}}" class="basket-product__picture">
+          <img src="{{product.pictures[0]}}" alt="" class="basket-product__picture-image">
         </a>
         <div class="basket-product__main">
           <div class="additional-class-1"></div>
-          <a href="" class="product-name-link"> {{product.name}} </a>
-          <div class="additional-class-2"></div>
+          <a routerLink="/shop/{{product.category}}/{{product.id}}" class="product-name-link"> {{product.name}} </a>
+          <div class="item-labels">
+            @if (product?.isNew) {
+              <div>
+                <div class="item-label item-label_blue"> New </div>
+              </div>
+            }
+            @if (product?.isBestSeller) {
+              <div>
+                <div class="item-label item-label_orange"> Bestseller </div>
+              </div>
+            }
+            @if (product?.oldPrice !== null && product?.oldPrice > 0) {
+              <div>
+                <div class="item-label item-label_red"> -{{ calculateDiscount(product.oldPrice, product.price) }} </div>
+              </div>
+            }
+          </div>
         </div>
       </div>
-      <div class="product-amount">
-        <div class="product-amount__price">
-          <div class="product-amount__heading"> Price</div>
-          <div class="product-amount__price-val">
-            {{product.price}} $
+      @switch (type) {
+        @case ('common') {
+          <div class="product-amount">
+            <div class="product-amount__price">
+              <div class="product-amount__heading"> Price</div>
+              <div class="product-amount__price-val"> 
+                {{product.price}} $
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="product-amount__quantity">
-          <div class="product-amount__heading">
-            Quantity
+        }
+        @case ('checkout') {
+          <div class="product-amount">
+            <div class="product-amount__price">
+              <div class="product-amount__heading"> Price</div>
+              <div class="product-amount__price-val">
+                {{product.price}} $
+              </div>
+            </div>
+            <div class="product-amount__quantity">
+              <div class="product-amount__heading">
+                Quantity
+              </div>
+              <div class="product-amount__value">
+                <a class="product-amount__indecrease">
+                  <!-- <i (click)="decrementItemQuantity(item)" class="pi pi-minus"></i> -->
+                </a>-->
+                <!--{{item.quantity}}-->
+                <!--<a class="product-amount__indecrease">
+                  <i (click)="incrementItemQuantity(item)" class="pi pi-plus"></i>
+                </a>
+              </div>
+    
+            </div>
+            <div class="product-amount__sum">
+              <div class="product-amount__heading"> Sum</div>
+              <div class="product-amount__price-val">
+                <!--{{item.price * item.quantity}} $-->
+              </div>
+            </div>
           </div>
-          <div class="product-amount__value">
-            <!--<a class="product-amount__indecrease">
-              <i (click)="decrementItemQuantity(item)" class="pi pi-minus"></i>
-            </a>-->
-            <!--{{item.quantity}}-->
-            <!--<a class="product-amount__indecrease">
-              <i (click)="incrementItemQuantity(item)" class="pi pi-plus"></i>
-            </a>-->
-          </div>
+        }
+      }
 
-        </div>
-        <div class="product-amount__sum">
-          <div class="product-amount__heading"> Sum</div>
-          <div class="product-amount__price-val">
-            <!--{{item.price * item.quantity}} $-->
-          </div>
-        </div>
-      </div>
       <!--<a class="product-action__delete">
         <i (click)="removeBasketItem(item)" class="pi pi-trash"></i>
       </a>-->

@@ -4,11 +4,11 @@ import {BasketService} from "../../../features/basket/basket.service";
 import {WishlistService} from "../../../features/wishlist/wishlist.service";
 import {IWishlistItem} from "../../../core/models/customer/wishlistItem";
 import {ActivatedRoute, Router} from "@angular/router";
-import {IProductColor} from "../../../core/models/catalog/product-color";
+import {IProductColor} from "../../../core/models/catalog/product-color.interface";
 import {IProductImage} from "../../../core/models/catalog/product-image";
 import {Observable, of} from "rxjs";
 import { map } from 'rxjs/operators';
-import { IProductSize } from 'src/app/core/models/catalog/product-size';
+import { IProductSize } from 'src/app/core/models/catalog/product-size.interface';
 
 @Component({
   selector: 'app-product-item',

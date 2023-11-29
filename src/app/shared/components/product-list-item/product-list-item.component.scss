@@ -9,7 +9,7 @@
     outline: 0;
     min-height: 700px;
     position: relative;
-    border-radius: 8px;
+    border-radius: 8px; 
     background-color: #fff;
   }
 
@@ -103,7 +103,6 @@
 .basket-product {
 
   &__body {
-    padding-right: 52px;
     padding-top: 16px;
     padding-bottom: 16px;
     border-bottom: 1px dashed #eee;
@@ -148,24 +147,45 @@
 
   &__price {
     text-align: center;
+    border-radius: 8px;
+    box-shadow: 0.4px 2px 4px #e8e8fe;
+    padding: 0.6rem;
+    margin-right: 1.2rem;
+    min-width: 8rem;
   }
 
   &__quantity {
     text-align: center;
+    border-radius: 8px;
+    box-shadow: 0.4px 2px 4px #cfefe3;
+    padding: 0.6rem;
+    margin-right: 1.2rem;
+    min-width: 8rem;
+    transition: ease-in-out 0.5s;
+    &:hover {
+      box-shadow: 0.4px 2px 6px #baedda;
+    }
   }
 
   &__sum {
     text-align: center;
+    border-radius: 8px;
+    box-shadow: 0.4px 2px 4px #fce8e8;
+    padding: 0.6rem;
+    margin-right: 1.2rem;
+    min-width: 8rem;
   }
 
   &__value {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    margin-right: -8px;
     margin-top: 8px;
     font-weight: 500;
-    min-width: 75px;
+  }
+
+  &__indecrease {
+    cursor: pointer;
   }
 
   &__price-val {
@@ -186,5 +206,38 @@
     height: 24px;
     padding: 8px;
     border-radius: 100%;
+  }
+}
+.item-labels {
+  margin-top: 0.6rem;
+}
+.item-label {
+  padding: 0 1rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 1rem;
+  background: #212121;
+  color: #fff;
+  white-space: nowrap;
+  display: inline-flex;
+  vertical-align: top;
+  align-items: center;
+  position: relative;
+
+  &_blue {
+    background: #42bfdd;
+  }
+
+  &_orange {
+    background: #f2a965;
+  }
+
+  &_red {
+    background: #ec5c5d;
+  }
+
+  &_white {
+    background: #fff;
+    color: #212121;
   }
 }

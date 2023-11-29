@@ -5,12 +5,21 @@
         <div class="products__title">
           {{ title }}
         </div>
+        @if (title === 'Viwed products') {
+        <a routerLink="/account/seen" class="products__all-link">
+          <div class="products__all-link-text"> Open full list </div>
+          <div class="products__all-link-icon">
+            <i class="pi pi-chevron-down"></i>
+          </div>     
+        </a>
+        } @else {
         <a routerLink="/shop/{{category}}" class="products__all-link">
           <div class="products__all-link-text"> Open full list </div>
           <div class="products__all-link-icon">
             <i class="pi pi-chevron-down"></i>
           </div>     
         </a>
+        }
       </div>
       <div class="products__body">
         <div class="products__list" [ngClass]="{'products__list_full': (products$ | async)?.length >= 4}">

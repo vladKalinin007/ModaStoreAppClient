@@ -11,6 +11,7 @@ import { CheckoutSuccessComponent } from './checkout-success/checkout-success.co
 import {FeaturesModule} from "../features.module";
 import { CheckoutUserInfoComponent } from './checkout-user-info/checkout-user-info.component';
 import {FormsModule} from "@angular/forms";
+import { MessageService } from 'primeng/api';
 
 
 
@@ -24,6 +25,9 @@ import {FormsModule} from "@angular/forms";
     CheckoutReviewComponent,
     CheckoutSuccessComponent,
     CheckoutUserInfoComponent,
+  ],
+  providers: [
+    MessageService
   ],
     imports: [
         FeaturesModule,

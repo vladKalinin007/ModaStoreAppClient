@@ -1,35 +1,40 @@
 @import "src/app/shared/styles/common.scss";
-:host ::ng-deep .pslider {
-  &.p-slider-horizontal {
-    height: 0.600rem;
-  }
-  &.p-slider-range {
-    background: #48d597;
-  }
+// :host ::ng-deep .pslider {
+//   &.p-slider-horizontal {
+//     height: 0.600rem;
+//   }
+//   &.p-slider-range {
+//     background: #48d597;
+//   }
 
-  //.p {
-  //  &-accordion {
-  //
-  //  }
-  //  &-accordion-header {
-  //
-  //  }
-  //
-  //  &-header-link {
-  //    border: none;
-  //
-  //    :focus {
-  //
-  //    }
-  //  }
-  //}
-  .p-accordion .p-accordion-header .p-accordion-header-link {
-    border: none;
-    :focus {
-      outline: none;
-    }
-  }
+//   //.p {
+//   //  &-accordion {
+//   //
+//   //  }
+//   //  &-accordion-header {
+//   //
+//   //  }
+//   //
+//   //  &-header-link {
+//   //    border: none;
+//   //
+//   //    :focus {
+//   //
+//   //    }
+//   //  }
+//   //}
+//   .p-accordion .p-accordion-header .p-accordion-header-link {
+//     border: none;
+//     :focus {
+//       outline: none;
+//     }
+//   }
+// }
+
+mat-slider {
+  width: 92%;
 }
+
 
 .mat-expansion-panel {
   box-sizing: content-box;
@@ -57,6 +62,7 @@
   }
 
   &__item {
+    
     width: 25%;
     &.catalog__item_w_33 {
       width: 33.3333333333%;
@@ -64,7 +70,17 @@
   }
 
   &__checkbox-item {
+    color: #48d597;
     font-size: 1.5rem;
+  }
+
+  &__color-indicator {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 1rem;
+    border: 0.1px solid;
   }
 
   &__checkbox-name {

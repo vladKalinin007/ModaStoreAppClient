@@ -11,7 +11,13 @@ import {IOrderItem} from "../../../core/models/order";
 export class ProductListItemComponent {
 
   @Input() product: IProduct;
+  @Input() type: 'common' | 'checkout' | 'review';
 
   constructor() { }
+
+  calculateDiscount(oldPrice: number, newPrice: number): string {
+    const discount = ((oldPrice - newPrice) / oldPrice) * 100;
+    return discount.toFixed(0) + '%';
+  }
 
 }
