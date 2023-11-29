@@ -8,6 +8,7 @@ import {ChatComponent} from "./features/chat/chat/chat.component";
 import {MemberComponent} from "./features/member/member/member.component";
 import {AdminComponent} from "./features/admin/admin/admin.component";
 import {WishlistComponent} from "./features/wishlist/wishlist/wishlist.component";
+import { AuthGuard } from './core/guards/auth.guard';
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
   },
   {
     path: 'account',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./features/account/account.module')
       .then(m => m.AccountModule)
   },
@@ -64,7 +66,7 @@ const routes: Routes = [
   },
   {
     path: 'checkout',
-    /*canActivate: [AuthGuard],*/
+    canActivate: [AuthGuard],
     loadChildren: () => import('./features/checkout/checkout.module').then(m => m.CheckoutModule),
     data: {breadcrumb: 'Checkout'}
   },

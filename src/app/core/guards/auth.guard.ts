@@ -1,28 +1,28 @@
 import {inject, Injectable} from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {AccountService} from "../../features/account/account.service";
 import {map} from "rxjs/operators";
+import { UserService } from '../services/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard  {
+  readonly #userService: UserService = inject(UserService);
+  readonly #router: Router = inject(Router);
 
-  private _accountService: AccountService = inject(AccountService);
-  private _router: Router = inject(Router);
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot) {
 
-  // canActivate(
-  //   route: ActivatedRouteSnapshot,
-  //   state: RouterStateSnapshot): Observable<boolean | UrlTree> {
-  //   return this.accountService.currentUser$.pipe(
-  //     map(auth => {
-  //       if (auth) {
-  //         return true;
-  //       }
-  //       this.router.navigate(['account/login'], {queryParams: {returnUrl: state.url}});
-  //     })
-  //   );
-  // }
-
+    if (this.#userService.user()) {
+      return true;
+    } else {
+      this.#router.navigate(['/']);
+      this.#userService.toggleLoginFunction();
+      return false;
+    }
+  }
 }
+ 
