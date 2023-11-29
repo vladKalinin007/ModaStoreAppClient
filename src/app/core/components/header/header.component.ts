@@ -49,7 +49,7 @@ export class HeaderComponent implements OnInit {
 
   isMenuActive: boolean = false;
   isSearchActive: boolean = false;
-  isCheckoutPage: boolean = false;
+  isCheckoutPage$: Observable<boolean> = of(false);
   isScrolled: boolean = true;
   isModalOpen: boolean = false;
 
@@ -179,7 +179,7 @@ export class HeaderComponent implements OnInit {
   private checkIfCheckoutPage() {
     this.#router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.isCheckoutPage = (event.urlAfterRedirects === '/checkout');
+        this.isCheckoutPage$ = of(event.urlAfterRedirects === '/checkout');
         this.isModalOpen = false;
         const urlSegments = event.urlAfterRedirects.split('/');
         if (urlSegments.length === 4 && urlSegments[1] === 'shop') {

@@ -297,6 +297,11 @@
   right: 0;
   z-index: 99;
 
+  &__layout {
+    margin: 0 auto;
+    background-color: #F2F2F2;
+  }
+
   &__main {
     max-width: 1180px;
     display:flex;

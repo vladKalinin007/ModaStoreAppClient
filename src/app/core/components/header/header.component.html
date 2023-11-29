@@ -1,5 +1,19 @@
-@if (!isCheckoutPage) {
-
+@if (isCheckoutPage$ | async) {
+  <header class="checkout-header">
+    <div class="checkout-header__layout" >
+      <div class="checkout-header__inner">
+        <div class="checkout-header__main" [ngStyle]="{'margin': '0 auto'}">
+          <div class="checkout-header__logo">
+            <a class="logo" href="/">
+              <img src="assets/images/MainLogo2.png" alt="moda_logo"
+                   title="shafa_logo" class="logo__image">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+} @else {
   <header class="header" [class.header-hidden]="!isScrolled">
     <div class="modal-overlay"  [style.display]="isModalOpen ? 'block' : 'none'"></div>
     <div class="layout" [class.isModalActivated]="isModalOpen">
@@ -13,7 +27,7 @@
                 } @else {
                   <i class="pi pi-align-justify header__icon-internal" size="large"></i>
                 }
-              </a>
+              </a> 
             </div>  
           </div>
           <div class="header__item_left">
@@ -188,21 +202,6 @@
         }
       </div>
       <app-nav-modal [isMenuActive]="isMenuActive"></app-nav-modal>
-    </div>
-  </header>
-} @else {
-  <header class="checkout-header">
-    <div class="layout">
-      <div class="checkout-header__inner">
-        <div class="checkout-header__main">
-          <div class="checkout-header__logo">
-            <a class="logo" href="/">
-              <img src="assets/images/MainLogo2.png" alt="moda_logo"
-                   title="shafa_logo" class="logo__image">
-            </a>
-          </div>
-        </div>
-      </div>
     </div>
   </header>
 }
