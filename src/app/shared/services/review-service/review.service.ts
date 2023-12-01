@@ -46,8 +46,14 @@ export class ReviewService {
 
   addUserReview(review: IProductReview) {
     const currentReviews = this.#productReviewSource.getValue();
-    const updatedReviews = [review,...currentReviews];
-    this.#productReviewSource.next(updatedReviews);
+
+    if (currentReviews.length === 0) {
+      currentReviews.push(review);
+      this.#productReviewSource.next(currentReviews);
+    } else {
+      const updatedReviews = [review,...currentReviews];
+      this.#productReviewSource.next(updatedReviews);
+    }
 
     const publishReview = {
       id: review.id,
