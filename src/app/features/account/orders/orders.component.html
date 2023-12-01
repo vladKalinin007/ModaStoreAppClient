@@ -1,4 +1,4 @@
-@if ((orders$ | async).length > 1) {
+@if ((orders$ | async)?.length >= 1) {
   @for (order of (orders$ | async); track $index) {
     <app-order [order]="order"></app-order>
   }

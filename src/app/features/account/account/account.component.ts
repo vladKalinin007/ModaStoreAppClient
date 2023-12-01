@@ -21,8 +21,8 @@ export class AccountComponent implements OnInit {
   public currentUser: Signal<IUser>;
 
   ngOnInit(): void {
-    this.currentUser = this.#userService.user
-    console.dir(this.currentUser)
+    this.currentUser = this.#userService.user;
+    this.scrollToTop();
   }
 
   logout(): void {
@@ -52,5 +52,9 @@ export class AccountComponent implements OnInit {
       }
     }
     });
+  }
+
+  scrollToTop() {
+    window.scrollTo(0, 0);
   }
 }

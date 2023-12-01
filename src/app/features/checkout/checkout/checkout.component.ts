@@ -28,6 +28,7 @@ export class CheckoutComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    this.scrollToTop();
     this.createCheckoutForm();
     this.getDeliveryMethodValue();
     this.getAddressFormValues();
@@ -85,6 +86,10 @@ export class CheckoutComponent implements OnInit {
 
   setCardNumber(cardNumber: any): void {
     this.cardNumber = cardNumber;
+  }
+
+  scrollToTop() {
+    window.scrollTo(0, 0);
   }
 
 }
