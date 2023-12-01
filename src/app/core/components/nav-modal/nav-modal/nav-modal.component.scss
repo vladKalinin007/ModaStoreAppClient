@@ -1,5 +1,8 @@
 @import "src/app/shared/styles/common.scss";
 
+.pi {
+  font-size: 3rem;
+}
 
 .nav-modal {
   display: none;
@@ -26,14 +29,21 @@
 
   &__body {
     display: flex;
-    align-items: center;
-    height: 100%;
+    padding: 2rem;
   }
 
-  &__navs-aside {
-    display: flex;
-    align-items: flex-start;
-    width: 100%;
+  &__left {
+    flex: 2;
+    border-right: 1px dashed #d7d7d7;
+  }
+
+  &__center {
+    flex: 2;
+    border-right: 1px dashed #d7d7d7;
+  }
+
+  &__right {
+    flex: 1;
   }
 
   &___navs {
@@ -42,7 +52,59 @@
   }
 
   &__aside {
-    font-size: 1.8rem;
-    flex-shrink: 0;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }
+
+  &__link {
+    font-size: 2.4rem;
+  }
+}
+
+.right-block {
+  display: flex;
+  justify-content: center;
+
+  &__tel {
+    margin-bottom: 2rem;
+  }
+  &__socials {
+    margin-bottom: 2rem;
+  }
+
+  &__account-icon {
+    margin-right: 1rem;
+  }
+
+  &__account-text {
+    font-size: 2rem;
+  }
+
+}
+
+.center {
+  margin-left: 2rem;
+}
+
+.tel {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.socials {
+  &__title {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+
+  &__list {
+
+  }
+
+  &__item {
+    margin-right: 2rem;
   }
 }

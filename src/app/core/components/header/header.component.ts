@@ -140,15 +140,8 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleMenu() {
-    if (this.isSearchActive) {
-      this.isSearchActive = !this.isSearchActive;
-      this.isMenuActive = true;
-      this.isModalOpen = true;
-    } else {
-      this.isMenuActive = !this.isMenuActive;
-      this.isModalOpen = !this.isModalOpen;
-      this.searchForm.patchValue({ search: '' });
-    }
+    this.isMenuActive = !this.isMenuActive;
+    this.isModalOpen = !this.isModalOpen;
   }
 
   toggleBasket() {

@@ -4,14 +4,17 @@ import {Router} from "@angular/router";
 import {MatDialogRef} from "@angular/material/dialog";
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/core/services/user.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  providers: [ConfirmationService, MessageService]
 })
 export class LoginComponent implements OnInit {
   readonly #toastrService = inject(ToastrService);
+  readonly #messageService = inject(MessageService);
   readonly #dialogRef = inject(MatDialogRef<LoginComponent>);
   readonly #userService = inject(UserService);
   readonly #router = inject(Router);
@@ -19,6 +22,8 @@ export class LoginComponent implements OnInit {
   @Output() loginMode: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   loginForm: FormGroup;
+  errorMessage: string;
+  errorVisible: boolean = false;
   
   constructor() {}
 
@@ -41,13 +46,8 @@ export class LoginComponent implements OnInit {
       },
       error: (error) => {
         console.log(error);
-        this.#toastrService.error(
-          'Login Failed',
-          error.info.error,
-          {
-            timeOut: 6000,
-          }
-        );
+        this.errorVisible = true;
+        setTimeout(() => this.errorVisible = false, 5000)
       }
     });
   }

@@ -12,6 +12,7 @@ import { IProductReview, IPublishReview } from "../models/catalog/product-review
 import { v4 as uuid } from 'uuid';
 import { IProduct } from "../models/product";
 
+
 @Injectable({
     providedIn: 'root'
 })
@@ -65,19 +66,18 @@ export class UserService {
         );
     }
 
-    getUser(): Observable<IUser> {
-        return this.#httpClient.get<IUser>(this.API_URL, { withCredentials: true }).pipe(
-            tap((user: IUser) => {
-                console.dir(user);
-                this.#user.set(user);
-            }),
-        );
-    }
-
     logoutUser(): Observable<Object> {
         return this.#authService.logout().pipe(
             tap(() => {
                 this.#user.set(null);
+            }),
+        );
+    }
+
+    getUser(): Observable<IUser> {
+        return this.#httpClient.get<IUser>(this.API_URL, { withCredentials: true }).pipe(
+            tap((user: IUser) => {
+                this.#user.set(user);
             }),
         );
     }
@@ -129,7 +129,5 @@ export class UserService {
     checkEmailExists(email: string): Observable<Object> {
         return this.#httpClient.get(this.API_URL + '/check-email-exists/' + email);
     }
-
-    
 }
     
