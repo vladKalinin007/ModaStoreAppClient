@@ -144,7 +144,7 @@
           <div class="product-sale__buy-button">
             @if (product) {
               <app-button
-              (click)="addItemToWishList()"
+              (click)="addProductToBasket()"
               buttonName="Add to basket"
               buttonStyle="btn btn_color_dark btn_size_large basket-list__checkout-button"
               showIcon="true"
@@ -159,7 +159,7 @@
             <div class="product-sale__buy-button">
               @if (product) {
                 <app-button
-                  (click)="addProductToBasket()"
+                  (click)="addItemToWishList()"
                   buttonName="Add to wishlist"
                   buttonStyle="btn btn_color_light btn_size_large"
                   showIcon="true"
@@ -308,6 +308,12 @@
                   @for (review of (productReviews$ | async); track $index) {
                     <app-review [review]="review"/>
                   }
+                } @else {
+                  <div class="product-reviews__empty">
+                    <div class="product-reviews__empty-text">
+                      No reviews yet
+                    </div>
+                  </div>
                 }
               </div>
             </div>

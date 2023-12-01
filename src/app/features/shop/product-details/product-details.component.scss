@@ -498,6 +498,20 @@
     margin-right: 0.5rem;
     color: #949194;
   }
+
+  &__empty {
+    display: flex;
+    justify-content: center;
+    padding: 4rem 0;
+    border: .5px dashed #cac6c6;
+    border-radius: 8px;
+  }
+
+  &__empty-text {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #7f7f7f;
+  }
 }
 
 .review-header {
