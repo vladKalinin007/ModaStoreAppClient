@@ -15,6 +15,7 @@ import {MatSliderModule} from "@angular/material/slider";
 import {MaterialModule} from "../../../material.module";
 import { SeenComponent } from './seen/seen.component';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
+import { OrderComponent } from 'src/app/shared/components/order/order.component';
 
 
 
@@ -34,7 +35,7 @@ import { AuthenticationComponent } from './components/authentication/authenticat
   ],
   imports: [
     FeaturesModule,
-    /*CommonModule,*/
+    OrderComponent,
     AccountRoutingModule,
     MatSliderModule,
     MaterialModule,

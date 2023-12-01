@@ -1,30 +1,30 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { IBasket } from 'src/app/core/models/basket';
 import { Order, OrderToCreate } from 'src/app/core/models/order';
 import { environment } from 'src/environments/environment';
 import { IOrder } from 'src/app/core/models/order';
 import { Observable } from 'rxjs';
 import { IOrderToCreate } from 'src/app/core/models/order';
+import { BasketService } from 'src/app/features/basket/basket.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
+  readonly #httpClient: HttpClient = inject(HttpClient);
+  readonly #basketService: BasketService = inject(BasketService);
 
-  url: string = environment.apiUrl + 'Order';
-
-  constructor(
-    private http: HttpClient,
-    ) { }
+  url: string = environment.apiUrl;
 
   getUserOrders() {
-    return this.http.get<IOrder[]>(this.url);
+    return this.#httpClient.get<IOrder[]>(this.url + 'orders', {withCredentials: true});
   }
 
-  addUserOrder(order: IOrderToCreate): Observable<IOrderToCreate> {
-
-    return this.http.post<IOrderToCreate>(this.url, order);
+  addUserOrder() {
+    const basketId = this.#basketService.getCurrentBasketValue().id;
+    const URL = this.url + 'order/' + basketId;
+    return this.#httpClient.post(URL, {}, {withCredentials: true});
   }
 
 

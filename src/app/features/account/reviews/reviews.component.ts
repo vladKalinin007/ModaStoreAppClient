@@ -3,7 +3,7 @@ import {AccountService} from "../account.service";
 import {IProductReview} from "../../../core/models/catalog/product-review";
 import {ReviewService} from "../../../shared/services/review-service/review.service";
 import {ProductService} from "../../../core/services/product.service/product.service";
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-reviews',
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./reviews.component.scss']
 })
 export class ReviewsComponent implements OnInit {
-  readonly #accountService = inject(AccountService);
+  readonly #reviewService = inject(ReviewService);
 
   isAccountReviewList: boolean = true;
   userReviews$: Observable<IProductReview[]>;
@@ -23,6 +23,11 @@ export class ReviewsComponent implements OnInit {
   }
 
   loadReviews(): void {
-    this.userReviews$ = this.#accountService.userReviews$;
+    this.#reviewService.getUserReviews().subscribe({
+      next: (reviews: IProductReview[]) => {
+        console.dir(reviews)
+        this.userReviews$ = of(reviews);
+      }
+    })
   }
 }

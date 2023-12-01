@@ -25,8 +25,6 @@ export class ShopService {
   products$: Observable<IProduct[]>;
   brands$: Observable<IBrand[]>;
   types$: Observable<IType[]>;
-  // sizes$: Observable<ISize[]>;
-  // colors$: Observable<IColor[]>;
 
   baseUrl: string = environment.apiUrl;
 
@@ -41,7 +39,25 @@ export class ShopService {
 
     let params: HttpParams = new HttpParams();
 
-    params = params.append('category', shopParams.category);
+    if (shopParams.category) {
+      if (shopParams.category.includes('bestsellers') || 
+          shopParams.category.includes('new') || 
+          shopParams.category.includes('sale')) {
+        switch (shopParams.category) {
+          case 'bestsellers':
+            params = params.append('isBestSeller', 'true');
+            break;
+          case 'new':
+            params = params.append('isNew', 'true');
+            break;
+          case 'sale':
+            params = params.append('isOnSale', 'true');
+            break;
+        }
+      } else {
+        params = params.append('category', shopParams.category);
+      }
+    }
 
     if (shopParams.brandId) {
       params = params.append('brandId', shopParams.brandId);

@@ -1,4 +1,3 @@
-
 <h1 class="page-title heading">{{headerTitle | titlecase}}</h1>
 <div class="catalog">
   <div class="layout">
@@ -228,8 +227,9 @@
               <mat-paginator 
                 [length]="100"
                 [pageSize]="this.shopParams.pageSize"
-                [pageSizeOptions]="[9, 18, 27, 36]"
+                [pageSizeOptions]="[3, 9, 18, 27, 36]"
                 aria-label="Select page"
+                (page)="onPageChange($event)"
               >
               </mat-paginator>
             </div>

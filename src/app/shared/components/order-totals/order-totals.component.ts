@@ -22,7 +22,7 @@ import { DeliveryService } from 'src/app/shared/services/delivery.service/delive
   styleUrls: ['./order-totals.component.scss'],
   providers: [ConfirmationService, MessageService]
 })
-export class OrderTotalsComponent implements OnInit, OnChanges {
+export class OrderTotalsComponent implements OnInit {
 
     @Input() checkoutForm: FormGroup;
     @Input() stripe: any;
@@ -51,23 +51,9 @@ export class OrderTotalsComponent implements OnInit, OnChanges {
       this.shippingPrice$ = this.basketService.shipping$;
     }
 
-    ngOnChanges(): void {
-      console.log("OnChanges.Stripe: ", this.stripe);
-      console.log("OnChanges.CardNumber: ", this.cardNumber);
-      console.log("OnChanges.CheckoutForm: ", this.checkoutForm);
-    }
-
     submitOrder() {
-
-      const orderToCreate = new OrderToCreate(
-        this.basketService.getCurrentBasketValue().id,
-        this.deliveryService.deliveryMethodId,
-        this.checkoutForm.get('addressForm').value
-      )
-
-      this.orderService.addUserOrder(orderToCreate).subscribe({
+      this.orderService.addUserOrder().subscribe({
         next: (response: any) => {
-          console.log(response);
           this.messageService.add(
             {
               severity: 'success',
@@ -85,7 +71,6 @@ export class OrderTotalsComponent implements OnInit, OnChanges {
               detail: 'Order placement failed'
             }
           );
-          console.log(error);
         }
 
       });
@@ -95,9 +80,7 @@ export class OrderTotalsComponent implements OnInit, OnChanges {
 
 
     async confirmPayment(basket: IBasket) {
-
       try {
-
         const paymentResult = await this.confirmPaymentWithStripe(basket);
 
         if (paymentResult.paymentIntent) {
@@ -117,7 +100,6 @@ export class OrderTotalsComponent implements OnInit, OnChanges {
           this.toastr.error(paymentResult.error.message);
         }
       } catch (error) {
-        console.error(error);
         this.messageService.add(
         {
           severity: 'warn',
@@ -128,19 +110,19 @@ export class OrderTotalsComponent implements OnInit, OnChanges {
       }
     }
 
-    private async createOrder(basket: IBasket) {
-      const orderToCreate: IOrderToCreate = this.getOrderToCreate(basket);
-      return this.checkoutService.createOrder(orderToCreate);
-    }
+    // private async createOrder(basket: IBasket) {
+    //   const orderToCreate: IOrderToCreate = this.getOrderToCreate(basket);
+    //   return this.checkoutService.createOrder(orderToCreate);
+    // }
 
-    // Don't forget to link to upper component (checkout.component.ts)
-    private getOrderToCreate(basket: IBasket) {
-      return {
-        basketId: basket.id,
-        deliveryMethodId: this.checkoutForm.get('deliveryForm').get('deliveryMethod').value,
-        shipToAddress: this.checkoutForm.get('addressForm').value
-      }
-    }
+    // // Don't forget to link to upper component (checkout.component.ts)
+    // private getOrderToCreate(basket: IBasket) {
+    //   return {
+    //     basketId: basket.id,
+    //     deliveryMethodId: this.checkoutForm.get('deliveryForm').get('deliveryMethod').value,
+    //     shipToAddress: this.checkoutForm.get('addressForm').value
+    //   }
+    // }
 
     private async confirmPaymentWithStripe(basket: IBasket) {
       return this.stripe.confirmCardPayment(basket.clientSecret, {

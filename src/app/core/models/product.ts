@@ -14,6 +14,7 @@ export interface IProduct {
   specialPrice: number;
   discountPercentage: number;
   stockQuantity: number;
+  quantity: number;
   displayOrder: number;
   pictureUrl: string;
   productType: string;

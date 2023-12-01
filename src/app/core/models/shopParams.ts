@@ -12,8 +12,18 @@ export class ShopParams {
     style: string = "";
     season: string = "";
     pageNumber: number = 1;
-    pageSize: number = 12;
+    pageSize: number = 9;
     search: string;
     minPrice: string;
     maxPrice: string;
+
+    nextPage() {
+        this.pageNumber++;
+    }
+
+    previousPage() {
+        if (this.pageNumber > 1) {
+            this.pageNumber--;
+        }
+    }
 }

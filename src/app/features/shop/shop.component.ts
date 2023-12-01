@@ -14,6 +14,7 @@ import {IProductColor} from "../../core/models/catalog/product-color.interface";
 import {IProductSize} from "../../core/models/catalog/product-size.interface";
 import {IProductAttribute} from "../../core/models/catalog/product-attribute.interface";
 import { Observable, map, of, startWith, switchMap } from 'rxjs';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-shop',
@@ -80,7 +81,6 @@ export class ShopComponent implements OnInit {
   ngOnInit(): void {
     this.scrollToTop()
     this.setCategory()
-    this.loadProducts()
     this.getProducts();
     this.getBrands();
     this.getTypes();
@@ -91,19 +91,9 @@ export class ShopComponent implements OnInit {
 
   setCategory(): void {
     this.shopParams.category = this.#activatedRoute.snapshot.paramMap.get('categoryName') ?? '';
-  }
-
-  loadProducts() {
-    let query: string = this.#activatedRoute.snapshot.paramMap.get('categoryName') ?? '';
-
-    if (query) {
-      this.headerTitle = this.#activatedRoute.snapshot.paramMap.get('categoryName');
-      this.#productService.getProductsByCategory(query)
-    }
-    else {
-      this.headerTitle = 'All Products';
-      this.#productService.getProducts()
-    }
+    this.isSideBarHidden = this.shopParams.category === 'bestsellers' || 
+                           this.shopParams.category === 'new' || 
+                           this.shopParams.category === 'sale';
   }
 
   getProducts() {
@@ -265,6 +255,17 @@ export class ShopComponent implements OnInit {
     this.shopParams.search = this.searchTerm.nativeElement.value;
     this.shopParams.pageNumber = 1;
     this.getProducts();
+  }
+
+  onPageChange(event: PageEvent) {
+    if (event.previousPageIndex !== undefined && event.previousPageIndex < event.pageIndex) {
+      this.shopParams.nextPage();
+    } else if (event.previousPageIndex > event.pageIndex) {
+      this.shopParams.previousPage();
+    }
+    this.shopParams.pageSize = event.pageSize;
+    this.getProducts();
+    this.scrollToTop();
   }
 
   onReset() {

@@ -1,12 +1,9 @@
-<!--<app-empty placeholderMessage="You havent seen anything yet" placeholderIcon="visibility_off"/>-->
-
-<ng-container *ngIf="(seenProducts$ | async) as SeenProducts">
-<!--  <ng-container *ngFor="let seenProduct of (history$ | async).seenProducts">-->
-  <app-product-list-item *ngFor="let seenProduct of SeenProducts" [product]="seenProduct"></app-product-list-item>
-    <!--seenProduct-->
-<!--    <app-seen-item [seenProduct]="seenProduct"/>-->
-  </ng-container>
-<!--</ng-container>-->
-<ng-template #empty>
+@for (seenProduct of (seenProducts$ | async); track $index) {
+  <div class="layout">
+    <div class="seen">
+      <app-product-list-item [product]="seenProduct" [type]="'common'"></app-product-list-item>
+    </div>
+  </div>
+} @empty {
   <app-empty placeholderMessage="You havent seen anything yet" placeholderIcon="visibility_off"/>
-</ng-template>
+}

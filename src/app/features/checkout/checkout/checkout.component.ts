@@ -1,15 +1,21 @@
-import {Component, OnChanges, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit, inject} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AccountService} from "../../account/account.service";
 import {IBasket} from "../../../core/models/basket";
 import {BasketService} from "../../basket/basket.service";
+import { MessageService } from 'primeng/api';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
-export class CheckoutComponent implements OnInit, OnChanges {
+export class CheckoutComponent implements OnInit {
+  readonly #userService = inject(UserService);
+  readonly #messageService = inject(MessageService);
+  readonly #fb = inject(FormBuilder);
+  readonly #basketService = inject(BasketService);
 
   checked = false;
   disabled = false;
@@ -19,10 +25,7 @@ export class CheckoutComponent implements OnInit, OnChanges {
 
   checkoutForm: FormGroup;
 
-  constructor(private fb: FormBuilder,
-              private accountService: AccountService,
-              private basketService: BasketService
-              ) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.createCheckoutForm();
@@ -30,26 +33,19 @@ export class CheckoutComponent implements OnInit, OnChanges {
     this.getAddressFormValues();
   }
 
-  ngOnChanges(): void {
-    console.log('this.checkoutForm', this.checkoutForm);
-    console.log('this.stripe', this.stripe);
-    console.log('this.cardNumber', this.cardNumber);
-  }
-
   createCheckoutForm() {
-    this.checkoutForm = this.fb.group({
-      addressForm: this.fb.group({
+    this.checkoutForm = this.#fb.group({
+      addressForm: this.#fb.group({
         firstName: [null, Validators.required],
         lastName: [null, Validators.required],
         street: [null, Validators.required],
         city: [null, Validators.required],
-        state: [null, Validators.required],
-        zipCode: [null, Validators.required],
+        zipcode: [null, Validators.required],
       }),
-      deliveryForm: this.fb.group({
+      deliveryForm: this.#fb.group({
         deliveryMethod: [null, Validators.required]
       }),
-      paymentForm: this.fb.group({
+      paymentForm: this.#fb.group({
         nameOnCard: [null, Validators.required],
         cardNumber: [null, Validators.required],
         cardExpiry: [null, Validators.required],
@@ -59,9 +55,7 @@ export class CheckoutComponent implements OnInit, OnChanges {
   }
 
   getAddressFormValues() {
-    this.accountService
-      .getUserAddress()
-      .subscribe({
+    this.#userService.getAddress().subscribe({
       next: address => {
         if (address) {
           this.checkoutForm.get('addressForm').patchValue(address);
@@ -75,7 +69,7 @@ export class CheckoutComponent implements OnInit, OnChanges {
 
   getDeliveryMethodValue() {
 
-    const basket: IBasket = this.basketService.getCurrentBasketValue();
+    const basket: IBasket = this.#basketService.getCurrentBasketValue();
 
     if (basket.deliveryMethodId !== null) {
       this.checkoutForm

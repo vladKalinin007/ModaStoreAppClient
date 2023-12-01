@@ -44,7 +44,6 @@ export class CheckoutDeliveryComponent implements OnInit {
 
   ngOnInit() {
     this.getDeliveryMethods();
-    /*this.getServices();*/
     this.cities = [
       { name: 'New York', code: 'NY' },
       { name: 'Rome', code: 'RM' },
@@ -58,7 +57,6 @@ export class CheckoutDeliveryComponent implements OnInit {
     this.isOnlineSelected = event.source.value === "2";
   }
 
-  /*this.checkoutService.getDeliveryMethods()*/
   getDeliveryMethods() {
     this.deliveryService.getDeliveryMethods()
       .subscribe( {
@@ -77,13 +75,6 @@ export class CheckoutDeliveryComponent implements OnInit {
     console.log(selectedValue)
     this.setShippingPrice(selectedValue);
   }
-
-  /*onSelectionChange(selectedMethod: IDeliveryMethod) {
-    console.log("trigger")
-    this.selectedDeliveryMethod = selectedMethod; // This line may not be necessary, as ngModel handles it.
-    this.setShippingPrice(selectedMethod);
-  }*/
-
 
   setShippingPrice(deliveryMethod: IDeliveryMethod) {
     this.basketService.setShippingPrice(deliveryMethod);

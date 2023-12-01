@@ -36,7 +36,7 @@ export class DeliveryService {
   }
 
   getDeliveryMethods(): Observable<IDeliveryMethod[]> {
-    return this.httpClient.get(this.baseUrl + 'Order/deliveryMethods').pipe(
+    return this.httpClient.get(this.baseUrl + 'deliveryMethods').pipe(
       map((dm: IDeliveryMethod[]) => {
           return dm.sort((a, b) => b.price - a.price);
         }

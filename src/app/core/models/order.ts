@@ -23,7 +23,7 @@ export class OrderToCreate {
 export interface IOrder {
   id: string;
   buyerEmail: string; //
-  orderDate: string; //
+  orderDate: Date; //
   shipToAddress: IAddress; //
   deliveryMethod: string; //
   shippingPrice: number;
@@ -48,9 +48,9 @@ export class Order {
 
 export interface IOrderItem {
   id: string;
-  productId: string;
-  productName: string;
-  pictureUrl: string;
+  itemOrdered_ProductName: string;
+  itemOrdered_PictureUrl: string;
+  itemOrdered_ProductItemId: string;
   price: number;
   quantity: number;
 }

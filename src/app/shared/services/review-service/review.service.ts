@@ -23,25 +23,11 @@ export class ReviewService {
   productReviews$ = this.#productReviewSource.asObservable();
 
   constructor() {
-    this.#getUserReviews();
     this.#getLatestReviews();
   }
 
-  #getUserReviews(): void {
-    this.userReviews$ = this.#http.get<IProductReview[]>(this.BASE_URL).pipe(
-      switchMap((reviews: IProductReview[]) => {
-        const productObservables = reviews.map(review => {
-          return this.#productsService.getProduct(review.productId).pipe(
-            map(product => {
-              review.productName = product.name;
-              review.pictureUrl = product.pictureUrl;
-              return review;
-            })
-          );
-        });
-        return forkJoin(productObservables);
-      })
-    );
+  getUserReviews() {
+    return this.#http.get<IProductReview[]>(this.BASE_URL, {withCredentials: true});
   }
 
   #getLatestReviews() {

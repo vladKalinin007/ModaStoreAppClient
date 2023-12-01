@@ -1,0 +1,48 @@
+.layout {
+  padding: 2rem;
+  border-radius: 8px;
+  border: .5px dashed #bebebe;
+}
+
+.order {
+  padding: 1rem;
+}
+
+.order-details {
+  display: flex;
+  justify-content: space-between;
+
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #e8e6e6;
+
+  &__info {
+    padding: 1rem;
+  }
+
+  &__status {
+  }
+}
+
+.order-info {
+  &__subject {
+    display: flex;
+    justify-content: space-between;
+    min-width: 15rem;
+    border-bottom: 0.5px dashed #b2b0b0;
+  }
+
+  &__label {
+    margin-right: 1rem;
+    font-weight: bold;
+  }
+}
+
+.order-items {
+  padding: 1rem 0;
+}
+
+.status {
+  padding: 1rem;
+  box-shadow: 1px 1px 4px #d4d4d4;
+  border-radius: 6px;
+}

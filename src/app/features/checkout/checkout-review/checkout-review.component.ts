@@ -1,9 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, inject} from '@angular/core';
 import {IBasket} from "../../../core/models/basket";
-import {Observable} from "rxjs";
+import {Observable, forkJoin, map, of, switchMap} from "rxjs";
 import {BasketService} from "../../basket/basket.service";
 import {ToastrService} from "ngx-toastr";
 import {FormGroup} from "@angular/forms";
+import { ProductService } from 'src/app/core/services/product.service/product.service';
+import { IProduct } from 'src/app/core/models/product';
 
 @Component({
   selector: 'app-checkout-review',
@@ -11,32 +13,36 @@ import {FormGroup} from "@angular/forms";
   styleUrls: ['./checkout-review.component.scss']
 })
 export class CheckoutReviewComponent implements OnInit {
+  readonly #basketService = inject(BasketService);
+  readonly #productService = inject(ProductService);
 
   @Input() checkoutForm: FormGroup;
-
+  
   basket$: Observable<IBasket>;
-
-  constructor(
-    private basketService: BasketService,
-    private toastr: ToastrService
-  ) { }
+  products$: Observable<IProduct[]>
 
   ngOnInit(): void {
-    this.basket$ = this.basketService.basket$;
+    this.basket$ = this.#basketService.basket$;
+    this.fetchProductsByIds();
   }
 
-  createPaymentIntent() {
-    return this.basketService.createPaymentIntent()
+  fetchProductsByIds() {
+    this.basket$
+      .pipe(
+        switchMap(basket => 
+          forkJoin(
+            basket.items.map(item => 
+              this.#productService.getProduct(item.id).pipe(
+                map(product => ({ ...product, quantity: item.quantity }))
+              )
+            )
+          )
+        )
+      )
       .subscribe({
-      next: (response) => {
-        this.toastr.success('Payment intent created');
-      },
-      error: (error) => {
-        console.log(error);
-        this.toastr.error(error.message);
-      }
-    })
+        next: products => this.products$ = of(products),
+        error: err => console.log(err)
+      });
   }
-
 
 }
