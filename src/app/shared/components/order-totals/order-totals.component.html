@@ -4,9 +4,6 @@
       <h4 class="checkout-promo__heading">
         Promocode
       </h4>
-      <!--<button class="button checkout-promo__header-button button_with-icon button_link">
-        Add
-      </button>-->
     </div>
     <div class="checkout-promo__form">
       <div class="form__row">
@@ -16,19 +13,22 @@
         </mat-form-field>
       </div>
       <div class="form__row mt-3">
-        <!--<button type="button" class="button button_size_medium button_color_navy checkout-promo__submit">
-          Apply
-        </button>-->
         <app-button buttonName="Apply" buttonStyle="btn btn_size_large btn_color_light btn_rd checkout-promo__submit"/>
       </div>
     </div>
   </div>
   <div class="checkout-total">
-    <h4 class="checkout-total__hading">Sun</h4>
+    <h4 class="checkout-total__hading">Sum</h4>
     <dl class="checkout-total__row js-goods-info">
+      @if ((itemQuantity$ | async) === 1) {
       <dt class="checkout-total__label">
-        1 goods for:
+        1 item for:
       </dt>
+      } @else {
+      <dt class="checkout-total__label">
+        {{(itemQuantity$ | async)}} items for:
+      </dt>
+      }
       <dd class="checkout-total__value">
         {{(basketTotal$ | async).subtotal | currency: 'USD':'symbol':'1.2-2'}}
       </dd>
@@ -50,7 +50,6 @@
       </dd>
     </dl>
     <div class="checkout-total__buttons">
-      <!--<input type="submit" tabindex="29" class="button button_color_green button_size_large checkout-total__submit" value="Make an order">-->
       <div>
         <app-button (click)="submitOrder()" buttonName="Checkout" buttonStyle="btn btn_color_dark btn_size_large btn_rd checkout-total__submit" />
       </div>

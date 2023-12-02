@@ -1,5 +1,5 @@
 import {Component, OnChanges, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
+import {Observable, map} from "rxjs";
 import {IBasketTotals} from "../../../core/models/basket";
 import {BasketService} from "../../../features/basket/basket.service";
 import {FormBuilder} from "@angular/forms";
@@ -29,26 +29,32 @@ export class OrderTotalsComponent implements OnInit {
     @Input() cardNumber: any;
     @Input() deliveryMethodId: any;
 
-    basketTotal$: Observable<IBasketTotals> = this.basketService.basketTotal$;
-    shippingPrice$: Observable<number> = this.basketService.shipping$;
+    basketTotal$: Observable<IBasketTotals>;
+    shippingPrice$: Observable<number>;
+    itemQuantity$: Observable<number>;
 
 
     constructor(
       private basketService: BasketService,
-      private formBuilder: FormBuilder,
-      private checkoutService: CheckoutService,
       private toastr: ToastrService,
       private router: Router,
-      private confirmationService: ConfirmationService,
       private messageService: MessageService,
       private orderService: OrderService,
-      private deliveryService: DeliveryService
     ) {}
 
 
     ngOnInit(): void {
       this.basketTotal$ = this.basketService.basketTotal$;
       this.shippingPrice$ = this.basketService.shipping$;
+      this.calculateItemQuantity();
+    }
+
+    calculateItemQuantity() {
+      this.itemQuantity$ = this.basketService.basket$.pipe(
+        map((basket: IBasket) => {
+          return basket.items.length;
+        })
+      );
     }
 
     submitOrder() {
@@ -76,7 +82,6 @@ export class OrderTotalsComponent implements OnInit {
       });
 
     }
-
 
 
     async confirmPayment(basket: IBasket) {
@@ -109,20 +114,6 @@ export class OrderTotalsComponent implements OnInit {
         );
       }
     }
-
-    // private async createOrder(basket: IBasket) {
-    //   const orderToCreate: IOrderToCreate = this.getOrderToCreate(basket);
-    //   return this.checkoutService.createOrder(orderToCreate);
-    // }
-
-    // // Don't forget to link to upper component (checkout.component.ts)
-    // private getOrderToCreate(basket: IBasket) {
-    //   return {
-    //     basketId: basket.id,
-    //     deliveryMethodId: this.checkoutForm.get('deliveryForm').get('deliveryMethod').value,
-    //     shipToAddress: this.checkoutForm.get('addressForm').value
-    //   }
-    // }
 
     private async confirmPaymentWithStripe(basket: IBasket) {
       return this.stripe.confirmCardPayment(basket.clientSecret, {
