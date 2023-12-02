@@ -34,12 +34,14 @@
       </dd>
     </dl>
     <dl class="checkout-total__row mt-3">
+      @if ((shippingPrice$ | async)) {
       <dt class="checkout-total__label">
         Delivery cost:
       </dt>
       <dd class="checkout-total__value">
         {{(shippingPrice$ | async) | currency: 'USD':'symbol':'1.2-2'}}
       </dd>
+      }
     </dl>
     <dl class="checkout-total__row checkout-total__row_type_bordered mt-3">
       <dt class="checkout-total__label">
