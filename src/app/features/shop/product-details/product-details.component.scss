@@ -164,8 +164,10 @@
 }
 
 .product-details {
+  margin-top: 2rem;
   margin-bottom: 4.2rem;
   &__description {
+    margin-top: 2rem;
     line-height: 25px;
     font-weight: 300;
   }
@@ -328,6 +330,7 @@
 .props {
   margin: -.8rem -2.5rem;
   display: flex;
+  margin-top: 2rem;
   &__group {
     padding: 0 2.5rem;
     width: 50%;

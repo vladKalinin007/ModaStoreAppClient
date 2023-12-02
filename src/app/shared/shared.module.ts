@@ -57,6 +57,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { GradientShadowDirective } from './directives/gradient-shadow/gradient-shadow.directive';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -123,7 +124,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     MaterialModule,
     FormsModule,
     NgxSkeletonLoaderModule,
-    InputTextareaModule
+    InputTextareaModule,
+    MatTabsModule
   ],
   exports: [
     PaginationModule,
@@ -178,7 +180,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     ConfirmDialogModule,
     GradientShadowDirective,
     NgxSkeletonLoaderModule,
-    InputTextareaModule
+    InputTextareaModule,
+    MatTabsModule
   ]
 })
 export class SharedModule { }
