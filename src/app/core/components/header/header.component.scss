@@ -6,9 +6,9 @@
 .layout {
   position: relative;
   z-index: 10; 
-  max-width: 1180px;
-  margin: 0 auto;
   background: #fff;
+  max-width: 118rem;
+  margin: 0 auto;
 
   &.isModalActivated {
     border-top-left-radius: 8px;
@@ -145,6 +145,7 @@
 }
 
 .header {
+  width: 100%;
   background: #fff;
   opacity: 0.97;
   position: fixed;
@@ -153,18 +154,35 @@
   right: 0;
   z-index: 99;
   transition: top 0.3s;
+  margin: 0 auto;
+
+  // @include iPadPro {
+  //   width: 100.24rem;
+  // }
+
+  @media (max-width: 1180px) {
+    padding: 0 2rem;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0 1rem;
+  }
 
   &.header-hidden {
     top: -100px;
-  }
+  } 
 
   &__main {
-    max-width: 1180px;
     display:flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #ececec;
     position: relative;
+    @media (max-width: 480px) {
+      min-height: 12rem;
+      justify-content: center;
+    }
   }
 
   &__search-field {
@@ -182,6 +200,23 @@
   &__logo {
     display: flex;
     position: relative;
+    @media (max-width: 480px) {
+      display: none;
+    }
+
+
+    &.mobile {
+      display: none;
+      font-size: 6rem;
+      padding: 0 2rem;
+      border-radius: 50%;
+      box-shadow: 1px 1px 4px #edc7f6;
+      font-family: 'Playfair Display';
+      color: #686868;
+      @media (max-width: 480px) {
+        display: flex;
+      }
+    }
   }
 
   &__items {
@@ -198,6 +233,10 @@
     transition: .2s;
     fill: currentColor;
     cursor: pointer;
+    @media (max-width: 480px) {
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   &__item-body {
@@ -206,6 +245,9 @@
 
   &__icon-internal {
     font-size: 1.6em;
+    @media (max-width: 480px) {
+      font-size: 3rem;
+    }
   }
 
   &__item {
@@ -400,6 +442,11 @@ a {
   align-items: center;
   position: relative;
   top: -2px;
+
+  @media (max-width: 480px) {
+    display: none;
+    
+  }
 
   &:focus {
     outline: none;

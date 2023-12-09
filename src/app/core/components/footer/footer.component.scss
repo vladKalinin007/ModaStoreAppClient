@@ -11,7 +11,7 @@
 .material-icons {
     font-size: 3.6rem;
 }
-
+ 
 .layout {
     background-color: #F2F2F2;
 }
@@ -25,12 +25,35 @@
         padding: 6rem 0;
     }
 
+    &__intercolumn {
+        display: flex;
+        width: 100%;
+        @media (max-width: 480px) {
+            display: flex;
+            justify-content: space-evenly;
+            margin-bottom: 4rem;
+        }
+    }
+
     &__columns {
         display: flex;
         justify-content: space-between;
         position: relative;
         border-bottom: 1px solid #e2dfdf;
         padding-bottom: 2rem;
+        @media (max-width: 1024px) {
+            margin: 0 2rem;
+        }
+        @media (max-width: 480px) {
+            flex-direction: column;
+        }
+    }
+
+    &__column {
+        width: 100%;
+        @media (max-width: 480px) {
+            margin: 0 2rem;
+        }
     }
 
     &__row {

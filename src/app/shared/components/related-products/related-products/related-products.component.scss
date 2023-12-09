@@ -12,11 +12,20 @@
 }
 
 .products {
-  /*margin: 8rem 0 6.5rem;*/
+  
+  @media (max-width: 1180px) {
+    padding: 0 2rem;
+  }
 
   &__inner {
     padding-top: 4rem;
     border-top: 0.8px dotted #ded5d5;
+    @media (max-width: 768px) {
+    
+      background-color: #eeeeee38;
+  
+    }
+    
   }
 
   &__header {
@@ -95,13 +104,23 @@
     display: flex;
     transition-property: transform;
     box-sizing: content-box;
+    flex-wrap: wrap;
     &.products__list_full {
       justify-content: space-between;
+      @media (max-width: 768px) {
+    
+        justify-content: space-evenly;
+    
+      }
     }
   }
 
   &__item {
     width: 291.5px;
+    @media (max-width: 768px) {
+      width: 30rem;
+      margin-bottom: 20rem;
+    }
 
   }
 
