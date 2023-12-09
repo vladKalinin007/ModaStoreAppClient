@@ -13,12 +13,33 @@
     flex-wrap: wrap;
     margin: -4rem -.5rem 0;
     margin-bottom: 10rem;
+    @media (max-width: 918px) {
+      justify-content: space-evenly;
+    }
+    @media (max-width: 768px) {
+      justify-content: space-evenly;
+    }
+    @media (max-width: 480px) {
+      justify-content: center;
+    }
   }
 
   &__item {
 
     &_w25 {
       width: 25%;
+      @media (max-width: 918px) {
+        width: 33%;
+        margin-bottom: 20rem;
+      }
+      @media (max-width: 768px) {
+        width: 40%;
+        margin-bottom: 20rem;
+      }
+      @media (max-width: 480px) {
+        width: 80%;
+        margin-bottom: 20rem;
+      }
     }
     
     // margin: 4rem .5rem 0;

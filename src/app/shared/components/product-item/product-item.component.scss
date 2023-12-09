@@ -9,21 +9,31 @@
   height: 600px;
   transition: box-shadow 0.3s ease-in-out;
 
-  @media (max-width: 768px) {
+  @media (max-width: 918px) {
     margin-bottom: 8rem;
     margin-bottom: -10rem;
     transition: box-shadow .2s;
     z-index: 2;
   }
 
+  // @media (max-width: 768px) {
+  //   margin-bottom: 8rem;
+  //   margin-bottom: -10rem;
+  //   transition: box-shadow .2s;
+  //   z-index: 2;
+  // }
+
   &:hover {
     box-shadow: 0 2rem 4rem rgba(97,97,97,.1);
     margin-bottom: -10rem;
     transition: box-shadow .2s;
     z-index: 2;
-    @media (max-width: 768px) {
+    @media (max-width: 918px) {
       box-shadow: none;
     }
+    // @media (max-width: 768px) {
+    //   box-shadow: none;
+    // }
   }
 
   &:hover &__sizes-btn {
@@ -34,9 +44,12 @@
   &__layout {
     position: relative;
     padding: 1rem;
-    @media (max-width: 768px) {
+    @media (max-width: 918px) {
       box-shadow: 0 2rem 4rem rgba(97, 97, 97, 0.1);
     }
+    // @media (max-width: 768px) {
+    //   box-shadow: 0 2rem 4rem rgba(97, 97, 97, 0.1);
+    // }
   }
   &__image {
     position: relative;
@@ -62,9 +75,12 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    @media (max-width: 768px) {
+    @media (max-width: 918px) {
       max-height: 1180rem;
     }
+    // @media (max-width: 768px) {
+    //   max-height: 1180rem;
+    // }
   }
 
   &__pic {
@@ -73,9 +89,7 @@
     display: block;
     margin: 0 auto;
     @media (max-width: 1180px) {
-    
       max-height: 50rem;
-  
     }
   }
 
@@ -215,7 +229,6 @@
   }
 
   &__link {
-    /*background: #000000;*/
     border: .5px solid #d7d7d7;
     width: 1.6rem;
     height: 1.6rem;
