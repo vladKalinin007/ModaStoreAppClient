@@ -145,9 +145,23 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleBasket() {
+    let dialogWidth = '1008px';
+    let dialogHeight = '648px';
+    let maxWidth = '1008px';
+    let maxHeight = '648px';
+  
+    if (window.innerWidth <= 480) {
+      dialogWidth = '100%';
+      dialogHeight = '100%';
+      maxWidth = '100vw';
+      maxHeight = '100vh';
+    }
+  
     this.dialogRef = this.#dialog.open(BasketComponent, {
-      width: '1008px',
-      height: '648px',
+      width: dialogWidth,
+      height: dialogHeight,
+      maxWidth: maxWidth,
+      maxHeight: maxHeight,
     });
   }
 
