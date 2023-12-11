@@ -156,10 +156,6 @@
   transition: top 0.3s;
   margin: 0 auto;
 
-  // @include iPadPro {
-  //   width: 100.24rem;
-  // }
-
   @media (max-width: 1180px) {
     padding: 0 2rem;
   }
@@ -200,6 +196,11 @@
   &__logo {
     display: flex;
     position: relative;
+    &._checkout {
+      @media (max-width: 656px) {
+        display: block;
+      }
+    }
     @media (max-width: 480px) {
       display: none;
     }
@@ -332,6 +333,7 @@
 }
 
 .checkout-header {
+  width: 100%;
   background-color: #F2F2F2F2;
   position: fixed;
   top: 0;
@@ -339,9 +341,21 @@
   right: 0;
   z-index: 99;
 
+  @media (max-width: 1180px) {
+    padding: 0 2rem;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0 1rem;
+  }
+
   &__layout {
     margin: 0 auto;
     background-color: #F2F2F2;
+    max-width: 118rem;
+    z-index: 10; 
+    position: relative;
   }
 
   &__main {
@@ -351,6 +365,10 @@
     justify-content: center;
     border-bottom: 1px solid #ececec;
     position: relative;
+    @media (max-width: 480px) {
+      min-height: 12rem;
+      justify-content: center;
+    }
   }
 
   &__logo {
@@ -358,6 +376,9 @@
     position: relative;
     justify-content: center;
     border-bottom: 1px solid #ececec;
+    @media (max-width: 480px) {
+      border-bottom: none;
+    }
   }
 
   & .brand-picture {
@@ -442,6 +463,12 @@ a {
   align-items: center;
   position: relative;
   top: -2px;
+
+  &._checkout {
+    @media (max-width: 656px) {
+      display: block;
+    }
+  }
 
   @media (max-width: 480px) {
     display: none;

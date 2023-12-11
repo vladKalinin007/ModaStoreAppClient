@@ -6,13 +6,13 @@
       </h4>
     </div>
     <div class="checkout-promo__form">
-      <div class="form__row">
+      <div class="form__row _promo">
         <mat-form-field>
           <mat-label>Add promocode</mat-label>
           <input formControlName="zipCode" matInput>
         </mat-form-field>
       </div>
-      <div class="form__row mt-3">
+      <div class="form__row _apply mt-3">
         <app-button buttonName="Apply" buttonStyle="btn btn_size_large btn_color_light btn_rd checkout-promo__submit"/>
       </div>
     </div>
@@ -52,7 +52,7 @@
       </dd>
     </dl>
     <div class="checkout-total__buttons">
-      <div>
+      <div class="checkout-total__button">
         <app-button (click)="submitOrder()" buttonName="Checkout" buttonStyle="btn btn_color_dark btn_size_large btn_rd checkout-total__submit" />
       </div>
     </div>

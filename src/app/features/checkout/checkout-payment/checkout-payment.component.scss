@@ -63,6 +63,9 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 6.0rem;
+    @media (max-width: 480px) {
+      margin-bottom: 4rem;
+    }
   }
 
   &__row {
@@ -117,6 +120,9 @@
 
 .payment-form {
   padding-left: 4rem;
+  @media (max-width: 480px) {
+    padding-left: 0;
+  }
 
   &__tabs {
 
@@ -140,7 +146,10 @@
   &__payment-info {
     border: 1px dashed #ECECEC;
     padding: 12px 12px 12px 12px;
-    border-radius: 8px
+    border-radius: 8px;
+    @media (max-width: 480px) {
+      padding: 0;
+    }
   }
 }
 
@@ -167,10 +176,18 @@
   justify-content: flex-start;
   margin-right: 1.2rem;
 
+  @media (max-width: 480px) {
+    margin-right: 0;
+  }
+
   &__item {
     padding: 1.2rem;
     border-radius: 8px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.20);
     margin-bottom: 1.2rem;
+
+    @media (max-width: 480px) {
+      display: none;
+    }
   }
 }
