@@ -47,25 +47,66 @@ mat-slider {
   margin-bottom: 1rem;
 }
 
+
+.mat-mdc-paginator-container {
+  @media (max-width: 480px) {
+    justify-content: center;
+  }
+}
+
+
+
 .catalog {
+
+  @media (max-width: 480px) {
+    margin-top: 4rem;
+  }
 
   &__main {
     display: flex;
     position: relative;
-    /*padding-top: 62px;*/
+
+    @media (max-width: 916px) {
+      margin: 0 1rem;
+    }
+
+    @media (max-width: 480px) {
+      flex-direction: column;
+    }
   }
 
   &__list {
     display: flex;
     margin: -1rem -1rem -1.5rem;
     flex-wrap: wrap;
+    @media (max-width: 480px) {
+      margin: 0;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
   &__item {
     
     width: 25%;
+
+    @media (max-width: 480px) {
+      width: 70%;
+      margin-bottom: 20rem;
+    }
+
     &.catalog__item_w_33 {
       width: 33.3333333333%;
+
+      @media (max-width: 916px) {
+        width: 50%;
+        margin-bottom: 20rem;
+      }
+
+      @media (max-width: 480px) {
+        width: 70%;
+        margin-bottom: 20rem;
+      }
     }
   }
 
@@ -92,6 +133,16 @@ mat-slider {
     width: 100%;
     flex-shrink: 0;
     padding-right: 50px;
+    @media (max-width: 480px) {
+      max-width: max-content;
+      padding-right: 0;
+      padding: 2rem;
+      position: sticky;
+      z-index: 99;
+      top: 0;
+      left: 0;
+      background: white;
+    }
 
     &.catalog__aside_hidden {
       display: none;
@@ -109,6 +160,9 @@ mat-slider {
 
   &__content {
     width: 100%;
+    @media (max-width: 480px) {
+      margin-top: 2rem;
+    }
   }
 
   &__pagination {
@@ -122,6 +176,9 @@ mat-slider {
 .page-title {
   margin-bottom: 67px;
   text-align: center;
+  @media (max-width: 480px) {
+    display: none; 
+  }
 }
 
 .heading {

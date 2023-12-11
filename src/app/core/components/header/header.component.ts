@@ -4,7 +4,7 @@ import {debounceTime, distinctUntilChanged, Observable, of, switchMap} from "rxj
 import {IBasket} from "../../models/basket";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {BasketComponent} from "../../../features/basket/basket/basket.component";
-import {NavigationEnd, Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {IUser} from "../../models/user";
 import {WishlistService} from "../../../features/wishlist/wishlist.service";
 import {IWishlist} from "../../models/customer/wishlist";
@@ -16,6 +16,7 @@ import {fastCascade} from "../../../shared/animations/fade-in.animation";
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
 import {AuthenticationComponent} from "../../../features/account/components/authentication/authentication.component";
 import { UserService } from '../../services/user.service';
+import { ShopService } from 'src/app/features/shop/shop.service';
 
 
 @Component({
@@ -38,6 +39,9 @@ export class HeaderComponent implements OnInit {
   readonly #formBuilder = inject(FormBuilder);
   readonly #confirmationService = inject(ConfirmationService);
   readonly #messageService = inject(MessageService);
+  readonly #activatedRoute = inject(ActivatedRoute);
+  readonly #shopService = inject(ShopService);
+  
 
   currentUser: Signal<IUser>;
   basket$: Observable<IBasket>;
@@ -52,6 +56,9 @@ export class HeaderComponent implements OnInit {
   isCheckoutPage$: Observable<boolean> = of(false);
   isScrolled: boolean = true;
   isModalOpen: boolean = false;
+  isOptionsActive$: Observable<boolean>;
+  isMenuVisible: boolean = false;
+  isMenuVisible$: Observable<boolean> = of(false);
 
   prevScrollPos = window.pageYOffset;
 
@@ -62,6 +69,7 @@ export class HeaderComponent implements OnInit {
       search: ['']
     });
     this.#userService.toggleLoginFunction = this.toggleLogin.bind(this);
+    this.#shopService.toggleSideBarVisibilityFunction = this.setMenuVisibility.bind(this);
   }
 
   ngOnInit() {
@@ -72,6 +80,26 @@ export class HeaderComponent implements OnInit {
     this.setSearchObservable();
     this.checkIfCheckoutPage();
     this.checkSearchResults();
+    this.checkScreenSize();
+  }
+
+  setMenuVisibility() {
+    this.isMenuVisible = !this.isMenuVisible;
+  }
+
+  checkScreenSize(): void {
+    if (window.innerWidth <= 480) {
+      this.isMenuVisible = false;
+      this.isMenuVisible$ = of(false);
+    } else {
+      this.isMenuVisible = true;
+      this.isMenuVisible$ = of(true);
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.checkScreenSize();
   }
 
   exit(): void {
@@ -163,6 +191,10 @@ export class HeaderComponent implements OnInit {
       maxWidth: maxWidth,
       maxHeight: maxHeight,
     });
+  }
+
+  toggleOptions() {
+    this.#shopService.toggleSideBarVisibilityFunction();
   }
 
   logout() {

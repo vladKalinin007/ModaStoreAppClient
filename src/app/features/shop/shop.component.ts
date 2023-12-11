@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, inject, signal} from '@angular/core';
 import {IProduct} from "../../core/models/product";
 import {ShopService} from "./shop.service";
 import {IPagination} from "../../core/models/pagination";
@@ -72,13 +72,19 @@ export class ShopComponent implements OnInit {
   areSizesLoading$: Observable<boolean>;
   areAttributesLoading$: Observable<boolean>;
 
+  isFilterMenuActive: boolean = true;
+
   readonly #shopService: ShopService = inject(ShopService);
   readonly #productService: ProductService = inject(ProductService);
   readonly #activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+  readonly #changeDetectorRef: ChangeDetectorRef = inject(ChangeDetectorRef);
 
-  constructor() { }
+  constructor() {
+    this.#shopService.toggleSideBarVisibilityFunction = this.changeSideBarVisibilityValue.bind(this);
+  }
 
   ngOnInit(): void {
+    this.updateSideBarVisibility();
     this.scrollToTop()
     this.setCategory()
     this.getProducts();
@@ -91,9 +97,15 @@ export class ShopComponent implements OnInit {
 
   setCategory(): void {
     this.shopParams.category = this.#activatedRoute.snapshot.paramMap.get('categoryName') ?? '';
-    this.isSideBarHidden = this.shopParams.category === 'bestsellers' || 
-                           this.shopParams.category === 'new' || 
-                           this.shopParams.category === 'sale';
+    this.isSideBarHidden = this.setDefaultSideBarVisibilityValues();
+    this.#shopService.isMenuVisible$.next(this.isSideBarHidden);
+  }
+
+  setDefaultSideBarVisibilityValues() {
+    return this.isSideBarHidden = this.shopParams.category === 'bestsellers' ||
+                                  this.shopParams.category === 'new' ||
+                                  this.shopParams.category === 'sale' ||
+                                  window.innerWidth < 480;                            
   }
 
   getProducts() {
@@ -126,13 +138,13 @@ export class ShopComponent implements OnInit {
     );
   }
 
-  private updateSideBarVisibility(categories: ICategory[]): void {
-    const currentRoute: string = this.#activatedRoute.snapshot.paramMap.get('categoryName');
-
-    const isCategoryFound = categories.some(category => category.name === currentRoute);
-
-    if (!isCategoryFound) {
+  updateSideBarVisibility(): void {
+    if (window.innerWidth < 480) {
       this.isSideBarHidden = true;
+
+      this.#changeDetectorRef.markForCheck();
+    } else {
+      this.isSideBarHidden = false;
     }
   }
 
@@ -168,54 +180,75 @@ export class ShopComponent implements OnInit {
     );
   }
 
+  changeSideBarVisibilityValue() {
+    if (window.innerWidth < 480) {
+      this.isSideBarHidden = !this.isSideBarHidden;
+      this.#changeDetectorRef.markForCheck();
+    }
+  }
+
   onBrandSelected(brandId: string): void {
+    this.scrollToTop();
     this.selectedBrand = this.selectedBrand === brandId ? null : brandId;
     this.shopParams.brandId = this.selectedBrand;
     this.shopParams.pageNumber = 1;
     this.getProducts();
+    this.changeSideBarVisibilityValue();
   }
 
 
   onColorSelected(colorId: string): void {
+    this.scrollToTop();
     this.selectedColor = this.selectedColor === colorId ? null : colorId;
     this.shopParams.colorId = this.selectedColor;
     this.shopParams.pageNumber = 1;
     this.getProducts();
+    this.changeSideBarVisibilityValue();
   }
 
   onSizeSelected(sizeId: string): void {
+    this.scrollToTop();
     this.selectedSize = this.selectedSize === sizeId ? null : sizeId;
     this.shopParams.sizeId = this.selectedSize;
     this.shopParams.pageNumber = 1;
     this.getProducts();
+    this.changeSideBarVisibilityValue();
   }
 
   onMaterialSelected(material: string) {
+    this.scrollToTop();
     this.selectedMaterial = this.selectedMaterial === material ? null : material;
     this.shopParams.material = this.selectedMaterial;
     this.shopParams.pageNumber = 1;
     this.getProducts();
+    this.changeSideBarVisibilityValue();
   }
 
   onSeasonSelected(season: string) {
+    this.scrollToTop();
     this.selectedSeason = this.selectedSeason === season ? null : season;
     this.shopParams.season = this.selectedSeason;
     this.shopParams.pageNumber = 1;
     this.getProducts();
+    this.changeSideBarVisibilityValue();
   }
 
   onPatternSelected(pattern: string) {
+    this.scrollToTop();
     this.selectedPattern = this.selectedPattern === pattern ? null : pattern;
     this.shopParams.pattern = this.selectedPattern;
     this.shopParams.pageNumber = 1;
     this.getProducts();
+    this.changeSideBarVisibilityValue();
   }
 
   onStyleSelected(style: string) {
+    this.scrollToTop();
     this.selectedStyle = this.selectedStyle === style ? null : style;
     this.shopParams.style = this.selectedStyle;
     this.shopParams.pageNumber = 1;
     this.getProducts();
+    this.changeSideBarVisibilityValue();
   }
 
   onPriceSelected(): void {
@@ -224,19 +257,23 @@ export class ShopComponent implements OnInit {
     }
 
     this.priceChangeTimeout = setTimeout(() => {
+      this.scrollToTop();
       this.shopParams.minPrice = this.startThumbValue.toString();
       this.shopParams.maxPrice = this.endThumbValue.toString();
       this.shopParams.pageNumber = 1;
       this.getProducts();
+      this.changeSideBarVisibilityValue();
     }, 1200);
   }
 
 
   onTypeSelected(typeId: string) {
+    this.scrollToTop();
     this.selectedType = this.selectedType === typeId ? null : typeId;
     this.shopParams.typeId = this.selectedType;
     this.shopParams.pageNumber = 1;
     this.getProducts();
+    this.changeSideBarVisibilityValue();
   }
 
   onSortSelected(sort: string) {

@@ -7,7 +7,7 @@ import {map} from "rxjs/operators";
 import {ShopParams} from "../../core/models/shopParams";
 import {IProduct} from "../../core/models/product";
 import {environment} from "../../../environments/environment";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable, of} from "rxjs";
 import { ProductService } from 'src/app/core/services/product.service/product.service';
 import { ReviewService } from 'src/app/shared/services/review-service/review.service';
 import { IProductReview } from 'src/app/core/models/catalog/product-review';
@@ -25,6 +25,10 @@ export class ShopService {
   products$: Observable<IProduct[]>;
   brands$: Observable<IBrand[]>;
   types$: Observable<IType[]>;
+
+  isMenuVisible$ = new BehaviorSubject<boolean>(false);
+
+  isMenuVisible: boolean;
 
   baseUrl: string = environment.apiUrl;
 
@@ -153,5 +157,7 @@ export class ShopService {
   getAttributes(name: string): Observable<IProductAttribute> {
     return this.#productService.getAttributes(name);
   }
+
+  toggleSideBarVisibilityFunction: () => void;
 
 }

@@ -2,7 +2,7 @@
   <header class="checkout-header"> 
     <div class="checkout-header__layout" >
       <div class="checkout-header__inner">
-        <div class="checkout-header__main" [ngStyle]="{'margin': '0 auto'}">
+        <div class="checkout-header__main" [ngClass]="{'_no-border': (isOptionsActive$ | async)}" [ngStyle]="{'margin': '0 auto'}">
           <div class="checkout-header__logo">
             <a class="logo _checkout" href="/">
               <img src="assets/images/MainLogo2.png" alt="moda_logo"
@@ -204,6 +204,14 @@
           </app-product-list-item>
         }
       </div>
+      
+        <div class="header__hide-field" [ngClass]="{'_hidden': isMenuVisible}">
+          <a class="filter-button" (click)="toggleOptions()">
+            <span class="filter-button__text">Filters</span>
+            <i class="pi pi-sort-alt header__icon-internal _gray" size="large"></i>
+          </a>
+        </div>
+      
       <app-nav-modal [isMenuActive]="isMenuActive"></app-nav-modal>
     </div>
   </header>

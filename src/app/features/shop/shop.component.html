@@ -6,7 +6,7 @@
         <ng-container>
           
           <section class="catalog__aside" [ngClass]="{'catalog__aside_hidden': isSideBarHidden}">
-            
+          
             <mat-expansion-panel expanded>
               <mat-expansion-panel-header>
                 <mat-panel-title>  Price </mat-panel-title>
@@ -201,7 +201,7 @@
 
             </mat-expansion-panel>
           </section>
-      
+          
           <section class="catalog__content">
 
             @if (areProductsLoading$ | async) {

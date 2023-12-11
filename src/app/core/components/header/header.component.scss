@@ -166,7 +166,7 @@
   }
 
   &.header-hidden {
-    top: -100px;
+    top: -120px;
   } 
 
   &__main {
@@ -175,6 +175,11 @@
     justify-content: space-between;
     border-bottom: 1px solid #ececec;
     position: relative;
+
+    &._no-border {
+      border-bottom: none;
+    }
+
     @media (max-width: 480px) {
       min-height: 12rem;
       justify-content: center;
@@ -185,6 +190,23 @@
     padding: 0 2rem;
     overflow-y: auto;
     max-height: 90vh;
+  }
+
+  &__hide-field {
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+    border-bottom: 1px solid gainsboro;
+    border-right: 1px solid gainsboro;
+    border-left: 1px solid gainsboro;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: #f9f9f991;
+
+    &._hidden {
+      visibility: hidden;
+    }
+
   }
 
   &__menu {
@@ -246,6 +268,13 @@
 
   &__icon-internal {
     font-size: 1.6em;
+
+    &._gray {
+      color: #a9a6a6;
+      padding-bottom: 1rem;
+      font-size: 2.3rem;
+    }
+
     @media (max-width: 480px) {
       font-size: 3rem;
     }
@@ -792,4 +821,18 @@ a {
 
 .modal-open {
   overflow: hidden;
+}
+
+.filter-button {
+  display: inline-flex;
+  align-items: center;
+
+  &__text {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 2.4rem;
+    color: #9e9c9c;
+    margin-right: 1rem;
+  }
 }
