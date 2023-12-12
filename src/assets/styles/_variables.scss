@@ -23,11 +23,11 @@
     font-size: 14px;
   }
 
-/*  .p-rating .p-rating-icon {
-    color: var(--mainColor);
-    font-size: 14px;
-    fill: #bdbdbd
-  }*/
+  .mat-mdc-paginator-container {
+    @media (max-width: 480px) {
+      justify-content: center !important;
+    }
+  }
 
 
 

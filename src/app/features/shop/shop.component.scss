@@ -36,6 +36,16 @@ mat-slider {
 }
 
 
+
+:root body {
+  .mat-mdc-paginator-container {
+    @media (max-width: 480px) {
+      justify-content: center !important;
+    }
+  }
+}
+
+
 .mat-expansion-panel {
   box-sizing: content-box;
   display: block;
