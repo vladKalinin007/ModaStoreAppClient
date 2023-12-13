@@ -15,6 +15,10 @@
   padding-bottom: 2rem;
   border-bottom: 1px solid #e8e6e6;
 
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
+
   &__info {
     padding: 1rem;
   }

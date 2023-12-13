@@ -1,7 +1,9 @@
 @if ((orders$ | async)?.length >= 1) {
-  @for (order of (orders$ | async); track $index) {
-    <app-order [order]="order"></app-order>
-  }
+  <div class="orders">
+    @for (order of (orders$ | async); track $index) {
+      <app-order [order]="order"></app-order>
+    }
+  </div>
 } @else {
   empty
 }

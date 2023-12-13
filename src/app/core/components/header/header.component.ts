@@ -1,6 +1,6 @@
 import {Component, HostListener, OnInit, Signal, ViewEncapsulation, inject} from '@angular/core';
 import {BasketService} from "../../../features/basket/basket.service";
-import {debounceTime, distinctUntilChanged, Observable, of, switchMap} from "rxjs";
+import {debounceTime, distinctUntilChanged, filter, Observable, of, switchMap} from "rxjs";
 import {IBasket} from "../../models/basket";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {BasketComponent} from "../../../features/basket/basket/basket.component";
@@ -17,6 +17,7 @@ import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/a
 import {AuthenticationComponent} from "../../../features/account/components/authentication/authentication.component";
 import { UserService } from '../../services/user.service';
 import { ShopService } from 'src/app/features/shop/shop.service';
+import { AccountService } from 'src/app/features/account/account.service';
 
 
 @Component({
@@ -41,11 +42,12 @@ export class HeaderComponent implements OnInit {
   readonly #messageService = inject(MessageService);
   readonly #activatedRoute = inject(ActivatedRoute);
   readonly #shopService = inject(ShopService);
+  readonly #accountService = inject(AccountService);
   
 
   currentUser: Signal<IUser>;
   basket$: Observable<IBasket>;
-  wishlist$: Observable<IWishlist>;
+  wishlist$: Observable<IWishlist>; 
   products$: Observable<IProduct[]>
   searchResults$: Observable<IPagination<IProduct>>;
 
@@ -58,6 +60,7 @@ export class HeaderComponent implements OnInit {
   isModalOpen: boolean = false;
   isOptionsActive$: Observable<boolean>;
   isMenuVisible: boolean = false;
+  isAccountVisible: boolean = false;
   isMenuVisible$: Observable<boolean> = of(false);
 
   prevScrollPos = window.pageYOffset;
@@ -70,6 +73,8 @@ export class HeaderComponent implements OnInit {
     });
     this.#userService.toggleLoginFunction = this.toggleLogin.bind(this);
     this.#shopService.toggleSideBarVisibilityFunction = this.setMenuVisibility.bind(this);
+    this.#accountService.toggleAccountFunction = this.toggleAccount.bind(this);
+    this.subscribeForNavigationEnd();
   }
 
   ngOnInit() {
@@ -87,19 +92,38 @@ export class HeaderComponent implements OnInit {
     this.isMenuVisible = !this.isMenuVisible;
   }
 
+  subscribeForNavigationEnd() {
+    this.#router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.checkScreenSize();
+    });
+  }
+
   checkScreenSize(): void {
     if (window.innerWidth <= 480) {
-      this.isMenuVisible = false;
-      this.isMenuVisible$ = of(false);
+      this.isMenuVisible = this.#checkForShopRoute() ? true : false;
+      this.isAccountVisible = this.#checkForAccountRoute() ? true : false;
     } else {
-      this.isMenuVisible = true;
-      this.isMenuVisible$ = of(true);
+      this.isMenuVisible = false;
     }
+  }
+
+  #checkForShopRoute(): boolean {
+    const routeArray = this.#router.url.split('/').filter(part => part);
+    const isShopInUrl = routeArray.includes('shop');
+    return isShopInUrl && routeArray.length === 2;
+  }
+
+  #checkForAccountRoute(): boolean {
+    const routeArray = this.#router.url.split('/').filter(part => part);
+    return routeArray.includes('account');
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.checkScreenSize();
+    this.isMobile();
   }
 
   exit(): void {
@@ -151,10 +175,24 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleLogin() {
+    let dialogWidth = '415px';
+    let dialogHeight = '600px';
+    let maxWidth = '415px';
+    let maxHeight = '600px';
+  
+    if (window.innerWidth <= 480) {
+      dialogWidth = '100%';
+      dialogHeight = '100%';
+      maxWidth = '100vw';
+      maxHeight = '100vh';
+    }
+  
     this.#dialog.open(AuthenticationComponent, {
-      width: '415px',
-      height: '600px'
-    })
+      width: dialogWidth,
+      height: dialogHeight,
+      maxWidth: maxWidth,
+      maxHeight: maxHeight,
+    });
   }
 
   toggleSearch() {
@@ -195,6 +233,14 @@ export class HeaderComponent implements OnInit {
 
   toggleOptions() {
     this.#shopService.toggleSideBarVisibilityFunction();
+  }
+
+  toggleAccount() {
+    this.#accountService.toggleAccountFunction();
+  }
+
+  isMobile(): boolean {
+    return window.innerWidth <= 480;
   }
 
   logout() {

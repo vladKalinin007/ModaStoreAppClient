@@ -1,3 +1,4 @@
+import { AuthenticationComponent } from './../components/authentication/authentication.component';
 import {Component, EventEmitter, OnInit, Output, inject} from '@angular/core';
 import {AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
@@ -16,8 +17,8 @@ export class RegisterComponent implements OnInit {
   readonly #fb = inject(FormBuilder);
   readonly #router = inject(Router);
   readonly #userService = inject(UserService);
-  readonly #dialogRef = inject(MatDialogRef<RegisterComponent>);
   readonly #toastrService = inject(ToastrService);
+  readonly #dialogRef: MatDialogRef<AuthenticationComponent> = inject(MatDialogRef);
   
   @Output() registerMode = new EventEmitter<boolean>();
 
@@ -48,7 +49,7 @@ export class RegisterComponent implements OnInit {
       ],
       password: [
         '', 
-        [Validators.required, Validators.minLength(4), Validators.maxLength(8)]
+        [Validators.required, Validators.minLength(4), Validators.maxLength(15)]
       ]
     })
   }
@@ -57,7 +58,7 @@ export class RegisterComponent implements OnInit {
     this.#userService.registerUser(this.registerForm.value).subscribe({
       next: () => {
         this.#router.navigateByUrl('/');
-        this.#closeDialog();
+        this.closeDialog();
       },
       error: (error) => {
         console.log(error);
@@ -68,7 +69,7 @@ export class RegisterComponent implements OnInit {
     })
   }
 
-  #closeDialog(): void {
+  closeDialog(): void {
     this.#dialogRef.close();
   }
 

@@ -47,9 +47,15 @@
             </p-galleria>
           </div>
         } @else {
-          <ngx-skeleton-loader 
-          [theme]="{height: '80rem', width: '61rem'}"
-          ></ngx-skeleton-loader>
+          @if (isMobile()) {
+            <ngx-skeleton-loader 
+              [theme]="{height: '50rem', width: '37rem'}"
+            ></ngx-skeleton-loader>
+          } @else {
+            <ngx-skeleton-loader 
+              [theme]="{height: '53.9rem', width: '40.5rem'}"
+            ></ngx-skeleton-loader>
+          }
         }
       </div>
       <div class="product-about__right">

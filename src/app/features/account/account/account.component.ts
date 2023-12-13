@@ -15,10 +15,17 @@ import { UserService } from 'src/app/core/services/user.service';
 export class AccountComponent implements OnInit {
 
   readonly #userService: UserService = inject(UserService);
+  readonly #accountService: AccountService = inject(AccountService);
   private confirmationService: ConfirmationService = inject(ConfirmationService);
   private messageService: MessageService = inject(MessageService);
 
   public currentUser: Signal<IUser>;
+
+  isAccountVisible: boolean = false;
+
+  constructor() {
+    this.#accountService.toggleAccountFunction = this.changeAccounVisibility.bind(this);
+  }
 
   ngOnInit(): void {
     this.currentUser = this.#userService.user;
@@ -56,5 +63,9 @@ export class AccountComponent implements OnInit {
 
   scrollToTop() {
     window.scrollTo(0, 0);
+  }
+
+  changeAccounVisibility(): void {
+    this.isAccountVisible = !this.isAccountVisible;
   }
 }

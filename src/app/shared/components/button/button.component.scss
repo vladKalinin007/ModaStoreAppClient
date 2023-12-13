@@ -4,8 +4,6 @@
 }
 
 .btn {
-  /*position: relative;
-  overflow: hidden;*/
   height: 4.1rem;
   width: 17.2rem;
   display: inline-flex;
@@ -37,8 +35,9 @@
     &_large {
       font-size: 1.8rem;
       height: 4.8rem;
-      width: 26rem;
+      max-width: 28rem;
       line-height: 48px;
+      width: 100%;
       ::after {
         width: 246px;
         height: 246px;

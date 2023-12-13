@@ -6,6 +6,12 @@
 
 }
 
+.reviews {
+  @media (max-width: 480px) {
+    margin-top: 6rem;
+  }
+}
+
 .review {
   padding: 1rem;
 

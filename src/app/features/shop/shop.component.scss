@@ -1,35 +1,4 @@
 @import "src/app/shared/styles/common.scss";
-// :host ::ng-deep .pslider {
-//   &.p-slider-horizontal {
-//     height: 0.600rem;
-//   }
-//   &.p-slider-range {
-//     background: #48d597;
-//   }
-
-//   //.p {
-//   //  &-accordion {
-//   //
-//   //  }
-//   //  &-accordion-header {
-//   //
-//   //  }
-//   //
-//   //  &-header-link {
-//   //    border: none;
-//   //
-//   //    :focus {
-//   //
-//   //    }
-//   //  }
-//   //}
-//   .p-accordion .p-accordion-header .p-accordion-header-link {
-//     border: none;
-//     :focus {
-//       outline: none;
-//     }
-//   }
-// }
 
 mat-slider {
   width: 92%;
@@ -76,7 +45,7 @@ mat-slider {
     display: flex;
     position: relative;
 
-    @media (max-width: 916px) {
+    @media (max-width: 1024px) {
       margin: 0 1rem;
     }
 
@@ -107,6 +76,10 @@ mat-slider {
 
     &.catalog__item_w_33 {
       width: 33.3333333333%;
+
+      @media (max-width: 1024px) {
+        margin-bottom: 20rem;
+      }
 
       @media (max-width: 916px) {
         width: 50%;
@@ -170,6 +143,11 @@ mat-slider {
 
   &__content {
     width: 100%;
+
+    &._hidden {
+      display: none;  
+    }
+    
     @media (max-width: 480px) {
       margin-top: 2rem;
     }

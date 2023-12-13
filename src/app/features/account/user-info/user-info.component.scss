@@ -15,6 +15,11 @@
 
 .info-form {
   margin: 2rem 4rem;
+
+  @media (max-width: 480px) {
+    margin: 8rem 4rem;
+  }
+  
   &__body {
 
   }
@@ -41,6 +46,10 @@
     align-items: center;
     margin-bottom: 2rem;
 
+    @media (max-width: 480px) {
+      flex-direction: column;
+      margin-bottom: 0;
+    }
 
   }
 
@@ -48,6 +57,10 @@
     flex: 1;
     margin-right: 2rem;
     width: 100%;
+
+    @media (max-width: 480px) {
+      margin-right: 0;
+    }
 
     &:last-child {
       margin-right: 0;

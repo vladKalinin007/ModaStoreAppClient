@@ -1,21 +1,23 @@
-@for (item of (userReviews$ | async); track $index) {
-  <div class="review">
-    <div class="layout">
-      <div class="review__inner">
-        <div class="review__body">
-          <div class="review__image">
-            <img [src]="item.pictureUrl" class="review__picture" alt="Product image">
-          </div>
-          <div class="review__content">
-            <div class="review__header">
-              {{item.productName}}
+<div class="reviews">
+  @for (item of (userReviews$ | async); track $index) {
+    <div class="review">
+      <div class="layout">
+        <div class="review__inner">
+          <div class="review__body">
+            <div class="review__image">
+              <img [src]="item.pictureUrl" class="review__picture" alt="Product image">
             </div>
-            <div class="review__comment">
-              <app-review [review]="item"></app-review>
+            <div class="review__content">
+              <div class="review__header">
+                {{item.productName}}
+              </div>
+              <div class="review__comment">
+                <app-review [review]="item"></app-review>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-} 
+  } 
+</div>

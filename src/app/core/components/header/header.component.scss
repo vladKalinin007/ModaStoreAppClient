@@ -61,6 +61,10 @@
   border-radius: 8px;
   opacity: 0;
   transition: .15s;
+
+  @media (max-width: 480px) {
+    left: 7.4rem;
+  }
   &:not(.is-active) {
     pointer-events: none;
   }
@@ -96,6 +100,10 @@
     &::placeholder {
       color: currentColor;
       opacity: .5;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 1.6rem;
     }
   }
 
@@ -204,7 +212,7 @@
     background-color: #f9f9f991;
 
     &._hidden {
-      visibility: hidden;
+      display: none;
     }
 
   }

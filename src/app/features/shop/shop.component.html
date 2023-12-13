@@ -202,7 +202,7 @@
             </mat-expansion-panel>
           </section>
           
-          <section class="catalog__content">
+          <section class="catalog__content" [ngClass]="{'_hidden' : !isSideBarHidden}">
 
             @if (areProductsLoading$ | async) {
               <div class="catalog__list" >

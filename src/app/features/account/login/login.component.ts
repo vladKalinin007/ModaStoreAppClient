@@ -5,6 +5,7 @@ import {MatDialogRef} from "@angular/material/dialog";
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/core/services/user.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { AuthenticationComponent } from '../components/authentication/authentication.component';
 
 @Component({
   selector: 'app-login',
@@ -13,11 +14,9 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   providers: [ConfirmationService, MessageService]
 })
 export class LoginComponent implements OnInit {
-  readonly #toastrService = inject(ToastrService);
-  readonly #messageService = inject(MessageService);
-  readonly #dialogRef = inject(MatDialogRef<LoginComponent>);
   readonly #userService = inject(UserService);
   readonly #router = inject(Router);
+  readonly #dialogRef: MatDialogRef<AuthenticationComponent> = inject(MatDialogRef);
 
   @Output() loginMode: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -42,7 +41,7 @@ export class LoginComponent implements OnInit {
     this.#userService.loginUser(this.loginForm.value).subscribe({
       next: () => {
         this.#router.navigateByUrl('/');
-        this.#dialogRef.close();
+        this.closeDialog();
       },
       error: (error) => {
         console.log(error);
@@ -50,6 +49,10 @@ export class LoginComponent implements OnInit {
         setTimeout(() => this.errorVisible = false, 5000)
       }
     });
+  }
+
+  closeDialog(): void {
+    this.#dialogRef.close();
   }
 
   toggleLoginMode(): void {

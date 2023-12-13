@@ -1,50 +1,52 @@
 <div class="layout">
   <mat-sidenav-container>
-    <mat-sidenav opened mode="side">
-      <p style="padding: 0 1rem; margin-top: 0.7rem;">
-        <mat-toolbar color="primary">
-          <span>{{currentUser()?.email}}</span>
-        </mat-toolbar>
-      </p>
-      <mat-nav-list>
-        <a mat-list-item routerLink="/account/user-information">
-          <span class="list-item">
-            <i class="pi pi-user"></i>
-            <span>Information</span>
-          </span>
-        </a>
-        <a mat-list-item routerLink="/account/seen">
-          <span class="list-item">
-            <i class="pi pi-eye"></i>
-            <span>Seen</span>
-          </span>
-        </a>
-        <a mat-list-item routerLink="/account/orders">
-          <span class="list-item">
-            <i class="pi pi-shopping-cart"></i>
-            <span>Orders</span>
-          </span>
-        </a>
-        <a mat-list-item routerLink="/account/reviews">
-          <span class="list-item">
-            <i class="pi pi-comments"></i>
-            <span>Reviews</span>
-          </span>
-        </a>
-        <a mat-list-item routerLink="/account/user-information">
-          <span class="list-item">
-            <i class="pi pi-cog"></i>
-            <span>Settings</span>
-          </span>
-        </a>
-        <a (click)="confirmLogout()" mat-list-item>
-          <span class="list-item">
-            <i class="pi pi-sign-out"></i>
-            <span>Logout</span>
-          </span>
-        </a>
-      </mat-nav-list>
-    </mat-sidenav>
+   
+      <mat-sidenav [ngClass]="{'_hidden': !isAccountVisible}" opened mode="side">
+        <p style="padding: 0 1rem; margin-top: 0.7rem;">
+          <mat-toolbar color="primary">
+            <span>{{currentUser()?.email}}</span>
+          </mat-toolbar>
+        </p>
+        <mat-nav-list>
+          <a class="account__link" (click)="changeAccounVisibility()" mat-list-item routerLink="/account/user-information">
+            <span class="list-item">
+              <i class="pi pi-user"></i>
+              <span>Information</span>
+            </span>
+          </a>
+          <a class="account__link"  (click)="changeAccounVisibility()" mat-list-item routerLink="/account/seen">
+            <span class="list-item">
+              <i class="pi pi-eye"></i>
+              <span>Seen</span>
+            </span>
+          </a>
+          <a class="account__link"  (click)="changeAccounVisibility()" mat-list-item routerLink="/account/orders">
+            <span class="list-item">
+              <i class="pi pi-shopping-cart"></i>
+              <span>Orders</span>
+            </span>
+          </a>
+          <a class="account__link"  (click)="changeAccounVisibility()" mat-list-item routerLink="/account/reviews">
+            <span class="list-item">
+              <i class="pi pi-comments"></i>
+              <span>Reviews</span>
+            </span>
+          </a>
+          <a class="account__link"  (click)="changeAccounVisibility()" mat-list-item routerLink="/account/user-information">
+            <span class="list-item">
+              <i class="pi pi-cog"></i>
+              <span>Settings</span>
+            </span>
+          </a>
+          <a class="account__link"  (click)="changeAccounVisibility()" (click)="confirmLogout()" mat-list-item>
+            <span class="list-item">
+              <i class="pi pi-sign-out"></i>
+              <span>Logout</span>
+            </span>
+          </a>
+        </mat-nav-list>
+      </mat-sidenav>
+    
     <mat-sidenav-content>
       <router-outlet/>
     </mat-sidenav-content>

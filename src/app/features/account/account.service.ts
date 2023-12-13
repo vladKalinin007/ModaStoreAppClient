@@ -88,4 +88,6 @@ export class AccountService {
   getUserReviews(): void {
     this.userReviews$ = this.httpClient.get<IProductReview[]>(this.BASE_URL + 'reviews');
   }
+
+  toggleAccountFunction: () => void;
 }

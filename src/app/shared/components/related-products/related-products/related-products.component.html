@@ -33,7 +33,13 @@
           } @empty {
             @for (i of [1, 2, 3, 4]; track i) {
               <div class="products__item products__skeleton" >
-                <ngx-skeleton-loader [theme]="{height: '50rem'}" ></ngx-skeleton-loader>
+                <ngx-skeleton-loader 
+                [theme]="{
+                  height: '50rem',
+                  width: '28rem',
+                }" 
+                >
+              </ngx-skeleton-loader>
               </div>
             }
           }

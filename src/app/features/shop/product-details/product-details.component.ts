@@ -182,4 +182,8 @@ export class ProductDetailsComponent implements OnInit {
     window.scrollTo(0, 0);
   }
 
+  isMobile(): boolean {
+    return window.innerWidth <= 480;
+  }
+
 }
