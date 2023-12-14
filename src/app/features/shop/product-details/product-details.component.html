@@ -53,7 +53,7 @@
             ></ngx-skeleton-loader>
           } @else {
             <ngx-skeleton-loader 
-              [theme]="{height: '53.9rem', width: '40.5rem'}"
+              [theme]="{height: '80rem', width: '60rem'}"
             ></ngx-skeleton-loader>
           }
         }
@@ -75,12 +75,12 @@
           </div>
           @if (product) {
             <div class="product-card__panel">
-              <div class="product-card__panel-article"> Brand: {{product?.productBrand}}</div>
+              <div class="product-card__panel-article"> <strong>Brand:</strong> {{product?.productBrand}}</div>
               <div class="product-card__rating">
                 <p-rating [(ngModel)]="ratingValue" [cancel]="false"/>
               </div>
                 <div class="product-card__reviews">
-                  <a href="#" class="product-card__reviews-count"> {{productReviews?.length}} reviews</a>
+                  <a class="product-card__reviews-count"> {{productReviews?.length}} reviews</a>
                 </div>
             </div>
           } @else {
@@ -107,7 +107,7 @@
           @if (product) {
             <div class="product-card__color">
               <div class="product-card__color-title">
-                Select color:
+                Available colors:
               </div>
               @if (product?.colors?.length > 0) {
                 <div class="color-palette">
@@ -124,7 +124,6 @@
             <div class="product-card__sizes">
               <div class="product-card__sizes-title">
                 Select your size:
-                <a (click)="sidebarVisible = true" class="product-card__sizes-link">table of sizes</a>
                 <p-sidebar [(visible)]="sidebarVisible" position="right">
                 </p-sidebar>
               </div>
