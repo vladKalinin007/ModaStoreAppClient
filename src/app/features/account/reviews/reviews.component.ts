@@ -25,7 +25,6 @@ export class ReviewsComponent implements OnInit {
   loadReviews(): void {
     this.#reviewService.getUserReviews().subscribe({
       next: (reviews: IProductReview[]) => {
-        console.dir(reviews)
         this.userReviews$ = of(reviews);
       }
     })

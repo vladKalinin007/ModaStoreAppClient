@@ -46,7 +46,7 @@
     align-items: center;
     margin-bottom: 2rem;
 
-    @media (max-width: 480px) {
+    @media (max-width: 768px) {
       flex-direction: column;
       margin-bottom: 0;
     }
@@ -58,7 +58,7 @@
     margin-right: 2rem;
     width: 100%;
 
-    @media (max-width: 480px) {
+    @media (max-width: 768px) {
       margin-right: 0;
     }
 

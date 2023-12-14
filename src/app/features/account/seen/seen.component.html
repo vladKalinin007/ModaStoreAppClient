@@ -1,9 +1,11 @@
-@for (seenProduct of (seenProducts$ | async); track $index) {
-  <div class="layout">
-    <div class="seen">
-      <app-product-list-item [product]="seenProduct" [type]="'common'"></app-product-list-item>
-    </div>
-  </div>
-} @empty {
-  <app-empty placeholderMessage="You havent seen anything yet" placeholderIcon="visibility_off"/>
-}
+<div class="seen-list">
+  @for (seenProduct of (seenProducts$ | async); track $index) {
+      <div class="layout">
+        <div class="seen">
+          <app-product-list-item [product]="seenProduct" [type]="'common'"></app-product-list-item>
+        </div>
+      </div>
+  } @empty {
+    <app-empty placeholderMessage="No products" placeholderIcon="visibility_off"/>
+  }
+</div>
