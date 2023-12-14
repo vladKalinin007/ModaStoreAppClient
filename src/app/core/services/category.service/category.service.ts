@@ -21,6 +21,10 @@ export class CategoryService {
     this.categories$ = this.#http.get<ICategory[]>(this.BASE_URL);
   }
 
+  getCategoriesDirectly(): Observable<ICategory[]> {
+    return this.#http.get<ICategory[]>(this.BASE_URL);
+  }
+
   getCategoriesById(id: string): Observable<ICategory> {
     return this.#http.get<ICategory>(this.BASE_URL + id);
   }

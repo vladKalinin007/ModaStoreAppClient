@@ -160,4 +160,6 @@ export class ShopService {
 
   toggleSideBarVisibilityFunction: () => void;
 
+  toggleMenuFunction: () => void;
+
 }

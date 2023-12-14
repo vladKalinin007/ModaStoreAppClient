@@ -5,43 +5,43 @@
       <div class="nav-modal__body">
         <div class="nav-modal__left">
           <div class="nav-modal__item">
-            <a class="nav-modal__link" href="/ua/catalog/">
+            <a (click)="toggleMenu()" routerLink="/" class="nav-modal__link" href="/ua/payment/">
+              HOME
+            </a>
+          </div>
+          <div class="nav-modal__item">
+            <a (click)="getCategories()" class="nav-modal__link">
               CATALOG
             </a>
           </div>
           <div class="nav-modal__item">
-            <a class="nav-modal__link" href="/ua/about/">
+            <a class="nav-modal__link">
               ABOUT US
             </a>
           </div>
           <div class="nav-modal__item">
-            <a class="nav-modal__link" href="/ua/contacts/">
+            <a class="nav-modal__link">
               CONTACTS
             </a>
           </div>
           <div class="nav-modal__item">
-            <a class="nav-modal__link" href="/ua/delivery/">
+            <a class="nav-modal__link">
               BLOG
             </a>
           </div>
           <div class="nav-modal__item">
-            <a class="nav-modal__link" href="/ua/payment/">
-              SHOP
-            </a>
-          </div>
-          <div class="nav-modal__item">
-            <a class="nav-modal__link" href="/ua/wholesale/">
+            <a class="nav-modal__link">
               SUPPORT
             </a>
           </div>
           <div class="nav-modal__item">
-            <a class="nav-modal__link" href="/ua/faq/">
+            <a class="nav-modal__link">
               FAQ
             </a>
           </div>
         </div>
         <div class="nav-modal__center">
-          <div class="center">
+          <div class="center" [ngClass]="{'_hidden' : areCategoriesLoaded}">
             <div class="nav-modal__item">
               <a class="nav-modal__link" href="/ua/catalog/">
                 PARTNERS
@@ -63,22 +63,31 @@
               </a>
             </div>
           </div>
+          <div class="categories">
+            <div class="categories__list">
+              @for (categoryName of categoryNames; track $index) {
+                <div class="categories__item">
+                  <a (click)="toggleMenu()" routerLink="/shop/{{categoryName}}">{{categoryName}}</a>
+                </div>
+              } 
+            </div>
+          </div>
         </div>
         <div class="nav-modal__right">
           <div class="right-block">
             <div class="right-block__container">
               <div class="right-block__tel">
-                <a class="tel" href="tel:0671892779">
+                <a class="tel">
                   (099) 999 99 99
                 </a>
                 <br>
-                <a class="tel" href="tel:0631516943">
+                <a class="tel">
                   (099) 999 99 99
                 </a>
               </div>
               <div class="right-block__socials">
                 <div class="socials">
-                  <div class="socials__title">Our social medias:</div>
+                  <div class="socials__title">Our socials:</div>
                   <div class="socials__list">
                     <a class="socials__item" href="https://www.facebook.com/" target="_blank">
                       <i class="pi pi-facebook"></i>

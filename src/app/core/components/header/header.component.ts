@@ -73,6 +73,7 @@ export class HeaderComponent implements OnInit {
     });
     this.#userService.toggleLoginFunction = this.toggleLogin.bind(this);
     this.#shopService.toggleSideBarVisibilityFunction = this.setMenuVisibility.bind(this);
+    this.#shopService.toggleMenuFunction = this.toggleMenu.bind(this);
     this.#accountService.toggleAccountFunction = this.toggleAccount.bind(this);
     this.subscribeForNavigationEnd();
   }
