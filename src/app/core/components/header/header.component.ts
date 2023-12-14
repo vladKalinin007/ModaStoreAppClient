@@ -40,7 +40,6 @@ export class HeaderComponent implements OnInit {
   readonly #formBuilder = inject(FormBuilder);
   readonly #confirmationService = inject(ConfirmationService);
   readonly #messageService = inject(MessageService);
-  readonly #activatedRoute = inject(ActivatedRoute);
   readonly #shopService = inject(ShopService);
   readonly #accountService = inject(AccountService);
   

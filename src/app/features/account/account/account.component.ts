@@ -4,6 +4,7 @@ import {IUser} from "../../../core/models/user";
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
 import {inject} from "@angular/core";
 import { UserService } from 'src/app/core/services/user.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class AccountComponent implements OnInit {
 
   readonly #userService: UserService = inject(UserService);
   readonly #accountService: AccountService = inject(AccountService);
+  readonly #router = inject(Router);
   private confirmationService: ConfirmationService = inject(ConfirmationService);
   private messageService: MessageService = inject(MessageService);
 
@@ -33,13 +35,19 @@ export class AccountComponent implements OnInit {
   }
 
   logout(): void {
-    this.#userService.logoutUser();
+    this.#userService.logoutUser().subscribe({
+      next: () => {
+        this.#router.navigateByUrl('/');
+      },
+      error: error => console.log(error)
+    });
+
   }
 
   confirmLogout(): void {
 
     this.confirmationService.confirm({
-    message: 'Are you sure you want to log out?',
+    message: 'Are you sure you want to logout?',
     header: 'Confirmation',
     icon: 'pi pi-exclamation-triangle',
 
