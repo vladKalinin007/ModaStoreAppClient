@@ -1,9 +1,11 @@
 import { AsyncPipe, DatePipe } from "@angular/common";
 import { Component, Input, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { NgxSkeletonLoaderComponent, NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import { RatingModule } from "primeng/rating";
 import { Observable, map } from "rxjs";
 import { IProductReview } from "src/app/core/models/catalog/product-review";
+import { SharedModule } from "../../shared.module";
 
 @Component({
     selector: 'app-reviews-block',
@@ -14,7 +16,8 @@ import { IProductReview } from "src/app/core/models/catalog/product-review";
         RatingModule,
         FormsModule,
         AsyncPipe,
-        DatePipe
+        DatePipe,
+        SharedModule,
     ]
 })
 export class ReviewsBlockComponent {

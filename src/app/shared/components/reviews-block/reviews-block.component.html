@@ -20,7 +20,7 @@
                             </div>
                         </div>
                         <div class="review-component__review">
-                            <div class="review-content">
+                            <div class="review-content"> 
                                 <div class="review-content__header">
                                     <div class="review-header">
                                         <div class="review-header__name">
@@ -52,7 +52,17 @@
                         </div>
                     </div>
                 } @empty {
-                    <div>placeholer</div>
+                    <div class="reviews-placeholder">
+                        @for (i of [1, 2, 3]; track i) {
+                          <ngx-skeleton-loader class="reviews-placeholder__item" 
+                          [theme]="{
+                            height: '15rem',
+                            width: '35rem',
+                            'margin-right': '1rem',
+                            }">
+                        </ngx-skeleton-loader>
+                        }
+                      </div>
                 }
             </div>
         </div>
