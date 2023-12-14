@@ -4,7 +4,7 @@
       <a href="/shop/{{product?.category}}/{{product?.id}}">
         <div class="catalog-item__pic-container">
           @if (productImages && productImages[imageIndex]) {
-            <img routerLink="/shop/{{product?.id}}"
+            <img 
               [src]="productImages[imageIndex]"
               alt="{{product?.name}}"
               class="catalog-item__pic" 
