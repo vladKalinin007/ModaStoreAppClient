@@ -107,6 +107,7 @@ export class HeaderComponent implements OnInit {
       this.isAccountVisible = this.#checkForAccountRoute() ? true : false;
     } else {
       this.isMenuVisible = false;
+      this.isAccountVisible = false;
     }
   }
 

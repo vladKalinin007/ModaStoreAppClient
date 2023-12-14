@@ -9,7 +9,9 @@
 }
 
 .mat-mdc-list-base {
-  margin-top: 6rem;
+  @media (max-width: 480px) {
+    margin-top: 6rem;
+  }
 }
 
 .pi {
@@ -63,17 +65,11 @@ span {
   padding: 0 1rem;
 }
 
-// .mat-sidenav {
-//   position: relative;
-//   transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-//   opacity: 1;
-//   transform: translateX(0);
-// }
 
 ._hidden {
-  // opacity: 0;
-  // transform: translateX(-100%);
-  display: none;
+  @media (max-width: 480px) {
+    display: none;
+  }
 }
 
 .mat-drawer.mat-drawer-side {
