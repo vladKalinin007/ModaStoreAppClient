@@ -121,6 +121,8 @@ export class ShopComponent implements OnInit {
     );
   }
 
+  
+
   getBrands(): void {
     this.brands$ = this.#shopService.brands$;
     this.areBrandsLoading$ = this.brands$.pipe(
