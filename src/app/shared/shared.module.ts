@@ -54,7 +54,6 @@ import { ShortenPipe } from './pipes/shorten.pipe';
 import { ReviewComponent } from './components/review/review.component';
 import { EmptyComponent } from './components/empty/empty.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { GradientShadowDirective } from './directives/gradient-shadow/gradient-shadow.directive';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import {MatTabsModule} from '@angular/material/tabs';
@@ -83,7 +82,6 @@ import {MatTabsModule} from '@angular/material/tabs';
     ShortenPipe,
     ReviewComponent,
     EmptyComponent,
-    GradientShadowDirective,
   ],
   imports: [
     CommonModule,
@@ -178,7 +176,6 @@ import {MatTabsModule} from '@angular/material/tabs';
     EmptyComponent,
     SeenItemComponent,
     ConfirmDialogModule,
-    GradientShadowDirective,
     NgxSkeletonLoaderModule,
     InputTextareaModule,
     MatTabsModule
