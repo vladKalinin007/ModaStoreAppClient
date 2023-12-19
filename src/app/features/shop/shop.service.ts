@@ -8,12 +8,12 @@ import {ShopParams} from "../../core/models/shopParams";
 import {IProduct} from "../../core/models/product";
 import {environment} from "../../../environments/environment";
 import {BehaviorSubject, Observable, of} from "rxjs";
-import { ProductService } from 'src/app/core/services/product.service/product.service';
 import { ReviewService } from 'src/app/shared/services/review-service/review.service';
 import { IProductReview } from 'src/app/core/models/catalog/product-review';
 import { IProductSize } from 'src/app/core/models/catalog/product-size.interface';
 import { IProductColor } from 'src/app/core/models/catalog/product-color.interface';
 import { IProductAttribute } from 'src/app/core/models/catalog/product-attribute.interface';
+import { ProductService } from 'src/app/shared/services/product-service/product.service';
 
 @Injectable({
   providedIn: 'root'

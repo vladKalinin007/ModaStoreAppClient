@@ -8,7 +8,7 @@ import {
   HttpInterceptor,
   HttpResponse
 } from '@angular/common/http';
-import { TransferStateService } from '../services/transfer-state.service';
+import { TransferStateService } from '../services/transfer-state-service/transfer-state.service';
 
 @Injectable()
 export class TransferStateInterceptor implements HttpInterceptor {

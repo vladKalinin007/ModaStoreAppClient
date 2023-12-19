@@ -6,15 +6,14 @@ import {IBrand} from "../../core/models/brand";
 import {IType} from "../../core/models/productType";
 import {ShopParams} from "../../core/models/shopParams";
 import {ActivatedRoute} from "@angular/router";
-import {ProductService} from "../../core/services/product.service/product.service";
 import {fastCascade} from "../../shared/animations/fade-in.animation";
 import {ICategory} from "../../core/models/category";
-import {CategoryService} from "../../core/services/category.service/category.service";
 import {IProductColor} from "../../core/models/catalog/product-color.interface";
 import {IProductSize} from "../../core/models/catalog/product-size.interface";
 import {IProductAttribute} from "../../core/models/catalog/product-attribute.interface";
 import { Observable, map, of, startWith, switchMap } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
+import { ProductService } from 'src/app/shared/services/product-service/product.service';
 
 @Component({
   selector: 'app-shop',

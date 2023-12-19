@@ -1,13 +1,13 @@
 import { ICategory } from './../../core/models/category';
 import {Injectable, inject} from '@angular/core';
 import {Observable, map} from "rxjs";
-import {CategoryService} from "../../core/services/category.service/category.service";
-import { PictureService } from 'src/app/core/services/picture.service';
-import { ProductService } from 'src/app/core/services/product.service/product.service';
-import { HistoryService } from 'src/app/shared/services/history.service';
+import { PictureService } from 'src/app/shared/services/picture-service/picture.service';
+import { HistoryService } from 'src/app/shared/services/history-service/history.service';
 import { IProduct } from 'src/app/core/models/product';
 import { ReviewService } from 'src/app/shared/services/review-service/review.service';
 import { IProductReview } from 'src/app/core/models/catalog/product-review';
+import { CategoryService } from 'src/app/shared/services/category-service/category.service';
+import { ProductService } from 'src/app/shared/services/product-service/product.service';
 
 @Injectable({
   providedIn: 'root'

@@ -8,14 +8,14 @@ import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {IUser} from "../../models/user";
 import {WishlistService} from "../../../features/wishlist/wishlist.service";
 import {IWishlist} from "../../models/customer/wishlist";
-import {SearchService} from "../../services/search.service";
+import {SearchService} from "../../services/search-service/search.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {IProduct} from "../../models/product";
 import {IPagination} from "../../models/pagination";
 import {fastCascade} from "../../../shared/animations/fade-in.animation";
 import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/api';
 import {AuthenticationComponent} from "../../../features/account/components/authentication/authentication.component";
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../../shared/services/user-service/user.service';
 import { ShopService } from 'src/app/features/shop/shop.service';
 import { AccountService } from 'src/app/features/account/account.service';
 

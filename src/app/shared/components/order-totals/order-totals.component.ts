@@ -14,7 +14,7 @@ import { IOrderToCreate } from 'src/app/core/models/order';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { OrderService } from 'src/app/shared/services/order-service/order.service';
 import { OrderToCreate } from 'src/app/core/models/order';
-import { DeliveryService } from 'src/app/shared/services/delivery.service/delivery.service';
+import { DeliveryService } from 'src/app/shared/services/delivery-service/delivery.service';
 
 @Component({
   selector: 'app-order-totals',

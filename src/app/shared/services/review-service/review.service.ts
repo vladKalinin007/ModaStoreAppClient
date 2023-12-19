@@ -2,10 +2,10 @@ import { inject, Injectable } from '@angular/core';
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {IProductReview, IPublishReview} from "../../../core/models/catalog/product-review";
-import {ProductService} from "../../../core/services/product.service/product.service";
 import {map} from "rxjs/operators";
 import {BehaviorSubject, forkJoin, Observable} from "rxjs";
 import {switchMap} from "rxjs/internal/operators/switchMap";
+import { ProductService } from '../product-service/product.service';
 
 @Injectable({
   providedIn: 'root'

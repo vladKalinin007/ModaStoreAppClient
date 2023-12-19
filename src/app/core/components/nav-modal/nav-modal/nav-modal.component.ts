@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit, inject} from '@angular/core';
-import { CategoryService } from 'src/app/core/services/category.service/category.service';
 import { ShopService } from 'src/app/features/shop/shop.service';
+import { CategoryService } from 'src/app/shared/services/category-service/category.service';
 
 @Component({
   selector: 'app-nav-modal',

@@ -3,13 +3,13 @@ import {HttpClient} from "@angular/common/http";
 import {
   ISeenProductList,
   SeenProductList,
-} from "../../core/models/customer/seenProductList";
-import {environment} from "../../../environments/environment";
+} from "../../../core/models/customer/seenProductList";
+import {environment} from "../../../../environments/environment";
 import {map, switchMap} from "rxjs/operators";
 import {BehaviorSubject, forkJoin, Observable} from "rxjs";
-import {ISeenProduct} from "../../core/models/customer/seen-product";
-import {IProduct} from "../../core/models/product";
-import {ProductService} from "../../core/services/product.service/product.service";
+import {IProduct} from "../../../core/models/product";
+import { ProductService } from '../product-service/product.service';
+
 
 @Injectable({
   providedIn: 'root'

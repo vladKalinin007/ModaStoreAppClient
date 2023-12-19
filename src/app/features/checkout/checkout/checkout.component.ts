@@ -4,7 +4,7 @@ import {AccountService} from "../../account/account.service";
 import {IBasket} from "../../../core/models/basket";
 import {BasketService} from "../../basket/basket.service";
 import { MessageService } from 'primeng/api';
-import { UserService } from 'src/app/core/services/user.service';
+import { UserService } from 'src/app/shared/services/user-service/user.service';
 
 @Component({
   selector: 'app-checkout',

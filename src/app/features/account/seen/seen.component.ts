@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {HistoryService} from "../../../shared/services/history.service";
+import {HistoryService} from "../../../shared/services/history-service/history.service";
 import {Observable} from "rxjs";
 import {ISeenProductList} from "../../../core/models/customer/seenProductList";
 import {IProduct} from "../../../core/models/product";

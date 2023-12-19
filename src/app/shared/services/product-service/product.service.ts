@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../../../environments/environment";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {ShopParams} from "../../models/shopParams";
-import {IPagination} from "../../models/pagination";
 import {map} from "rxjs/operators";
-import {IProduct} from "../../models/product";
-import {IBrand} from "../../models/brand";
-import {IType} from "../../models/productType";
 import {Observable, forkJoin} from "rxjs";
-import {IProductColor} from "../../models/catalog/product-color.interface";
-import {IProductSize} from "../../models/catalog/product-size.interface";
-import {IProductAttribute} from "../../models/catalog/product-attribute.interface";
-import { fork } from 'child_process';
+import { ShopParams } from 'src/app/core/models/shopParams';
+import { IPagination } from 'src/app/core/models/pagination';
+import { IProduct } from 'src/app/core/models/product';
+import { IBrand } from 'src/app/core/models/brand';
+import { IType } from 'src/app/core/models/productType';
+import { IProductSize } from 'src/app/core/models/catalog/product-size.interface';
+import { IProductColor } from 'src/app/core/models/catalog/product-color.interface';
+import { IProductAttribute } from 'src/app/core/models/catalog/product-attribute.interface';
+
 
 @Injectable({
   providedIn: 'root'

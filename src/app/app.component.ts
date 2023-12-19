@@ -4,9 +4,9 @@ import {AccountService} from "./features/account/account.service";
 import {MenuItem} from "primeng/api";
 import {NavigationEnd, Router} from "@angular/router";
 import {WishlistService} from "./features/wishlist/wishlist.service";
-import {HistoryService} from "./shared/services/history.service";
-import { StorageService } from './core/services/storage.service';
-import { UserService } from './core/services/user.service';
+import {HistoryService} from "./shared/services/history-service/history.service";
+import { StorageService } from './core/services/storage-service/storage.service';
+import { UserService } from './shared/services/user-service/user.service';
 
 @Component({
   selector: 'app-root',

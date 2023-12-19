@@ -2,10 +2,9 @@ import {Component, Input, OnInit, inject} from '@angular/core';
 import {IBasket} from "../../../core/models/basket";
 import {Observable, forkJoin, map, of, switchMap} from "rxjs";
 import {BasketService} from "../../basket/basket.service";
-import {ToastrService} from "ngx-toastr";
 import {FormGroup} from "@angular/forms";
-import { ProductService } from 'src/app/core/services/product.service/product.service';
 import { IProduct } from 'src/app/core/models/product';
+import { ProductService } from 'src/app/shared/services/product-service/product.service';
 
 @Component({
   selector: 'app-checkout-review',

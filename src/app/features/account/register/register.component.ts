@@ -5,7 +5,7 @@ import {Router} from "@angular/router";
 import {of, switchMap, timer} from "rxjs";
 import {map} from "rxjs/operators";
 import {MatDialogRef} from "@angular/material/dialog";
-import { UserService } from 'src/app/core/services/user.service';
+import { UserService } from 'src/app/shared/services/user-service/user.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

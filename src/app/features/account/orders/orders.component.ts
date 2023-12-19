@@ -1,8 +1,6 @@
 import {Component, OnInit, inject} from '@angular/core';
 import {IOrder} from "../../../core/models/order";
 import {OrderService} from "../../../shared/services/order-service/order.service";
-import {ProductService} from "../../../core/services/product.service/product.service";
-import {IProduct} from "../../../core/models/product";
 import {Observable, of} from "rxjs";
 
 @Component({

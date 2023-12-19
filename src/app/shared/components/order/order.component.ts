@@ -3,9 +3,9 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, in
 import { Observable, forkJoin, map } from 'rxjs';
 import { IOrder } from 'src/app/core/models/order';
 import { IProduct } from 'src/app/core/models/product';
-import { ProductService } from 'src/app/core/services/product.service/product.service';
 import { SharedModule } from '../../shared.module';
 import { IAddress } from 'src/app/core/models/address';
+import { ProductService } from '../../services/product-service/product.service';
 
 @Component({
   selector: 'app-order',

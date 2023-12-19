@@ -4,7 +4,7 @@ import {CheckoutService} from "../checkout.service";
 import {IDeliveryMethod} from "../../../core/models/deliveryMethod";
 import {BasketService} from "../../basket/basket.service";
 import {ICity} from "../../../core/models/city";
-import {DeliveryService} from "../../../shared/services/delivery.service/delivery.service";
+import {DeliveryService} from "../../../shared/services/delivery-service/delivery.service";
 import {MessageService} from "primeng/api";
 
 @Component({

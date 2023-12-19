@@ -1,16 +1,16 @@
 import { Injectable, WritableSignal, inject, signal } from "@angular/core";
-import { AuthService } from "./auth-service/auth.service";
-import { IUser } from "../models/user";
+import { AuthService } from "../../../core/services/auth-service/auth.service";
+import { IUser } from "../../../core/models/user";
 import { ReviewService } from "src/app/shared/services/review-service/review.service";
 import { environment } from "src/environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Observable, concatMap, switchMap, tap } from "rxjs";
-import { IRegister } from "../models/identity/register.interface";
-import { ILogin } from "../models/identity/login.interface";
-import { IAddress } from "../models/address";
-import { IProductReview, IPublishReview } from "../models/catalog/product-review";
+import { IRegister } from "../../../core/models/identity/register.interface";
+import { ILogin } from "../../../core/models/identity/login.interface";
+import { IAddress } from "../../../core/models/address";
+import { IProductReview, IPublishReview } from "../../../core/models/catalog/product-review";
 import { v4 as uuid } from 'uuid';
-import { IProduct } from "../models/product";
+import { IProduct } from "../../../core/models/product";
 
 
 @Injectable({

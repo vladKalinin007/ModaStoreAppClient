@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {MatDialogRef} from "@angular/material/dialog";
 import { ToastrService } from 'ngx-toastr';
-import { UserService } from 'src/app/core/services/user.service';
+import { UserService } from 'src/app/shared/services/user-service/user.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AuthenticationComponent } from '../components/authentication/authentication.component';
 

@@ -5,10 +5,10 @@ import {IWishlist, Wishlist} from "../../core/models/customer/wishlist";
 import {BehaviorSubject, Observable} from "rxjs";
 import {IWishlistItem} from "../../core/models/customer/wishlistItem";
 import {IProduct} from "../../core/models/product";
-import { ProductService } from '../../core/services/product.service/product.service';
 import { forkJoin } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { StorageService } from 'src/app/core/services/storage.service';
+import { StorageService } from 'src/app/core/services/storage-service/storage.service';
+import { ProductService } from 'src/app/shared/services/product-service/product.service';
 
 @Injectable({
   providedIn: 'root'

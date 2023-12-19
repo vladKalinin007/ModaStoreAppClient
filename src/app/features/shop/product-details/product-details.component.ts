@@ -2,23 +2,17 @@ import {Component, OnInit, Signal, inject} from '@angular/core';
 import {IProduct} from "../../../core/models/product";
 import {ShopService} from "../shop.service";
 import {ActivatedRoute} from "@angular/router";
-import {BreadcrumbService} from "xng-breadcrumb";
 import {BasketService} from "../../basket/basket.service";
-import {ShopParams} from "../../../core/models/shopParams";
-import {ProductService} from "../../../core/services/product.service/product.service";
-import {HistoryService} from "../../../shared/services/history.service";
-
+import {HistoryService} from "../../../shared/services/history-service/history.service";
 import {WishlistService} from "../../wishlist/wishlist.service";
 import {Observable, map, startWith} from "rxjs";
-import {ISeenProductList} from "../../../core/models/customer/seenProductList";
 import {IProductImage} from "../../../core/models/catalog/product-image";
 import {IProductReview} from "../../../core/models/catalog/product-review";
 import {IProductColor} from "../../../core/models/catalog/product-color.interface";
 import {IProductSize} from "../../../core/models/catalog/product-size.interface";
-import {IProductRelated} from "../../../core/models/catalog/product-related";
 import {SliderImage} from "../../../core/models/sliderImage";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from 'src/app/core/services/user.service';
+import { UserService } from 'src/app/shared/services/user-service/user.service';
 import { IUser } from 'src/app/core/models/user';
 
 @Component({
