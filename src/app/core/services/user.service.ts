@@ -1,5 +1,5 @@
 import { Injectable, WritableSignal, inject, signal } from "@angular/core";
-import { AuthService } from "./auth.service";
+import { AuthService } from "./auth-service/auth.service";
 import { IUser } from "../models/user";
 import { ReviewService } from "src/app/shared/services/review-service/review.service";
 import { environment } from "src/environments/environment";
