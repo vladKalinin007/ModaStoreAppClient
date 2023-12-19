@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {PaginationModule} from "ngx-bootstrap/pagination";
-import { PagingHeaderComponent } from './components/paging-header/paging-header.component';
-import { PagerComponent } from './components/pager/pager.component';
 import { CarouselModule } from 'primeng/carousel';
 import { OrderTotalsComponent } from './components/order-totals/order-totals.component';
 import {RouterLink, RouterModule} from "@angular/router";
@@ -11,9 +9,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatMenuModule} from "@angular/material/menu";
 import { TextInputComponent } from './components/text-input/text-input.component';
-import { StepperComponent } from './components/stepper/stepper.component';
 import { BasketSummaryComponent } from './components/basket-summary/basket-summary.component';
-import { CheckoutOptionContainerComponent } from './components/checkout-option-container/checkout-option-container.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {SliderModule} from "primeng/slider";
 import {RatingModule} from "primeng/rating";
@@ -37,13 +33,10 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from "@angular/material/icon";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import { ProductItemComponent } from './components/product-item/product-item.component';
-import { ProductItemsCarouselComponent } from './components/product-items-carousel/product-items-carousel.component';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
 import { ButtonComponent } from './components/button/button.component';
 import { ToastModule } from 'primeng/toast';
 import { RelatedProductsComponent } from './components/related-products/related-products/related-products.component';
-import { SeenItemsComponent } from './components/seen-items/seen-items.component';
-import {SeenItemComponent} from './components/seen-items/seen-item/seen-item.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {MaterialModule} from "../../material.module";
@@ -59,22 +52,15 @@ import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
-    PagingHeaderComponent,
-    PagerComponent,
     OrderTotalsComponent,
     TextInputComponent,
-    StepperComponent,
     BasketSummaryComponent,
-    CheckoutOptionContainerComponent,
     ProductItemComponent,
-    ProductItemsCarouselComponent,
     NavigationBarComponent,
     ButtonComponent,
     RelatedProductsComponent,
     ProductItemComponent,
     RelatedProductsComponent,
-    SeenItemsComponent,
-    SeenItemComponent,
     ProductListItemComponent,
     DiscountPipe,
     ShortenPipe,
@@ -125,8 +111,6 @@ import {MatTabsModule} from '@angular/material/tabs';
   ],
   exports: [
     PaginationModule,
-    PagingHeaderComponent,
-    PagerComponent,
     CarouselModule,
     OrderTotalsComponent,
     ReactiveFormsModule,
@@ -135,7 +119,6 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatMenuModule,
     TextInputComponent,
     BasketSummaryComponent,
-    CheckoutOptionContainerComponent,
     MatDialogModule,
     SliderModule,
     RatingModule,
@@ -159,19 +142,16 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatButtonModule,
     MatIconModule,
     MatSlideToggleModule,
-    ProductItemsCarouselComponent,
     NavigationBarComponent,
     ButtonComponent,
     ToastModule,
     ProductItemComponent,
     RelatedProductsComponent,
-    SeenItemsComponent,
     MatSidenavModule,
     MatListModule,
     ProductListItemComponent,
     ReviewComponent,
     EmptyComponent,
-    SeenItemComponent,
     ConfirmDialogModule,
     NgxSkeletonLoaderModule,
     InputTextareaModule,

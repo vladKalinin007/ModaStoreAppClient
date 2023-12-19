@@ -9,8 +9,6 @@ import { SectionHeaderComponent } from './components/section-header/section-head
 import {BreadcrumbModule} from "xng-breadcrumb";
 import {SharedModule} from "../shared/shared.module";
 import { NavModalComponent } from './components/nav-modal/nav-modal/nav-modal.component';
-import { SearchModalComponent } from './components/search-modal/search-modal.component';
-import {ModalComponent} from "./components/modal/modal.component";
 import { HeaderComponent } from './components/header/header.component';
 
 
@@ -22,8 +20,6 @@ import { HeaderComponent } from './components/header/header.component';
     ServerErrorComponent,
     SectionHeaderComponent,
     NavModalComponent,
-    ModalComponent,
-    SearchModalComponent,
     ],
   imports: [
     CommonModule,
@@ -40,8 +36,6 @@ import { HeaderComponent } from './components/header/header.component';
     FooterComponent,
     SectionHeaderComponent,
     NavModalComponent,
-    ModalComponent,
-    SearchModalComponent
   ]
 })
 export class CoreModule { }
