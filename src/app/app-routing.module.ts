@@ -3,10 +3,6 @@ import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from "./features/home/home/home.component";
 import {ServerErrorComponent} from "./core/components/server-error/server-error.component";
 import {NotFoundComponent} from "./core/components/not-found/not-found.component";
-import {BlogComponent} from "./features/blog/blog/blog.component";
-import {ChatComponent} from "./features/chat/chat/chat.component";
-import {MemberComponent} from "./features/member/member/member.component";
-import {AdminComponent} from "./features/admin/admin/admin.component";
 import {WishlistComponent} from "./features/wishlist/wishlist/wishlist.component";
 import { AuthGuard } from './core/guards/auth.guard';
 
@@ -16,11 +12,6 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     data: {breadcrumb: 'Home'}
-  },
-  {
-    path: 'admin',
-    component: AdminComponent,
-    data: {breadcrumb: 'Admin'}
   },
   {
     path: 'account',
@@ -48,21 +39,6 @@ const routes: Routes = [
     path: 'wishlist',
     loadChildren: () => import('./features/wishlist/wishlist.module').then(m => m.WishlistModule),
     data: {breadcrumb: 'Wishlist'}
-  },
-  {
-    path: 'blog',
-    component: BlogComponent,
-    data: {breadcrumb: 'Blog'}
-  },
-  {
-    path: 'chat',
-    component: ChatComponent,
-    data: {breadcrumb: 'Chat'}
-  },
-  {
-    path: 'member',
-    component: MemberComponent,
-    data: {breadcrumb: 'Member'}
   },
   {
     path: 'checkout',

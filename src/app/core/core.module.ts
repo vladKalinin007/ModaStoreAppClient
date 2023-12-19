@@ -11,7 +11,6 @@ import {SharedModule} from "../shared/shared.module";
 import { NavModalComponent } from './components/nav-modal/nav-modal/nav-modal.component';
 import { SearchModalComponent } from './components/search-modal/search-modal.component';
 import {ModalComponent} from "./components/modal/modal.component";
-import { ComponentComponent } from './components/component/component.component';
 import { HeaderComponent } from './components/header/header.component';
 
 
@@ -25,7 +24,6 @@ import { HeaderComponent } from './components/header/header.component';
     NavModalComponent,
     ModalComponent,
     SearchModalComponent,
-    ComponentComponent,
     ],
   imports: [
     CommonModule,

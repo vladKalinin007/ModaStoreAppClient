@@ -39,7 +39,6 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import { ProductItemComponent } from './components/product-item/product-item.component';
 import { ProductItemsCarouselComponent } from './components/product-items-carousel/product-items-carousel.component';
 import { NavigationBarComponent } from './components/navigation-bar/navigation-bar.component';
-import { SubscribeBlockComponent } from '../core/components/subscribe-block/subscribe-block.component';
 import { ButtonComponent } from './components/button/button.component';
 import { ToastModule } from 'primeng/toast';
 import { RelatedProductsComponent } from './components/related-products/related-products/related-products.component';
@@ -70,7 +69,6 @@ import {MatTabsModule} from '@angular/material/tabs';
     ProductItemComponent,
     ProductItemsCarouselComponent,
     NavigationBarComponent,
-    SubscribeBlockComponent,
     ButtonComponent,
     RelatedProductsComponent,
     ProductItemComponent,
@@ -163,7 +161,6 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatSlideToggleModule,
     ProductItemsCarouselComponent,
     NavigationBarComponent,
-    SubscribeBlockComponent,
     ButtonComponent,
     ToastModule,
     ProductItemComponent,
