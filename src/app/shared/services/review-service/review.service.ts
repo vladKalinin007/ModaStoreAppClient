@@ -67,7 +67,7 @@ export class ReviewService {
     return this.#http.post(this.BASE_URL, publishReview, { withCredentials: true });
   }
 
-  deleteUserReview(id: number) {
+  deleteUserReview(id: string) {
     return this.#http.delete(this.BASE_URL + id);
   }
 }
