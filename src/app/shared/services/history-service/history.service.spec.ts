@@ -31,6 +31,10 @@ describe('HistoryService', () => {
     mockProduct = productMock;
   });
 
+  afterEach(() => {
+    httpMock.verify();
+  });
+
   it('should set history', () => {
     spyOn(service, 'setHistory').and.callThrough();
 
@@ -44,9 +48,14 @@ describe('HistoryService', () => {
 
   it('should update history', () => {
     spyOn(service, 'updateHistory').and.callThrough();
-
+    spyOn(service, 'setHistory').and.callThrough();
+  
     service.updateHistory('product-id');
-
+  
+    const req = httpMock.expectOne(`${service.BASE_URL}seen-product`);
+    expect(req.request.method).toBe('POST');
+    req.flush(mockSeenProductList);
+  
     expect(service.updateHistory).toHaveBeenCalledWith('product-id');
     expect(service.setHistory).toHaveBeenCalled();
   });
