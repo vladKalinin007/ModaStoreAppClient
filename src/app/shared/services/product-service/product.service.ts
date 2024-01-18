@@ -22,26 +22,7 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts(shopParams?: ShopParams) {
-
-    let params = new HttpParams();
-
-    params = shopParams?.brandId ? params.append('brandId', shopParams.brandId) : params;
-    params = shopParams?.typeId ? params.append('typeId', shopParams.typeId) : params;
-    params = shopParams?.search ? params.append('search', shopParams.search) : params;
-
-    params = params.append('sort', shopParams.sort);
-    params = params.append('pageIndex', shopParams.pageNumber.toString());
-    params = params.append('pageSize', shopParams.pageSize.toString());
-
-    const options = { observe: 'response' as const, params };
-
-    return this.http.get<IPagination<IProduct>>(this.BASE_URL, options).pipe(
-      map(response => response.body)
-    );
-  }
-
-  getBestsellers(quantity?: number) {
+  getBestsellers(quantity?: number): Observable<IPagination<IProduct>>  {
     let params: HttpParams = new HttpParams();
     params = params.append('isBestseller', 'true');
     if (quantity) params = params.append('pageSize', quantity.toString());
@@ -51,7 +32,7 @@ export class ProductService {
     );
   }
 
-  getNewProducts(quantity?: number) {
+  getNewProducts(quantity?: number): Observable<IPagination<IProduct>>  {
     let params: HttpParams = new HttpParams();
     params = params.append('isNew', 'true');
     if (quantity) params = params.append('pageSize', quantity.toString());
@@ -61,7 +42,7 @@ export class ProductService {
     );
   }
 
-  getOnSaleProducts(quantity?: number) {
+  getOnSaleProducts(quantity?: number): Observable<IPagination<IProduct>>  {
     let params: HttpParams = new HttpParams();
     params = params.append('isOnSale', 'true');
     if (quantity) params = params.append('pageSize', quantity.toString());
@@ -71,9 +52,8 @@ export class ProductService {
     );
   }
 
-  getProduct(id: string) {
+  getProduct(id: string): Observable<IProduct> {
     const url: string = `${this.BASE_URL}` + `?id=${id}`;
-    console.log(`CHECK URL: ${url}`)
     return this.http.get<IPagination<IProduct>>(url).pipe(
       map(response => response.data[0])
     );
@@ -84,17 +64,16 @@ export class ProductService {
     return forkJoin(requests);
   }
 
-  getBrands() {
+  getBrands(): Observable<IBrand[]> {
     return this.http.get<IBrand[]>(this.BASE_URL + 'productBrand/');
   }
 
-  getTypes() {
+  getTypes(): Observable<IType[]> {
     return this.http.get<IType[]>(this.BASE_URL + 'productType/');
   }
 
   getProductsByCategory(categoryName: string): Observable<IProduct[]> {
     const url: string = `${this.BASE_URL}products?categoryName=${categoryName}`;
-    console.log("it works")
     return this.http.get<IProduct[]>(url);
   }
 
@@ -128,5 +107,65 @@ export class ProductService {
     return this.http.get<IProduct[]>(this.BASE_URL, options).pipe(
       map(response => response.body)
     );
+  }
+
+  getProducts(shopParams: ShopParams): Observable<IPagination<IProduct>> {
+    let params: HttpParams = this.#createShopParams(shopParams);
+  
+    return this.http.get<IPagination<IProduct>>(this.BASE_URL, { observe: 'response', params }).pipe(
+      map(response => response.body)
+    );
+  }
+
+  #createShopParams(shopParams: ShopParams): HttpParams {
+    let params: HttpParams = new HttpParams();
+
+    params = this.#addCategoryParams(params, shopParams);
+    params = this.#addBasicParams(params, shopParams);
+    params = this.#addPriceParams(params, shopParams);
+  
+    return params;
+  }
+
+  #addCategoryParams(params: HttpParams, shopParams: ShopParams): HttpParams {
+    if (shopParams.category) {
+      if (['bestsellers', 'new', 'sale'].includes(shopParams.category)) {
+        params = params.append(`is${this.#capitalize(shopParams.category)}`, 'true');
+      } else {
+        params = params.append('category', shopParams.category);
+      }
+    }
+    return params;
+  }
+  
+  #addBasicParams(params: HttpParams, shopParams: ShopParams): HttpParams {
+    let resultParams = params;
+  
+    ['brandId', 'typeId', 'search', 'colorId', 'sizeId', 'material', 'season', 'pattern', 'style'].forEach(param => {
+      if (shopParams[param]) {
+        resultParams = resultParams.append(param, shopParams[param]);
+      }
+    });
+  
+    return resultParams;
+  }
+  
+  #addPriceParams(params: HttpParams, shopParams: ShopParams): HttpParams {
+    let resultParams = params;
+  
+    if (shopParams.price) {
+      resultParams = resultParams.append('price', shopParams.price);
+    }
+  
+    if (shopParams.minPrice && shopParams.maxPrice) {
+      resultParams = resultParams.append('minPrice', shopParams.minPrice);
+      resultParams = resultParams.append('maxPrice', shopParams.maxPrice);
+    }
+  
+    return resultParams;
+  }
+
+  #capitalize(value: string): string {
+    return value.charAt(0).toUpperCase() + value.slice(1);
   }
 }

@@ -39,86 +39,8 @@ export class ShopService {
     this.getBrands();
   }
 
-  getProducts(shopParams: ShopParams){
-
-    let params: HttpParams = new HttpParams();
-
-    if (shopParams.category) {
-      if (shopParams.category.includes('bestsellers') || 
-          shopParams.category.includes('new') || 
-          shopParams.category.includes('sale')) {
-        switch (shopParams.category) {
-          case 'bestsellers':
-            params = params.append('isBestSeller', 'true');
-            break;
-          case 'new':
-            params = params.append('isNew', 'true');
-            break;
-          case 'sale':
-            params = params.append('isOnSale', 'true');
-            break;
-        }
-      } else {
-        params = params.append('category', shopParams.category);
-      }
-    }
-
-    if (shopParams.brandId) {
-      params = params.append('brandId', shopParams.brandId);
-    }
-
-    if (shopParams.typeId) {
-      params = params.append('typeId', shopParams.typeId);
-    }
-
-    if (shopParams.search) {
-      params = params.append('search', shopParams.search);
-    }
-
-    if (shopParams.colorId) {
-      params = params.append('colorId', shopParams.colorId);
-    }
-
-    if (shopParams.sizeId) {
-      params = params.append('sizeId', shopParams.sizeId);
-    }
-
-    if (shopParams.material) {
-      params = params.append('material', shopParams.material);
-    }
-
-    if (shopParams.season) {
-      params = params.append('season', shopParams.season);
-    }
-
-    if (shopParams.pattern) {
-      params = params.append('pattern', shopParams.pattern);
-    }
-
-
-    if (shopParams.price) {
-      params = params.append('price', shopParams.price);
-    }
-
-    if (shopParams.minPrice && shopParams.maxPrice) {
-      params = params.append('minPrice', shopParams.minPrice);
-      params = params.append('maxPrice', shopParams.maxPrice);
-    }
-
-    if (shopParams.style) {
-      params = params.append('style', shopParams.style);
-    }
-
-    params = params.append('sort', shopParams.sort);
-    params = params.append('pageIndex', shopParams.pageNumber.toString());
-    params = params.append('pageSize', shopParams.pageSize.toString());
-
-    console.log(params)
-
-    return this.http.get<IPagination<IProduct>>(this.baseUrl + 'products', {observe: 'response', params}).pipe(map(response => {
-        return response.body;
-      })
-    );
+  getProducts(shopParams: ShopParams): Observable<IPagination<IProduct>>{
+    return this.#productService.getProducts(shopParams);
   }
 
   getRelatedProducts(ids: string[]): Observable<IProduct[]> {
